@@ -19,7 +19,13 @@ public class QuickWriter {
   }
 
   public void print(Object... objects) {
+    boolean printSpace = false;
     for (Object object : objects) {
+      if (printSpace) {
+        writer.print(' ');
+      } else {
+        printSpace = true;
+      }
       writer.print(object);
     }
   }
@@ -27,6 +33,10 @@ public class QuickWriter {
   public void println(Object... objects) {
     print(objects);
     writer.print('\n');
+  }
+
+  public void printf(String format, Object... objects) {
+    writer.printf(format, objects);
   }
 
   public void close() {
