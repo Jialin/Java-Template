@@ -19,18 +19,29 @@ public class QuickWriter {
   }
 
   public void print(Object... objects) {
-    boolean printSpace = false;
-    for (Object object : objects) {
-      if (printSpace) {
+    for (int i = 0; i < objects.length; ++i) {
+      if (i > 0) {
         writer.print(' ');
-      } else {
-        printSpace = true;
       }
-      writer.print(object);
+      writer.print(objects[i]);
     }
   }
 
   public void println(Object... objects) {
+    print(objects);
+    writer.print('\n');
+  }
+
+  public void print(int[] objects) {
+    for (int i = 0; i < objects.length; ++i) {
+      if (i > 0) {
+        writer.print(' ');
+      }
+      writer.print(objects[i]);
+    }
+  }
+
+  public void println(int[] objects) {
     print(objects);
     writer.print('\n');
   }
