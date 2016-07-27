@@ -1,4 +1,4 @@
-package template.utils;
+package template.array;
 
 public class IntegerArrayUtils {
 
