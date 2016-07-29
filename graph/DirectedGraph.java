@@ -2,29 +2,25 @@ package template.graph;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.function.Function;
 
 /**
  * Directed graph.
- *
- * @param <INFO> Edge information
  */
-public class DirectedGraph<INFO> {
+public class DirectedGraph {
 
   public int vertexCount;
   public int[] fromIndex;
   public int[] toIndex;
-  public INFO[] info;
+
+  protected int edgeIndex;
 
   private int[] nextOutgoing;
   private int[] lastOutgoing;
-  private int edgeIndex;
 
-  public DirectedGraph(int vertexCount, int edgeCapacity, Function<Integer, INFO[]> infoArrayFactory) {
+  public DirectedGraph(int vertexCount, int edgeCapacity) {
     this.vertexCount = vertexCount;
     this.fromIndex = new int[edgeCapacity];
     this.toIndex = new int[edgeCapacity];
-    this.info = infoArrayFactory.apply(edgeCapacity);
     this.nextOutgoing = new int[edgeCapacity];
     this.lastOutgoing = new int[vertexCount];
     Arrays.fill(lastOutgoing, -1);
@@ -32,12 +28,11 @@ public class DirectedGraph<INFO> {
   }
 
   /**
-   * Adds a directed edge from {@code fromIndex} to {@code toIndex} with {@code info}.
+   * Adds a directed edge from {@code fromIndex} to {@code toIndex}.
    */
-  public void add(int fromIndex, int toIndex, INFO info) {
+  public void add(int fromIndex, int toIndex) {
     this.fromIndex[edgeIndex] = fromIndex;
     this.toIndex[edgeIndex] = toIndex;
-    this.info[edgeIndex] = info;
     nextOutgoing[edgeIndex] = lastOutgoing[fromIndex];
     lastOutgoing[fromIndex] = edgeIndex++;
   }
