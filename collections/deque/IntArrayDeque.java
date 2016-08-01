@@ -8,10 +8,10 @@ public class IntArrayDeque extends IntArrayQueue {
     super(capacity);
   }
 
-  public void addFirst(int v) {
+  public void addFirst(int value) {
     ensureCapacity(size() + 1);
-    open = (open - 1) & (data.length - 1);
-    data[open] = v;
+    open = (open - 1) & (values.length - 1);
+    values[open] = value;
   }
 
   public void addLast(int v) {
@@ -23,8 +23,8 @@ public class IntArrayDeque extends IntArrayQueue {
   }
 
   public int peekLast() {
-    assert(open != close);
-    return data[(close - 1) & (data.length - 1)];
+    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    return values[(close - 1) & (values.length - 1)];
   }
 
   public int pollFirst() {
@@ -32,8 +32,8 @@ public class IntArrayDeque extends IntArrayQueue {
   }
 
   public int pollLast() {
-    assert(open != close);
-    close = (close - 1) & (data.length - 1);
-    return data[close];
+    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    close = (close - 1) & (values.length - 1);
+    return values[close];
   }
 }

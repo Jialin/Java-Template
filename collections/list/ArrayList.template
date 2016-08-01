@@ -1,0 +1,60 @@
+[
+  {
+    "filename": "IntArrayList",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "LongArrayList",
+    "type": "long",
+    "Type": "Long"
+  }
+]
+====================================================================================================
+package template.collections.list;
+
+import template.collections.%Type%Collection;
+
+public class %Type%ArrayList implements %Type%Collection {
+
+  private %type%[] values;
+  private int close;
+
+  public %Type%ArrayList(int capacity) {
+    values = new %type%[Integer.highestOneBit(capacity) << 1];
+  }
+
+  @Override
+  public void clear() {
+    close = 0;
+  }
+
+  @Override
+  public int size() {
+    return close;
+  }
+
+  @Override
+  public void add(%type% v) {
+    ensureCapacity(size() + 1);
+    values[close++] = v;
+  }
+
+  public %type% get(int idx) {
+    if (idx >= close) throw new ArrayIndexOutOfBoundsException();
+    return values[idx];
+  }
+
+  public void set(int idx, %type% value) {
+    if (idx >= close) throw new ArrayIndexOutOfBoundsException();
+    values[idx] = value;
+  }
+
+  protected void ensureCapacity(int capacity) {
+    if (capacity < values.length) return;
+    %type%[] newValues = new %type%[Integer.highestOneBit(capacity) << 1];
+    System.arraycopy(values, 0, newValues, 0, values.length);
+    close = size();
+    values = newValues;
+  }
+}

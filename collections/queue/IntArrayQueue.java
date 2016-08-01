@@ -4,11 +4,11 @@ import template.collections.IntCollection;
 
 public class IntArrayQueue implements IntCollection {
 
-  protected int[] data;
+  protected int[] values;
   protected int open, close;
 
   public IntArrayQueue(int capacity) {
-    data = new int[Integer.highestOneBit(capacity) << 1];
+    values = new int[Integer.highestOneBit(capacity) << 1];
   }
 
   @Override
@@ -18,36 +18,36 @@ public class IntArrayQueue implements IntCollection {
 
   @Override
   public int size() {
-    return (close - open) & (data.length - 1);
+    return (close - open) & (values.length - 1);
   }
 
   @Override
   public void add(int v) {
     ensureCapacity(size() + 1);
-    data[close++] = v;
-    close &= data.length - 1;
+    values[close++] = v;
+    close &= values.length - 1;
   }
 
   public int peek() {
-    assert(open != close);
-    return data[open];
+    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    return values[open];
   }
 
   public int poll() {
-    assert(open != close);
-    int res = data[open];
-    open = (open + 1) & (data.length - 1);
+    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    int res = values[open];
+    open = (open + 1) & (values.length - 1);
     return res;
   }
 
   protected void ensureCapacity(int capacity) {
-    if (capacity < data.length) return;
-    int[] newData = new int[Integer.highestOneBit(capacity) << 1];
-    for (int i = 0, j = open; j != close; i++, j = (j + 1) & (data.length - 1)) {
-      newData[i] = data[j];
+    if (capacity < values.length) return;
+    int[] newValues = new int[Integer.highestOneBit(capacity) << 1];
+    for (int i = 0, j = open; j != close; i++, j = (j + 1) & (values.length - 1)) {
+      newValues[i] = values[j];
     }
     close = size();
     open = 0;
-    data = newData;
+    values = newValues;
   }
 }
