@@ -33,15 +33,38 @@ public class QuickWriter {
   }
 
   public void print(int[] objects) {
+    print(objects, " ");
+  }
+
+  public void print(int[] objects, String delimiter) {
     for (int i = 0; i < objects.length; ++i) {
       if (i > 0) {
-        writer.print(' ');
+        writer.print(delimiter);
       }
       writer.print(objects[i]);
     }
   }
 
   public void println(int[] objects) {
+    print(objects);
+    writer.print('\n');
+  }
+
+
+  public void print(long[] objects) {
+    print(objects, " ");
+  }
+
+  public void print(long[] objects, String delimiter) {
+    for (int i = 0; i < objects.length; ++i) {
+      if (i > 0) {
+        writer.print(delimiter);
+      }
+      writer.print(objects[i]);
+    }
+  }
+
+  public void println(long[] objects) {
     print(objects);
     writer.print('\n');
   }
