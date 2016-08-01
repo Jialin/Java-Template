@@ -1,0 +1,30 @@
+[
+  {
+    "filename": "IntCollection",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "LongCollection",
+    "type": "long",
+    "Type": "Long"
+  }
+]
+====================================================================================================
+package template.collections;
+
+public interface %Type%Collection {
+  void clear();
+  int size();
+  void add(%type% value);
+
+  default boolean isEmpty() {
+    return size() == 0;
+  }
+
+  default void addAll(%type%[] values) {
+    for (%type% value : values) {
+      add(value);
+    }
+  }
+}

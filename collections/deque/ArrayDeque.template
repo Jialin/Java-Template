@@ -1,0 +1,52 @@
+[
+  {
+    "filename": "IntArrayDeque",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "LongArrayDeque",
+    "type": "long",
+    "Type": "Long"
+  }
+]
+====================================================================================================
+package template.collections.deque;
+
+import template.collections.queue.%Type%ArrayQueue;
+
+public class %Type%ArrayDeque extends %Type%ArrayQueue {
+
+  public %Type%ArrayDeque(int capacity) {
+    super(capacity);
+  }
+
+  public void addFirst(%type% v) {
+    ensureCapacity(size() + 1);
+    open = (open - 1) & (data.length - 1);
+    data[open] = v;
+  }
+
+  public void addLast(%type% v) {
+    add(v);
+  }
+
+  public %type% peekFirst() {
+    return peek();
+  }
+
+  public %type% peekLast() {
+    assert(open != close);
+    return data[(close - 1) & (data.length - 1)];
+  }
+
+  public %type% pollFirst() {
+    return poll();
+  }
+
+  public %type% pollLast() {
+    assert(open != close);
+    close = (close - 1) & (data.length - 1);
+    return data[close];
+  }
+}
