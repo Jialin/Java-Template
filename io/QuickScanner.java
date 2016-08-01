@@ -46,6 +46,14 @@ public class QuickScanner {
     return positive ? res : -res;
   }
 
+  public int[] nextInt(int n) {
+    int[] res = new int[n];
+    for (int i = 0; i < n; ++i) {
+      res[i] = nextInt();
+    }
+    return res;
+  }
+
   public int nextNonSpaceChar() {
     int res = nextChar();
     for ( ; isSpaceChar(res) || res < 0; res = nextChar()) ;
