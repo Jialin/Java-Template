@@ -5,8 +5,8 @@ package template.graph;
  */
 public class BidirectionalGraph extends DirectedGraph {
 
-  public BidirectionalGraph(int vertexCount, int edgeCapacity) {
-    super(vertexCount, edgeCapacity << 1);
+  public BidirectionalGraph(int vertexCapacity, int edgeCapacity) {
+    super(vertexCapacity, edgeCapacity << 1);
   }
 
   /**
