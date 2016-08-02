@@ -37,9 +37,7 @@ public class QuickScanner {
     }
     int res = 0;
     do {
-      if (c < '0' || '9' < c) {
-        throw new RuntimeException();
-      }
+      if (c < '0' || '9' < c) throw new RuntimeException();
       res = res * 10 + c - '0';
       c = nextChar();
     } while (!isSpaceChar(c));
@@ -52,6 +50,22 @@ public class QuickScanner {
       res[i] = nextInt();
     }
     return res;
+  }
+
+  public long nextLong() {
+    int c = nextNonSpaceChar();
+    boolean positive = true;
+    if (c == '-') {
+      positive = false;
+      c = nextChar();
+    }
+    long res = 0;
+    do {
+      if (c < '0' || '9' < c) throw new RuntimeException();
+      res = res * 10 + c - '0';
+      c = nextChar();
+    } while (!isSpaceChar(c));
+    return positive ? res : -res;
   }
 
   public int nextNonSpaceChar() {
