@@ -17,4 +17,15 @@ public class IntArrayUtils {
     }
     return res;
   }
+
+  public static int unique(int[] values) {
+    if (values.length == 0) return 0;
+    int res = 1;
+    for (int i = 1; i < values.length; ++i) {
+      if (values[i - 1] != values[i]) {
+        values[res++] = values[i];
+      }
+    }
+    return res;
+  }
 }
