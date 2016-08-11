@@ -46,10 +46,14 @@ public class QuickScanner {
 
   public int[] nextInt(int n) {
     int[] res = new int[n];
+    nextInt(n, res);
+    return res;
+  }
+
+  public void nextInt(int n, int[] res) {
     for (int i = 0; i < n; ++i) {
       res[i] = nextInt();
     }
-    return res;
   }
 
   public long nextLong() {
@@ -66,6 +70,18 @@ public class QuickScanner {
       c = nextChar();
     } while (!isSpaceChar(c));
     return positive ? res : -res;
+  }
+
+  public long[] nextLong(int n) {
+    long[] res = new long[n];
+    nextLong(n, res);
+    return res;
+  }
+
+  public void nextLong(int n, long[] res) {
+    for (int i = 0; i < n; ++i) {
+      res[i] = nextLong();
+    }
   }
 
   public int nextNonSpaceChar() {
