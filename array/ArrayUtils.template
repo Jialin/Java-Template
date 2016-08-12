@@ -1,0 +1,46 @@
+[
+  {
+    "filename": "IntArrayUtils",
+    "type": "int",
+    "Type": "Int",
+    "Class": "Integer"
+  },
+  {
+    "filename": "LongArrayUtils",
+    "type": "long",
+    "Type": "Long",
+    "Class": "Long"
+  }
+]
+====================================================================================================
+package template.array;
+
+public class %Type%ArrayUtils {
+
+  public static %type% min(%type%[] values) {
+    %type% res = %Class%.MAX_VALUE;
+    for (%type% value : values) {
+      res = Math.min(res, value);
+    }
+    return res;
+  }
+
+  public static %type% max(%type%[] values) {
+    %type% res = %Class%.MIN_VALUE;
+    for (%type% value : values) {
+      res = Math.max(res, value);
+    }
+    return res;
+  }
+
+  public static int unique(%type%[] values) {
+    if (values.length == 0) return 0;
+    int res = 1;
+    for (int i = 1; i < values.length; ++i) {
+      if (values[i - 1] != values[i]) {
+        values[res++] = values[i];
+      }
+    }
+    return res;
+  }
+}
