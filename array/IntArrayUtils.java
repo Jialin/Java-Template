@@ -18,6 +18,14 @@ public class IntArrayUtils {
     return res;
   }
 
+  public static void reverse(int[] values) {
+    for (int i = 0, j = values.length - 1; i < j; ++i, --j) {
+      values[i] ^= values[j];
+      values[j] ^= values[i];
+      values[i] ^= values[j];
+    }
+  }
+
   public static int unique(int[] values) {
     if (values.length == 0) return 0;
     int res = 1;
