@@ -1,128 +1,65 @@
 package template.graph;
 
-import template.collections.iterator.IntIterator;
-
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
- * Directed graph.
+ * A directed graph.
  */
-public class DirectedGraph {
+public class DirectedGraph<EDGE extends DirectedGraphEdge> {
 
   public int vertexCnt;
-  public int[] fromIdx;
-  public int[] toIdx;
+  public List<EDGE> edges;
+  public int[] inDegree, outDegree;
 
-  protected int edgeIdx;
-
-  private int[] nextIncoming;
-  private int[] lastIncoming;
-  private int[] nextOutgoing;
-  private int[] lastOutgoing;
+  private List<EDGE> lastOutgoingEdge;
+  private List<EDGE> lastIncomingEdge;
 
   public DirectedGraph(int vertexCapacity, int edgeCapacity) {
-    this.fromIdx = new int[edgeCapacity];
-    this.toIdx = new int[edgeCapacity];
-    this.nextIncoming = new int[edgeCapacity];
-    this.lastIncoming = new int[vertexCapacity];
-    this.nextOutgoing = new int[edgeCapacity];
-    this.lastOutgoing = new int[vertexCapacity];
+    edges = new ArrayList<>(edgeCapacity);
+    lastOutgoingEdge = new ArrayList<>(vertexCapacity);
+    lastIncomingEdge = new ArrayList<>(vertexCapacity);
+    inDegree = new int[vertexCapacity];
+    outDegree = new int[vertexCapacity];
   }
 
+  /**
+   * Initializes an empty graph with {@code vertexCnt} nodes.
+   */
   public void init(int vertexCnt) {
     this.vertexCnt = vertexCnt;
-    Arrays.fill(lastIncoming, 0, vertexCnt, -1);
-    Arrays.fill(lastOutgoing, 0, vertexCnt, -1);
-    edgeIdx = 0;
+    edges.clear();
+    lastOutgoingEdge.clear();
+    lastIncomingEdge.clear();
+    Arrays.fill(inDegree, 0, vertexCnt, 0);
+    Arrays.fill(outDegree, 0, vertexCnt, 0);
+    for (int i = 0; i < vertexCnt; ++i) {
+      lastOutgoingEdge.add(null);
+      lastIncomingEdge.add(null);
+    }
   }
 
   /**
    * Adds a directed edge from {@code fromIdx} to {@code toIdx}.
    */
-  public void add(int fromIdx, int toIdx) {
-    this.fromIdx[edgeIdx] = fromIdx;
-    this.toIdx[edgeIdx] = toIdx;
-    nextIncoming[edgeIdx] = lastIncoming[toIdx];
-    lastIncoming[toIdx] = edgeIdx;
-    nextOutgoing[edgeIdx] = lastOutgoing[fromIdx];
-    lastOutgoing[fromIdx] = edgeIdx++;
+  public void add(EDGE edge) {
+    edges.add(edge);
+    int fromIdx = edge.fromIdx;
+    int toIdx = edge.toIdx;
+    edge.nextOutgoing = lastOutgoingEdge.get(fromIdx);
+    lastOutgoingEdge.set(fromIdx, edge);
+    edge.nextIncoming = lastIncomingEdge.get(toIdx);
+    lastIncomingEdge.set(toIdx, edge);
+    ++inDegree[toIdx];
+    ++outDegree[fromIdx];
   }
 
-  /**
-   * Returns an {@link IntIterator} outgoing edge indices from {@code vertexIdx}.
-   */
-  public IntIterator outgoingEdgeIdx(int vertexIdx) {
-    return new IntIterator() {
-      int edgeIdx = lastOutgoing[vertexIdx];
-
-      @Override
-      public boolean hasNext() {
-        return edgeIdx >= 0;
-      }
-
-      @Override
-      public int next() {
-        int currentEdgeIdx = edgeIdx;
-        edgeIdx = nextOutgoing[edgeIdx];
-        return currentEdgeIdx;
-      }
-    };
+  public EDGE lastOutgoingEdge(int vertexIdx) {
+    return lastOutgoingEdge.get(vertexIdx);
   }
 
-  /**
-   * Returns an {@link IntIterator} outgoing edge destinations from {@code vertexIdx}.
-   */
-  public IntIterator outgoingVertexIdx(int vertexIdx) {
-    IntIterator iterator = outgoingEdgeIdx(vertexIdx);
-    return new IntIterator() {
-      @Override
-      public boolean hasNext() {
-        return iterator.hasNext();
-      }
-
-      @Override
-      public int next() {
-        return toIdx[iterator.next()];
-      }
-    };
-  }
-
-  /**
-   * Returns an {@link IntIterator} incoming edge indices from {@code vertexIdx}.
-   */
-  public IntIterator incomingEdgeIdx(int vertexIdx) {
-    return new IntIterator() {
-      int edgeIdx = lastIncoming[vertexIdx];
-
-      @Override
-      public boolean hasNext() {
-        return edgeIdx >= 0;
-      }
-
-      @Override
-      public int next() {
-        int currentEdgeIdx = edgeIdx;
-        edgeIdx = nextIncoming[edgeIdx];
-        return currentEdgeIdx;
-      }
-    };
-  }
-
-  /**
-   * Returns an {@link IntIterator} incoming edge destinations from {@code vertexIdx}.
-   */
-  public IntIterator incomingVertexIdx(int vertexIdx) {
-    IntIterator iterator = incomingEdgeIdx(vertexIdx);
-    return new IntIterator() {
-      @Override
-      public boolean hasNext() {
-        return iterator.hasNext();
-      }
-
-      @Override
-      public int next() {
-        return fromIdx[iterator.next()];
-      }
-    };
+  public EDGE lastIncomingEdge(int vertexIdx) {
+    return lastIncomingEdge.get(vertexIdx);
   }
 }

@@ -1,13 +1,11 @@
 package template.graph;
 
-import template.collections.iterator.IntIterator;
-
 import java.util.Arrays;
 
 /**
  * Directed graph with n edges (i.e. each node with exactly one outgoing edge).
  */
-public class OneRegularGraph extends DirectedGraph {
+public class OneRegularGraph extends DirectedGraph<DirectedGraphEdge> {
 
   /**
    * Total number of components.
@@ -64,9 +62,9 @@ public class OneRegularGraph extends DirectedGraph {
   }
 
   @Override
-  public void add(int fromIdx, int toIdx) {
-    super.add(fromIdx, toIdx);
-    this.toIdx[fromIdx] = toIdx;
+  public void add(DirectedGraphEdge edge) {
+    super.add(edge);
+    toIdx[edge.fromIdx] = edge.toIdx;
   }
 
   /**
@@ -100,15 +98,15 @@ public class OneRegularGraph extends DirectedGraph {
     if (compIdx[u] >= 0) return 0;
     compIdx[u] = compCnt;
     int res = 1 + dfs(toIdx[u]);
-    for (IntIterator i = incomingVertexIdx(u); i.hasNext(); ) {
-      res += dfs(i.next());
+    for (DirectedGraphEdge edge = lastIncomingEdge(u); edge != null; edge = edge.nextIncoming) {
+      res += dfs(edge.fromIdx);
     }
     return res;
   }
 
   private void reverseDfs(int dist, int u, int coreNode) {
-    for (IntIterator i = incomingVertexIdx(u); i.hasNext(); ) {
-      int v = i.next();
+    for (DirectedGraphEdge edge = lastIncomingEdge(u); edge != null; edge = edge.nextIncoming) {
+      int v = edge.fromIdx;
       if (distToCore[v] >= 0) continue;
       distToCore[v] = dist;
       closestCoreNode[v] = coreNode;
