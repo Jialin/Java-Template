@@ -29,12 +29,12 @@ public class LongArrayQueue implements LongCollection {
   }
 
   public long peek() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     return values[open];
   }
 
   public long poll() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     long res = values[open];
     open = (open + 1) & (values.length - 1);
     return res;

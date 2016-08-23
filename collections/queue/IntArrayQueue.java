@@ -29,12 +29,12 @@ public class IntArrayQueue implements IntCollection {
   }
 
   public int peek() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     return values[open];
   }
 
   public int poll() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     int res = values[open];
     open = (open + 1) & (values.length - 1);
     return res;

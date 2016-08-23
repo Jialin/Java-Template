@@ -42,12 +42,12 @@ public class %Type%ArrayQueue implements %Type%Collection {
   }
 
   public %type% peek() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     return values[open];
   }
 
   public %type% poll() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     %type% res = values[open];
     open = (open + 1) & (values.length - 1);
     return res;
