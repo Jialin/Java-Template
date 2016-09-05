@@ -36,4 +36,32 @@ public class IntArrayUtils {
     }
     return res;
   }
+
+  public static int lowerBound(int[] values, int value) {
+    int res = values.length;
+    for (int lower = 0, upper = values.length - 1; lower <= upper; ) {
+      int medium = (lower + upper) >> 1;
+      if (value <= values[medium]) {
+        res = medium;
+        upper = medium - 1;
+      } else {
+        lower = medium + 1;
+      }
+    }
+    return res;
+  }
+
+  public static int upperBound(int[] values, int value) {
+    int res = values.length;
+    for (int lower = 0, upper = values.length - 1; lower <= upper; ) {
+      int medium = (lower + upper) >> 1;
+      if (value < values[medium]) {
+        res = medium;
+        upper = medium - 1;
+      } else {
+        lower = medium + 1;
+      }
+    }
+    return res;
+  }
 }
