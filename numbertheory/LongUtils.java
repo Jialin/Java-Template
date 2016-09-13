@@ -1,5 +1,7 @@
 package template.numbertheory;
 
+import template.array.LongArrayUtils;
+
 public class LongUtils {
 
   /**
@@ -38,5 +40,21 @@ public class LongUtils {
       divisors[res++] = n / divisors[i];
     }
     return res;
+  }
+
+  public static long gcd(long a, long b) {
+    return b != 0 ? gcd(b, a % b) : a;
+  }
+
+  public static long extGcd(long a, long b, long[] x) {
+    if (b == 0) {
+      x[0] = 1;
+      x[1] = 0;
+      return a;
+    }
+    long gcd = extGcd(b, a % b, x);
+    LongArrayUtils.swap(x, 0, 1);
+    x[1] -= a / b * x[0];
+    return gcd;
   }
 }

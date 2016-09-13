@@ -1,5 +1,7 @@
 package template.numbertheory;
 
+import template.array.IntArrayUtils;
+
 public class IntUtils {
 
   private static final int MOD = 1000000007;
@@ -24,5 +26,21 @@ public class IntUtils {
                 ? a * b
                 : (int) ((long) a * b % mod))
         : 0;
+  }
+
+  public static int gcd(int a, int b) {
+    return b != 0 ? gcd(b, a % b) : a;
+  }
+
+  public static int extGcd(int a, int b, int[] x) {
+    if (b == 0) {
+      x[0] = 1;
+      x[1] = 0;
+      return a;
+    }
+    int gcd = extGcd(b, a % b, x);
+    IntArrayUtils.swap(x, 0, 1);
+    x[1] -= a / b * x[0];
+    return gcd;
   }
 }
