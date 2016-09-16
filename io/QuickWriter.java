@@ -76,4 +76,8 @@ public class QuickWriter {
   public void close() {
     writer.close();
   }
+
+  public void flush() {
+    writer.flush();
+  }
 }
