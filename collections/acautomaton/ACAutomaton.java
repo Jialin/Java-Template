@@ -1,6 +1,5 @@
 package template.collections.acautomaton;
 
-import template.collections.queue.IntArrayQueue;
 import template.collections.trie.Trie;
 
 import java.util.Arrays;
@@ -12,13 +11,11 @@ public class ACAutomaton extends Trie {
 
   private int[] suffixLink;
   private int[][] next;
-  private IntArrayQueue q;
 
   public ACAutomaton(int letterCapacity, int nodeCapacity) {
     super(letterCapacity, nodeCapacity);
     this.suffixLink = new int[nodeCapacity];
     this.next = new int[letterCapacity][nodeCapacity];
-    this.q = new IntArrayQueue(nodeCapacity);
   }
 
   @Override
@@ -59,7 +56,9 @@ public class ACAutomaton extends Trie {
     if (next[letter][u] < 0) {
       next[letter][u] = child[letter][u] >= 0
           ? child[letter][u]
-          : u == root ? root : calcNext(calcSuffixLink(u), letter);
+          : u == root
+              ? root
+              : calcNext(calcSuffixLink(u), letter);
     }
     return next[letter][u];
   }

@@ -12,13 +12,10 @@ public class Trie {
   public int letterCnt;
   public int nodePnt;
 
-  private int[] bfsOrder;
-
   public Trie(int letterCapacity, int nodeCapacity) {
     this.parent = new int[nodeCapacity];
     this.parentLetter = new int[nodeCapacity];
     this.child = new int[letterCapacity][nodeCapacity];
-    this.bfsOrder = new int[nodeCapacity];
   }
 
   public void init(int letterCnt) {
@@ -26,7 +23,6 @@ public class Trie {
     this.letterCnt = letterCnt;
     this.nodePnt = 1;
     initNode(0, -1, -1);
-    bfsOrder[0] = -1;
   }
 
   public int add(int[] letters) {
@@ -44,19 +40,6 @@ public class Trie {
       resIdx = child[letter][resIdx];
     }
     return resIdx;
-  }
-
-  public int[] calcBfsOrder() {
-    if (bfsOrder[0] < 0) {
-      int open = 0, closed = 0;
-      for (bfsOrder[closed++] = root; open < closed; ) {
-        int u = bfsOrder[open++];
-        for (int letter = 0; letter < letterCnt; ++letter) if (child[letter][u] >= 0) {
-          bfsOrder[closed++] = child[letter][u];
-        }
-      }
-    }
-    return bfsOrder;
   }
 
   private void initNode(int idx, int parent, int letter) {
