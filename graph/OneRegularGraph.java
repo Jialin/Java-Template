@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Directed graph with n edges (i.e. each node with exactly one outgoing edge).
  */
-public class OneRegularGraph extends DirectedGraph<DirectedGraphEdge> {
+public class OneRegularGraph extends DirectedGraph {
 
   /**
    * Total number of components.
@@ -37,7 +37,7 @@ public class OneRegularGraph extends DirectedGraph<DirectedGraphEdge> {
    */
   public int[] closestCoreNode;
 
-  private int[] toIdx;
+  private int[] outIdx;
   private int[] cnt;
 
   public OneRegularGraph(int vertexCapacity) {
@@ -48,23 +48,23 @@ public class OneRegularGraph extends DirectedGraph<DirectedGraphEdge> {
     distToCore = new int[vertexCapacity];
     closestCoreNode = new int[vertexCapacity];
 
-    toIdx = new int[vertexCapacity];
+    outIdx = new int[vertexCapacity];
     cnt = new int[vertexCapacity];
   }
 
   @Override
   public void init(int vertexCnt) {
     super.init(vertexCnt);
-    Arrays.fill(toIdx, 0, vertexCnt, -1);
+    Arrays.fill(outIdx, 0, vertexCnt, -1);
     Arrays.fill(compIdx, 0, vertexCnt, -1);
     Arrays.fill(cnt, 0, vertexCnt, 0);
     Arrays.fill(distToCore, 0, vertexCnt, -1);
   }
 
   @Override
-  public void add(DirectedGraphEdge edge) {
-    super.add(edge);
-    toIdx[edge.fromIdx] = edge.toIdx;
+  public void add(int fromIdx, int toIdx) {
+    super.add(fromIdx, toIdx);
+    this.outIdx[fromIdx] = toIdx;
   }
 
   /**
@@ -75,7 +75,7 @@ public class OneRegularGraph extends DirectedGraph<DirectedGraphEdge> {
     for (int i = 0; i < vertexCnt; ++i) {
       if (compIdx[i] >= 0) continue;
       compSize[compCnt] = dfs(i);
-      for (int rem = compSize[compCnt] << 1, u = i; rem > 0; rem--, u = toIdx[u]) {
+      for (int rem = compSize[compCnt] << 1, u = i; rem > 0; rem--, u = outIdx[u]) {
         ++cnt[u];
       }
       ++compCnt;
@@ -97,16 +97,16 @@ public class OneRegularGraph extends DirectedGraph<DirectedGraphEdge> {
   private int dfs(int u) {
     if (compIdx[u] >= 0) return 0;
     compIdx[u] = compCnt;
-    int res = 1 + dfs(toIdx[u]);
-    for (DirectedGraphEdge edge = lastIncomingEdge(u); edge != null; edge = edge.nextIncoming) {
-      res += dfs(edge.fromIdx);
+    int res = 1 + dfs(outIdx[u]);
+    for (int edgeIdx = lastIn[u]; edgeIdx >= 0; edgeIdx = nextIn[edgeIdx]) {
+      res += dfs(fromIdx[edgeIdx]);
     }
     return res;
   }
 
   private void reverseDfs(int dist, int u, int coreNode) {
-    for (DirectedGraphEdge edge = lastIncomingEdge(u); edge != null; edge = edge.nextIncoming) {
-      int v = edge.fromIdx;
+    for (int edgeIdx = lastIn[u]; edgeIdx >= 0; edgeIdx = nextIn[edgeIdx]) {
+      int v = fromIdx[edgeIdx];
       if (distToCore[v] >= 0) continue;
       distToCore[v] = dist;
       closestCoreNode[v] = coreNode;

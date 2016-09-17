@@ -1,65 +1,47 @@
 package template.graph;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * A directed graph.
  */
-public class DirectedGraph<EDGE extends DirectedGraphEdge> {
+public class DirectedGraph {
 
-  public int vertexCnt;
-  public List<EDGE> edges;
+  public int vertexCnt, edgeCnt;
+  public int[] fromIdx, toIdx;
+  public int[] nextIn, nextOut;
+  public int[] lastIn, lastOut;
   public int[] inDegree, outDegree;
 
-  private List<EDGE> lastOutgoingEdge;
-  private List<EDGE> lastIncomingEdge;
-
   public DirectedGraph(int vertexCapacity, int edgeCapacity) {
-    edges = new ArrayList<>(edgeCapacity);
-    lastOutgoingEdge = new ArrayList<>(vertexCapacity);
-    lastIncomingEdge = new ArrayList<>(vertexCapacity);
-    inDegree = new int[vertexCapacity];
-    outDegree = new int[vertexCapacity];
+    this.fromIdx = new int[edgeCapacity];
+    this.toIdx = new int[edgeCapacity];
+    this.lastIn = new int[vertexCapacity];
+    this.lastOut = new int[vertexCapacity];
+    this.nextIn = new int[edgeCapacity];
+    this.nextOut = new int[edgeCapacity];
+    this.inDegree = new int[vertexCapacity];
+    this.outDegree = new int[vertexCapacity];
   }
 
-  /**
-   * Initializes an empty graph with {@code vertexCnt} nodes.
-   */
   public void init(int vertexCnt) {
     this.vertexCnt = vertexCnt;
-    edges.clear();
-    lastOutgoingEdge.clear();
-    lastIncomingEdge.clear();
+    this.edgeCnt = 0;
     Arrays.fill(inDegree, 0, vertexCnt, 0);
     Arrays.fill(outDegree, 0, vertexCnt, 0);
-    for (int i = 0; i < vertexCnt; ++i) {
-      lastOutgoingEdge.add(null);
-      lastIncomingEdge.add(null);
-    }
+    Arrays.fill(lastIn, 0, vertexCnt, -1);
+    Arrays.fill(lastOut, 0, vertexCnt, -1);
   }
 
-  /**
-   * Adds a directed edge from {@code fromIdx} to {@code toIdx}.
-   */
-  public void add(EDGE edge) {
-    edges.add(edge);
-    int fromIdx = edge.fromIdx;
-    int toIdx = edge.toIdx;
-    edge.nextOutgoing = lastOutgoingEdge.get(fromIdx);
-    lastOutgoingEdge.set(fromIdx, edge);
-    edge.nextIncoming = lastIncomingEdge.get(toIdx);
-    lastIncomingEdge.set(toIdx, edge);
-    ++inDegree[toIdx];
+  public void add(int fromIdx, int toIdx) {
+    this.fromIdx[edgeCnt] = fromIdx;
+    this.toIdx[edgeCnt] = toIdx;
     ++outDegree[fromIdx];
-  }
-
-  public EDGE lastOutgoingEdge(int vertexIdx) {
-    return lastOutgoingEdge.get(vertexIdx);
-  }
-
-  public EDGE lastIncomingEdge(int vertexIdx) {
-    return lastIncomingEdge.get(vertexIdx);
+    ++inDegree[toIdx];
+    nextOut[edgeCnt] = lastOut[fromIdx];
+    lastOut[fromIdx] = edgeCnt;
+    nextIn[edgeCnt] = lastIn[toIdx];
+    lastIn[toIdx] = edgeCnt;
+    ++edgeCnt;
   }
 }

@@ -8,36 +8,46 @@ import java.util.Arrays;
 /**
  * A max flow system.
  */
-public class IntMaxFlow extends BidirectionalGraph<IntMaxFlowEdge> {
+public class IntMaxFlow extends BidirectionalGraph {
 
   protected static final int INF = Integer.MAX_VALUE;
+
+  public int[] flow, capacity;
 
   private int source, sink;
   private IntArrayQueue q;
   private int[] level;
-  private IntMaxFlowEdge[] edgePnt;
+  private int[] edgePnt;
 
   public IntMaxFlow(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
+    this.flow = new int[edgeCapacity << 1];
+    this.capacity = new int[edgeCapacity << 1];
     this.q = new IntArrayQueue(vertexCapacity);
     this.level = new int[vertexCapacity];
-    this.edgePnt = new IntMaxFlowEdge[vertexCapacity];
+    this.edgePnt = new int[vertexCapacity];
+  }
+
+  @Override
+  public void add(int fromIdx, int toIdx) {
+    throw new UnsupportedOperationException();
   }
 
   /**
    * Adds an edge from {@code fromIdx} to {@code toIdx} with {@code capacity}.
    */
-  public IntMaxFlowEdge add(int fromIdx, int toIdx, int capacity) {
-    IntMaxFlowEdge forward = new IntMaxFlowEdge(fromIdx, toIdx, capacity);
-    IntMaxFlowEdge backward = new IntMaxFlowEdge(toIdx, fromIdx, 0);
-    super.add(forward, backward);
-    return forward;
+  public int add(int fromIdx, int toIdx, int capacity) {
+    flow[edgeCnt] = flow[edgeCnt + 1] = 0;
+    this.capacity[edgeCnt] = capacity;
+    this.capacity[edgeCnt + 1] = 0;
+    super.add(fromIdx, toIdx);
+    return edgeCnt - 2;
   }
 
   /**
    * Adds an edge from {@code fromIdx} to {@code toIdx} with infinite capacity.
    */
-  public IntMaxFlowEdge addInf(int fromIdx, int toIdx) {
+  public int addInf(int fromIdx, int toIdx) {
     return add(fromIdx, toIdx, INF);
   }
 
@@ -49,7 +59,7 @@ public class IntMaxFlow extends BidirectionalGraph<IntMaxFlowEdge> {
     this.sink = sink;
     int res = 0;
     while (bfs()) {
-      for (int i = 0; i < vertexCnt; ++i) edgePnt[i] = lastOutgoingEdge(i);
+      for (int i = 0; i < vertexCnt; ++i) edgePnt[i] = lastOut[i];
       while (true) {
         int flow = dfs(source, INF);
         if (flow == INF) return INF;
@@ -67,9 +77,9 @@ public class IntMaxFlow extends BidirectionalGraph<IntMaxFlowEdge> {
     level[source] = 0;
     while (!q.isEmpty() && level[sink] < 0) {
       int u = q.poll();
-      for (IntMaxFlowEdge edge = lastOutgoingEdge(u); edge != null; edge = (IntMaxFlowEdge) edge.nextOutgoing) {
-        int v = edge.toIdx;
-        if (level[v] < 0 && edge.flow < edge.capacity) {
+      for (int edgeIdx = lastOut[u]; edgeIdx >= 0; edgeIdx = nextOut[edgeIdx]) {
+        int v = toIdx[edgeIdx];
+        if (level[v] < 0 && flow[edgeIdx] < capacity[edgeIdx]) {
           q.add(v);
           level[v] = level[u] + 1;
         }
@@ -81,14 +91,14 @@ public class IntMaxFlow extends BidirectionalGraph<IntMaxFlowEdge> {
   private int dfs(int u, int flow) {
     if (flow == 0) return 0;
     if (u == sink) return flow;
-    for ( ; edgePnt[u] != null; edgePnt[u] = (IntMaxFlowEdge) edgePnt[u].nextOutgoing) {
-      IntMaxFlowEdge edge = edgePnt[u];
-      int v = edge.toIdx;
+    for ( ; edgePnt[u] >= 0; edgePnt[u] = nextOut[edgePnt[u]]) {
+      int edgeIdx = edgePnt[u];
+      int v = toIdx[edgeIdx];
       if (level[v] != level[u] + 1) continue;
-      int res = dfs(v, Math.min(flow, edge.capacity - edge.flow));
+      int res = dfs(v, Math.min(flow, capacity[edgeIdx] - this.flow[edgeIdx]));
       if (res > 0) {
-        edge.flow += res;
-        ((IntMaxFlowEdge) edge.reverse).flow -= res;
+        this.flow[edgeIdx] += res;
+        this.flow[edgeIdx ^ 1] -= res;
         return res;
       }
     }

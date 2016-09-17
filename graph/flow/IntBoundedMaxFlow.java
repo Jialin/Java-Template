@@ -7,12 +7,16 @@ import java.util.Arrays;
  */
 public class IntBoundedMaxFlow extends IntMaxFlow {
 
+  public int[] lowerBound, upperBound;
+
   private int fakeSource, fakeSink;
   private int[] inFlow, outFlow;
   private boolean noSolution;
 
   public IntBoundedMaxFlow(int vertexCapacity, int edgeCapacity) {
-    super(vertexCapacity + 2, edgeCapacity + vertexCapacity);
+    super(vertexCapacity + 2, edgeCapacity + vertexCapacity + 1);
+    this.lowerBound = new int[(edgeCapacity + vertexCapacity + 1) << 1];
+    this.upperBound = new int[(edgeCapacity + vertexCapacity + 1) << 1];
     this.inFlow = new int[vertexCapacity];
     this.outFlow = new int[vertexCapacity];
   }
@@ -28,28 +32,27 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
   }
 
   @Override
-  public IntBoundedMaxFlowEdge add(int fromIdx, int toIdx, int upperBound) {
+  public int add(int fromIdx, int toIdx, int upperBound) {
     return add(fromIdx, toIdx, 0, upperBound);
   }
 
   @Override
-  public IntBoundedMaxFlowEdge addInf(int fromIdx, int toIdx) {
+  public int addInf(int fromIdx, int toIdx) {
     return add(fromIdx, toIdx, 0, INF);
   }
 
   /**
    * Adds an edge from {@code fromIdx} to {@code toIdx} with {@code lowerBound} and {@code upperBound}.
    */
-  public IntBoundedMaxFlowEdge add(int fromIdx, int toIdx, int lowerBound, int upperBound) {
+  public int add(int fromIdx, int toIdx, int lowerBound, int upperBound) {
     noSolution |= lowerBound > upperBound;
-    IntBoundedMaxFlowEdge forward = new IntBoundedMaxFlowEdge(fromIdx, toIdx, lowerBound, upperBound);
-    IntMaxFlowEdge backward = new IntMaxFlowEdge(toIdx, fromIdx, 0);
-    super.add(forward, backward);
+    this.lowerBound[edgeCnt] = lowerBound;
+    this.upperBound[edgeCnt] = upperBound;
     if (lowerBound > 0) {
       outFlow[fromIdx] += lowerBound;
       inFlow[toIdx] += lowerBound;
     }
-    return forward;
+    return super.add(fromIdx, toIdx, upperBound - lowerBound);
   }
 
   /**
@@ -60,7 +63,7 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
   @Override
   public int calc(int source, int sink) {
     if (noSolution) return -1;
-    IntMaxFlowEdge infEdge = super.addInf(sink, source);
+    int infEdgeIdx = super.addInf(sink, source);
     int sum = 0;
     for (int i = 0; i + 2 < vertexCnt; ++i) if (inFlow[i] != outFlow[i]) {
       if (inFlow[i] > outFlow[i]) {
@@ -72,25 +75,24 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
     }
     int res = super.calc(fakeSource, fakeSink);
     if (res != sum) return -1;
-    block(infEdge);
-    for (IntMaxFlowEdge edge = lastOutgoingEdge(fakeSource); edge != null; edge = (IntMaxFlowEdge) edge.nextOutgoing) {
-      block(edge);
+    block(infEdgeIdx);
+    for (int edgeIdx = lastOut[fakeSource]; edgeIdx >= 0; edgeIdx = nextOut[edgeIdx]) {
+      block(edgeIdx);
     }
-    for (IntMaxFlowEdge edge = lastIncomingEdge(fakeSink); edge != null; edge = (IntMaxFlowEdge) edge.nextIncoming) {
-      block(edge);
+    for (int edgeIdx = lastIn[fakeSink]; edgeIdx >= 0; edgeIdx = nextIn[edgeIdx]) {
+      block(edgeIdx);
     }
     res = super.calc(source, sink);
     if (res == INF) return INF;
     res = outFlow[source];
-    for (IntMaxFlowEdge edge = lastOutgoingEdge(source); edge != null; edge = (IntMaxFlowEdge) edge.nextOutgoing) {
-      res += edge.flow;
+    for (int edgeIdx = lastOut[source]; edgeIdx >= 0; edgeIdx = nextOut[edgeIdx]) {
+      res += flow[edgeIdx];
     }
     return res;
   }
 
-  private void block(IntMaxFlowEdge edge) {
-    edge.flow = edge.capacity = 0;
-    IntMaxFlowEdge reverseEdge = (IntMaxFlowEdge) edge.reverse;
-    reverseEdge.flow = reverseEdge.capacity = 0;
+  private void block(int edgeIdx) {
+    flow[edgeIdx] = capacity[edgeIdx] = 0;
+    flow[edgeIdx ^ 1] = capacity[edgeIdx ^ 1] = 0;
   }
 }
