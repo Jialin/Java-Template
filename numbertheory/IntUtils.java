@@ -15,6 +15,15 @@ public class IntUtils {
     return a >= mod ? a - mod : a;
   }
 
+  public static int sub(int a, int b) {
+    return sub(a, b, MOD);
+  }
+
+  public static int sub(int a, int b, int mod) {
+    a -= b;
+    return a >= 0 ? a + mod : a;
+  }
+
   public static int mul(int a, int b) {
     return mul(a, b, MOD);
   }
@@ -26,6 +35,16 @@ public class IntUtils {
                 ? a * b
                 : (int) ((long) a * b % mod))
         : 0;
+  }
+
+  public static int pow(int a, int b) {
+    return pow(a, b, MOD);
+  }
+
+  public static int pow(int a, int b, int mod) {
+    int res = 1;
+    for ( ; b > 0; b >>= 1, a = mul(a, a, mod)) if ((b & 1) > 0) res = mul(res, a);
+    return res;
   }
 
   public static int gcd(int a, int b) {
