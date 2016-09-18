@@ -28,6 +28,18 @@ public class QuickScanner {
     return res.toString();
   }
 
+  public String[] next(int n) {
+    String[] res = new String[n];
+    next(n, res);
+    return res;
+  }
+
+  public void next(int n, String[] res) {
+    for (int i = 0; i < n; ++i) {
+      res[i] = next();
+    }
+  }
+
   public int nextInt() {
     int c = nextNonSpaceChar();
     boolean positive = true;
