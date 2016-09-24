@@ -8,7 +8,7 @@ public class LongArrayUtils {
   public static long min(long[] values) {
     long res = Long.MAX_VALUE;
     for (long value : values) {
-      res = Math.min(res, value);
+      if (res > value) res = value;
     }
     return res;
   }
@@ -16,13 +16,17 @@ public class LongArrayUtils {
   public static long max(long[] values) {
     long res = Long.MIN_VALUE;
     for (long value : values) {
-      res = Math.max(res, value);
+      if (res < value) res = value;
     }
     return res;
   }
 
   public static void reverse(long[] values) {
-    for (int i = 0, j = values.length - 1; i < j; ++i, --j) {
+    reverse(values, 0, values.length);
+  }
+
+  public static void reverse(long[] values, int fromIdx, int toIdx) {
+    for (int i = fromIdx, j = toIdx - 1; i < j; ++i, --j) {
       values[i] ^= values[j];
       values[j] ^= values[i];
       values[i] ^= values[j];

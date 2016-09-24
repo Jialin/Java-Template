@@ -1,14 +1,17 @@
 [
   {
+    "filename": "CharArrayUtils",
+    "type": "char",
+    "Class": "Character"
+  },
+  {
     "filename": "IntArrayUtils",
     "type": "int",
-    "Type": "Int",
     "Class": "Integer"
   },
   {
     "filename": "LongArrayUtils",
     "type": "long",
-    "Type": "Long",
     "Class": "Long"
   }
 ]
@@ -17,13 +20,13 @@ package template.array;
 
 import java.util.Random;
 
-public class %Type%ArrayUtils {
+public class %filename% {
   private static final Random random = new Random();
 
   public static %type% min(%type%[] values) {
     %type% res = %Class%.MAX_VALUE;
     for (%type% value : values) {
-      res = Math.min(res, value);
+      if (res > value) res = value;
     }
     return res;
   }
@@ -31,13 +34,17 @@ public class %Type%ArrayUtils {
   public static %type% max(%type%[] values) {
     %type% res = %Class%.MIN_VALUE;
     for (%type% value : values) {
-      res = Math.max(res, value);
+      if (res < value) res = value;
     }
     return res;
   }
 
   public static void reverse(%type%[] values) {
-    for (int i = 0, j = values.length - 1; i < j; ++i, --j) {
+    reverse(values, 0, values.length);
+  }
+
+  public static void reverse(%type%[] values, int fromIdx, int toIdx) {
+    for (int i = fromIdx, j = toIdx - 1; i < j; ++i, --j) {
       values[i] ^= values[j];
       values[j] ^= values[i];
       values[i] ^= values[j];
