@@ -1,13 +1,11 @@
 package template.collections.acautomaton;
 
-import template.collections.trie.Trie;
-
-import java.util.Arrays;
+import template.collections.trie.AbstractTrie;
 
 /**
  * Aho-Corasick automaton.
  */
-public class ACAutomaton extends Trie {
+public class ACAutomaton extends AbstractTrie {
 
   private int[] suffixLink;
   private int[][] next;
@@ -19,28 +17,11 @@ public class ACAutomaton extends Trie {
   }
 
   @Override
-  public void init(int letterCnt) {
-    super.init(letterCnt);
-    suffixLink[root] = -1;
+  public void initNode(int idx, int parent, int parentLetter) {
+    suffixLink[idx] = -1;
     for (int letter = 0; letter < letterCnt; ++letter) {
-      next[letter][root] = -1;
+      next[letter][idx] = -1;
     }
-  }
-
-  @Override
-  public int add(int[] letters) {
-    return add(letters, 0, letters.length);
-  }
-
-  @Override
-  public int add(int[] letters, int fromIdx, int toIdx) {
-    int prevNodePnt = nodePnt;
-    int pnt = super.add(letters, fromIdx, toIdx);
-    Arrays.fill(suffixLink, prevNodePnt, nodePnt, -1);
-    for (int letter = 0; letter < letterCnt; ++letter) {
-      Arrays.fill(next[letter], prevNodePnt, nodePnt, -1);
-    }
-    return pnt;
   }
 
   public int calcSuffixLink(int u) {

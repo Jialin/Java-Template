@@ -1,9 +1,9 @@
 package template.collections.trie;
 
 /**
- * Trie.
+ * Abstract trie.
  */
-public class Trie {
+public abstract class AbstractTrie {
 
   public int[] parent;
   public int[] parentLetter;
@@ -12,7 +12,9 @@ public class Trie {
   public int letterCnt;
   public int nodePnt;
 
-  public Trie(int letterCapacity, int nodeCapacity) {
+  public abstract void initNode(int idx, int parent, int parentLetter);
+
+  public AbstractTrie(int letterCapacity, int nodeCapacity) {
     this.parent = new int[nodeCapacity];
     this.parentLetter = new int[nodeCapacity];
     this.child = new int[letterCapacity][nodeCapacity];
@@ -22,7 +24,7 @@ public class Trie {
     this.root = 0;
     this.letterCnt = letterCnt;
     this.nodePnt = 1;
-    initNode(0, -1, -1);
+    initNodeInternal(0, -1, -1);
   }
 
   public int add(int[] letters) {
@@ -35,18 +37,32 @@ public class Trie {
       int letter = letters[i];
       if (child[letter][resIdx] < 0) {
         child[letter][resIdx] = nodePnt;
-        initNode(nodePnt++, resIdx, letter);
+        initNodeInternal(nodePnt++, resIdx, letter);
       }
       resIdx = child[letter][resIdx];
     }
     return resIdx;
   }
 
-  private void initNode(int idx, int parent, int letter) {
+  public int access(int[] letters) {
+    return access(letters, 0, letters.length);
+  }
+
+  public int access(int[] letters, int fromIdx, int toIdx) {
+    int resIdx = root;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      resIdx = child[letters[i]][resIdx];
+      if (resIdx < 0) return resIdx;
+    }
+    return resIdx;
+  }
+
+  private void initNodeInternal(int idx, int parent, int letter) {
     this.parent[idx] = parent;
     this.parentLetter[idx] = letter;
     for (int i = 0; i < letterCnt; ++i) {
       child[i][idx] = -1;
     }
+    initNode(idx, parent, letter);
   }
 }
