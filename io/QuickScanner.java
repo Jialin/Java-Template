@@ -8,13 +8,13 @@ public class QuickScanner {
 
   private InputStream stream;
   private byte[] buffer;
-  private int currentPostion;
+  private int currentPosition;
   private int numberOfChars;
 
   public QuickScanner(InputStream stream) {
     this.stream = stream;
     this.buffer = new byte[BUFFER_SIZE];
-    this.currentPostion = 0;
+    this.currentPosition = 0;
     this.numberOfChars = 0;
   }
 
@@ -116,8 +116,8 @@ public class QuickScanner {
     if (numberOfChars == -1) {
       throw new RuntimeException();
     }
-    if (currentPostion >= numberOfChars) {
-      currentPostion = 0;
+    if (currentPosition >= numberOfChars) {
+      currentPosition = 0;
       try {
         numberOfChars = stream.read(buffer);
       } catch (Exception e) {
@@ -127,7 +127,7 @@ public class QuickScanner {
         return -1;
       }
     }
-    return buffer[currentPostion++];
+    return buffer[currentPosition++];
   }
 
   public boolean isSpaceChar(int c) {
