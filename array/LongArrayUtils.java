@@ -21,6 +21,13 @@ public class LongArrayUtils {
     return res;
   }
 
+  public static int find(long[] values, long value) {
+    for (int i = 0; i < values.length; ++i) {
+      if (values[i] == value) return i;
+    }
+    return -1;
+  }
+
   public static void reverse(long[] values) {
     reverse(values, 0, values.length);
   }

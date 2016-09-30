@@ -39,6 +39,13 @@ public class %filename% {
     return res;
   }
 
+  public static int find(%type%[] values, %type% value) {
+    for (int i = 0; i < values.length; ++i) {
+      if (values[i] == value) return i;
+    }
+    return -1;
+  }
+
   public static void reverse(%type%[] values) {
     reverse(values, 0, values.length);
   }

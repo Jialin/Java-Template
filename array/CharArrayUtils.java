@@ -21,6 +21,13 @@ public class CharArrayUtils {
     return res;
   }
 
+  public static int find(char[] values, char value) {
+    for (int i = 0; i < values.length; ++i) {
+      if (values[i] == value) return i;
+    }
+    return -1;
+  }
+
   public static void reverse(char[] values) {
     reverse(values, 0, values.length);
   }

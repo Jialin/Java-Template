@@ -21,6 +21,13 @@ public class IntArrayUtils {
     return res;
   }
 
+  public static int find(int[] values, int value) {
+    for (int i = 0; i < values.length; ++i) {
+      if (values[i] == value) return i;
+    }
+    return -1;
+  }
+
   public static void reverse(int[] values) {
     reverse(values, 0, values.length);
   }
