@@ -29,11 +29,16 @@ public class QuickScanner {
   }
 
   public int next(char[] s) {
+    return next(s, 0);
+  }
+
+  public int next(char[] s, int startIdx) {
     int b = nextNonSpaceChar();
     int res = 0;
     do {
-      s[res++] = (char) b;
+      s[startIdx++] = (char) b;
       b = nextChar();
+      ++res;
     } while (!isSpaceChar(b));
     return res;
   }
