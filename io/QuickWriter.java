@@ -69,6 +69,25 @@ public class QuickWriter {
     writer.print('\n');
   }
 
+  public void print(char[] s) {
+    print(s, 0);
+  }
+
+  public void print(char[] s, int startIdx) {
+    for (int i = startIdx; i < s.length && s[i] > 0; ++i) {
+      writer.print(s[i]);
+    }
+  }
+
+  public void println(char[] s) {
+    println(s, 0);
+  }
+
+  public void println(char[] s, int startIdx) {
+    print(s, startIdx);
+    writer.print('\n');
+  }
+
   public void printf(String format, Object... objects) {
     writer.printf(format, objects);
   }
