@@ -1,4 +1,4 @@
-package template.numbertheory;
+package template.numbertheory.number;
 
 import template.array.IntArrayUtils;
 
