@@ -9,6 +9,11 @@ public abstract class AbstractIntervalTree {
   private int left, right;
 
   /**
+   * Initializes the underlying storage.
+   */
+  public abstract void initStorage(int n4);
+
+  /**
    * Initializes leaf node {@code nodeIdx} with range {@code [idx, idx+1)}.
    */
   public abstract void initLeaf(int nodeIdx, int idx);
@@ -43,6 +48,7 @@ public abstract class AbstractIntervalTree {
    */
   public void init(int n) {
     this.n = n;
+    initStorage(n << 2);
     init(0, 0, n);
   }
 
@@ -58,7 +64,7 @@ public abstract class AbstractIntervalTree {
   /**
    * Calculates range {@code [lower, upper)}.
    */
-  public void calc(int lower, int upper) {
+  public void calcRange(int lower, int upper) {
     left = lower;
     right = upper;
     calc(0, 0, n);
