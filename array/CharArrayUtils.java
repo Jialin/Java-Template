@@ -41,11 +41,15 @@ public class CharArrayUtils {
   }
 
   public static int unique(char[] values) {
-    if (values.length == 0) return 0;
+    return unique(values, 0, values.length);
+  }
+
+  public static int unique(char[] values, int fromIdx, int toIdx) {
+    if (fromIdx == toIdx) return 0;
     int res = 1;
-    for (int i = 1; i < values.length; ++i) {
+    for (int i = fromIdx + 1; i < toIdx; ++i) {
       if (values[i - 1] != values[i]) {
-        values[res++] = values[i];
+        values[fromIdx + res++] = values[i];
       }
     }
     return res;
