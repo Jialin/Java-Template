@@ -55,6 +55,35 @@ public class CharArrayUtils {
     return res;
   }
 
+  public static int unique(char[] values, int[] cnt) {
+    return unique(values, 0, values.length, cnt, 0);
+  }
+
+  public static int unique(char[] values, int fromIdx, int toIdx, int[] cnt, int startIdx) {
+    if (fromIdx == toIdx) return 0;
+    int res = 1;
+    cnt[startIdx] = 1;
+    for (int i = fromIdx + 1; i < toIdx; ++i) {
+      if (values[i - 1] != values[i]) {
+        values[fromIdx + res++] = values[i];
+        cnt[++startIdx] = 1;
+      } else {
+        ++cnt[startIdx];
+      }
+    }
+    return res;
+  }
+
+  public static void update(char[] values, char delta) {
+    update(values, 0, values.length, delta);
+  }
+
+  public static void update(char[] values, int fromIdx, int toIdx, char delta) {
+    for (int i = fromIdx; i < toIdx; ++i) {
+      values[i] += delta;
+    }
+  }
+
   public static int lowerBound(char[] values, char value) {
     int res = values.length;
     for (int lower = 0, upper = values.length - 1; lower <= upper; ) {

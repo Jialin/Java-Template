@@ -73,6 +73,35 @@ public class %filename% {
     return res;
   }
 
+  public static int unique(%type%[] values, int[] cnt) {
+    return unique(values, 0, values.length, cnt, 0);
+  }
+
+  public static int unique(%type%[] values, int fromIdx, int toIdx, int[] cnt, int startIdx) {
+    if (fromIdx == toIdx) return 0;
+    int res = 1;
+    cnt[startIdx] = 1;
+    for (int i = fromIdx + 1; i < toIdx; ++i) {
+      if (values[i - 1] != values[i]) {
+        values[fromIdx + res++] = values[i];
+        cnt[++startIdx] = 1;
+      } else {
+        ++cnt[startIdx];
+      }
+    }
+    return res;
+  }
+
+  public static void update(%type%[] values, %type% delta) {
+    update(values, 0, values.length, delta);
+  }
+
+  public static void update(%type%[] values, int fromIdx, int toIdx, %type% delta) {
+    for (int i = fromIdx; i < toIdx; ++i) {
+      values[i] += delta;
+    }
+  }
+
   public static int lowerBound(%type%[] values, %type% value) {
     int res = values.length;
     for (int lower = 0, upper = values.length - 1; lower <= upper; ) {
