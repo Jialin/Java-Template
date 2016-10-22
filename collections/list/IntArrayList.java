@@ -9,6 +9,7 @@ public class IntArrayList implements IntCollection {
 
   public IntArrayList(int capacity) {
     values = new int[Integer.highestOneBit(capacity) << 1];
+    clear();
   }
 
   @Override

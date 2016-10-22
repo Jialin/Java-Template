@@ -9,6 +9,7 @@ public class LongArrayList implements LongCollection {
 
   public LongArrayList(int capacity) {
     values = new long[Integer.highestOneBit(capacity) << 1];
+    clear();
   }
 
   @Override

@@ -22,6 +22,7 @@ public class %Type%ArrayList implements %Type%Collection {
 
   public %Type%ArrayList(int capacity) {
     values = new %type%[Integer.highestOneBit(capacity) << 1];
+    clear();
   }
 
   @Override
