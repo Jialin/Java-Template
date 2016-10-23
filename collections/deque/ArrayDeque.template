@@ -21,18 +21,28 @@ public class %Type%ArrayDeque extends %Type%ArrayQueue {
     super(capacity);
   }
 
+  @Override
+  public void add(%type% value) {
+    throw new UnsupportedOperationException();
+  }
+
   public void addFirst(%type% value) {
     ensureCapacity(size() + 1);
     open = (open - 1) & (values.length - 1);
     values[open] = value;
   }
 
-  public void addLast(%type% v) {
-    add(v);
+  public void addLast(%type% value) {
+    super.add(value);
+  }
+
+  @Override
+  public %type% peek() {
+    throw new UnsupportedOperationException();
   }
 
   public %type% peekFirst() {
-    return peek();
+    return super.peek();
   }
 
   public %type% peekLast() {
@@ -40,8 +50,13 @@ public class %Type%ArrayDeque extends %Type%ArrayQueue {
     return values[(close - 1) & (values.length - 1)];
   }
 
+  @Override
+  public %type% poll() {
+    throw new UnsupportedOperationException();
+  }
+
   public %type% pollFirst() {
-    return poll();
+    return super.poll();
   }
 
   public %type% pollLast() {

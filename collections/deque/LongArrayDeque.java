@@ -8,18 +8,28 @@ public class LongArrayDeque extends LongArrayQueue {
     super(capacity);
   }
 
+  @Override
+  public void add(long value) {
+    throw new UnsupportedOperationException();
+  }
+
   public void addFirst(long value) {
     ensureCapacity(size() + 1);
     open = (open - 1) & (values.length - 1);
     values[open] = value;
   }
 
-  public void addLast(long v) {
-    add(v);
+  public void addLast(long value) {
+    super.add(value);
+  }
+
+  @Override
+  public long peek() {
+    throw new UnsupportedOperationException();
   }
 
   public long peekFirst() {
-    return peek();
+    return super.peek();
   }
 
   public long peekLast() {
@@ -27,8 +37,13 @@ public class LongArrayDeque extends LongArrayQueue {
     return values[(close - 1) & (values.length - 1)];
   }
 
+  @Override
+  public long poll() {
+    throw new UnsupportedOperationException();
+  }
+
   public long pollFirst() {
-    return poll();
+    return super.poll();
   }
 
   public long pollLast() {
