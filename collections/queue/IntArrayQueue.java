@@ -22,9 +22,9 @@ public class IntArrayQueue implements IntCollection {
   }
 
   @Override
-  public void add(int v) {
+  public void add(int value) {
     ensureCapacity(size() + 1);
-    values[close++] = v;
+    values[close++] = value;
     close &= values.length - 1;
   }
 
@@ -40,10 +40,20 @@ public class IntArrayQueue implements IntCollection {
     return res;
   }
 
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    for (int i = open; i != close; i = (i + 1) & (values.length - 1)) {
+      if (i != open) sb.append(',').append(' ');
+      sb.append(values[i]);
+    }
+    return sb.append(']').toString();
+  }
+
   protected void ensureCapacity(int capacity) {
     if (capacity < values.length) return;
     int[] newValues = new int[Integer.highestOneBit(capacity) << 1];
-    for (int i = 0, j = open; j != close; i++, j = (j + 1) & (values.length - 1)) {
+    for (int i = 0, j = open; j != close; ++i, j = (j + 1) & (values.length - 1)) {
       newValues[i] = values[j];
     }
     close = size();
