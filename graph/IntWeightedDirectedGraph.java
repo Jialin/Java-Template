@@ -9,6 +9,11 @@ public class IntWeightedDirectedGraph extends DirectedGraph {
 
   public IntWeightedDirectedGraph(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
+  }
+
+  @Override
+  public void create(int vertexCapacity, int edgeCapacity) {
+    super.create(vertexCapacity, edgeCapacity);
     weights = new int[edgeCapacity];
   }
 

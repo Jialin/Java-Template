@@ -14,14 +14,19 @@ public class DirectedGraph {
   public int[] inDegree, outDegree;
 
   public DirectedGraph(int vertexCapacity, int edgeCapacity) {
-    this.fromIdx = new int[edgeCapacity];
-    this.toIdx = new int[edgeCapacity];
-    this.lastIn = new int[vertexCapacity];
-    this.lastOut = new int[vertexCapacity];
-    this.nextIn = new int[edgeCapacity];
-    this.nextOut = new int[edgeCapacity];
-    this.inDegree = new int[vertexCapacity];
-    this.outDegree = new int[vertexCapacity];
+    create(vertexCapacity, edgeCapacity);
+    init(vertexCapacity);
+  }
+
+  public void create(int vertexCapacity, int edgeCapacity) {
+    fromIdx = new int[edgeCapacity];
+    toIdx = new int[edgeCapacity];
+    lastIn = new int[vertexCapacity];
+    lastOut = new int[vertexCapacity];
+    nextIn = new int[edgeCapacity];
+    nextOut = new int[edgeCapacity];
+    inDegree = new int[vertexCapacity];
+    outDegree = new int[vertexCapacity];
   }
 
   public void init(int vertexCnt) {
