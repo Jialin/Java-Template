@@ -1,0 +1,24 @@
+[
+  {
+    "filename": "CharComparator",
+    "type": "char",
+    "Type": "Char"
+  },
+  {
+    "filename": "IntComparator",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "LongComparator",
+    "type": "long",
+    "Type": "Long"
+  }
+]
+====================================================================================================
+package template.comparators;
+
+public interface %Type%Comparator {
+
+  int compare(%type% o1, %type% o2);
+}
