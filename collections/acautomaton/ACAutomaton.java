@@ -12,8 +12,12 @@ public class ACAutomaton extends AbstractTrie {
 
   public ACAutomaton(int letterCapacity, int nodeCapacity) {
     super(letterCapacity, nodeCapacity);
-    this.suffixLink = new int[nodeCapacity];
-    this.next = new int[letterCapacity][nodeCapacity];
+  }
+
+  @Override
+  public void create(int letterCapacity, int nodeCapacity) {
+    suffixLink = new int[nodeCapacity];
+    next = new int[letterCapacity][nodeCapacity];
   }
 
   @Override

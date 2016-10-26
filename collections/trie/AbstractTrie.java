@@ -12,12 +12,15 @@ public abstract class AbstractTrie {
   public int letterCnt;
   public int nodePnt;
 
+  public abstract void create(int letterCapacity, int nodeCapacity);
   public abstract void initNode(int idx, int parent, int parentLetter);
 
   public AbstractTrie(int letterCapacity, int nodeCapacity) {
-    this.parent = new int[nodeCapacity];
-    this.parentLetter = new int[nodeCapacity];
-    this.child = new int[letterCapacity][nodeCapacity];
+    parent = new int[nodeCapacity];
+    parentLetter = new int[nodeCapacity];
+    child = new int[letterCapacity][nodeCapacity];
+    create(letterCapacity, nodeCapacity);
+    init(letterCapacity);
   }
 
   public void init(int letterCnt) {
