@@ -4,8 +4,8 @@ import template.collections.IntCollection;
 
 public class IntArrayList implements IntCollection {
 
-  private int[] values;
-  private int close;
+  protected int[] values;
+  protected int size;
 
   public IntArrayList(int capacity) {
     values = new int[Integer.highestOneBit(capacity) << 1];
@@ -14,27 +14,27 @@ public class IntArrayList implements IntCollection {
 
   @Override
   public void clear() {
-    close = 0;
+    size = 0;
   }
 
   @Override
   public int size() {
-    return close;
+    return size;
   }
 
   @Override
-  public void add(int v) {
+  public void add(int value) {
     ensureCapacity(size() + 1);
-    values[close++] = v;
+    values[size++] = value;
   }
 
   public int get(int idx) {
-    if (idx >= close) throw new ArrayIndexOutOfBoundsException();
+    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     return values[idx];
   }
 
   public void set(int idx, int value) {
-    if (idx >= close) throw new ArrayIndexOutOfBoundsException();
+    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
   }
 
@@ -42,7 +42,7 @@ public class IntArrayList implements IntCollection {
     if (capacity < values.length) return;
     int[] newValues = new int[Integer.highestOneBit(capacity) << 1];
     System.arraycopy(values, 0, newValues, 0, values.length);
-    close = size();
+    size = size();
     values = newValues;
   }
 }

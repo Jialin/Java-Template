@@ -4,8 +4,8 @@ import template.collections.LongCollection;
 
 public class LongArrayList implements LongCollection {
 
-  private long[] values;
-  private int close;
+  protected long[] values;
+  protected int size;
 
   public LongArrayList(int capacity) {
     values = new long[Integer.highestOneBit(capacity) << 1];
@@ -14,27 +14,27 @@ public class LongArrayList implements LongCollection {
 
   @Override
   public void clear() {
-    close = 0;
+    size = 0;
   }
 
   @Override
   public int size() {
-    return close;
+    return size;
   }
 
   @Override
-  public void add(long v) {
+  public void add(long value) {
     ensureCapacity(size() + 1);
-    values[close++] = v;
+    values[size++] = value;
   }
 
   public long get(int idx) {
-    if (idx >= close) throw new ArrayIndexOutOfBoundsException();
+    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     return values[idx];
   }
 
   public void set(int idx, long value) {
-    if (idx >= close) throw new ArrayIndexOutOfBoundsException();
+    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
   }
 
@@ -42,7 +42,7 @@ public class LongArrayList implements LongCollection {
     if (capacity < values.length) return;
     long[] newValues = new long[Integer.highestOneBit(capacity) << 1];
     System.arraycopy(values, 0, newValues, 0, values.length);
-    close = size();
+    size = size();
     values = newValues;
   }
 }
