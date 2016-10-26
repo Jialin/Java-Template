@@ -85,8 +85,12 @@ public class IntArrayUtils {
   }
 
   public static int lowerBound(int[] values, int value) {
-    int res = values.length;
-    for (int lower = 0, upper = values.length - 1; lower <= upper; ) {
+    return lowerBound(values, 0, values.length, value);
+  }
+
+  public static int lowerBound(int[] values, int fromIdx, int toIdx, int value) {
+    int res = toIdx;
+    for (int lower = fromIdx, upper = toIdx - 1; lower <= upper; ) {
       int medium = (lower + upper) >> 1;
       if (value <= values[medium]) {
         res = medium;
@@ -123,10 +127,10 @@ public class IntArrayUtils {
    * Returns {@code k}-th (0-indexed) smallest value.
    */
   public static int kth(int[] values, int kth) {
-    return kthDFS(values, 0, values.length - 1, kth);
+    return kthInternal(values, 0, values.length - 1, kth);
   }
 
-  private static int kthDFS(int[] values, int lower, int upper, int kth) {
+  private static int kthInternal(int[] values, int lower, int upper, int kth) {
     if (lower == upper) return values[lower];
     if (lower + 1 == upper) {
       if (values[lower] > values[lower + 1]) swap(values, lower, lower + 1);
@@ -140,7 +144,7 @@ public class IntArrayUtils {
       if (i <= j) swap(values, i++, j--);
     }
     return kth < i - lower
-        ? kthDFS(values, lower, i - 1, kth)
-        : kthDFS(values, i, upper, kth - i + lower);
+        ? kthInternal(values, lower, i - 1, kth)
+        : kthInternal(values, i, upper, kth - i + lower);
   }
 }
