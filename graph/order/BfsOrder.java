@@ -1,6 +1,6 @@
 package template.graph.order;
 
-import template.graph.DirectedGraph;
+import template.graph.basic.DirectedGraph;
 
 public class BfsOrder {
 

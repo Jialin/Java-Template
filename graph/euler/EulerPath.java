@@ -1,7 +1,7 @@
 package template.graph.euler;
 
 import template.array.IntArrayUtils;
-import template.graph.BlockableDirectedGraph;
+import template.graph.blockable.BlockableDirectedGraph;
 
 public class EulerPath {
 

@@ -14,21 +14,32 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
   private boolean noSolution;
 
   public IntBoundedMaxFlow(int vertexCapacity, int edgeCapacity) {
-    super(vertexCapacity + 2, edgeCapacity + vertexCapacity + 1);
-    this.lowerBound = new int[(edgeCapacity + vertexCapacity + 1) << 1];
-    this.upperBound = new int[(edgeCapacity + vertexCapacity + 1) << 1];
+    super(vertexCapacity + 2, edgeCapacity + vertexCapacity + 1, false);
+    init(vertexCapacity);
+  }
+
+  @Override
+  public void createSubclass(int vertexCapacity, int edgeCapacity) {
+    super.createSubclass(vertexCapacity, edgeCapacity);
+    this.lowerBound = new int[edgeCapacity];
+    this.upperBound = new int[edgeCapacity];
     this.inFlow = new int[vertexCapacity];
     this.outFlow = new int[vertexCapacity];
   }
 
   @Override
-  public void init(int vertexCnt) {
-    super.init(vertexCnt + 2);
-    fakeSource = vertexCnt;
-    fakeSink = vertexCnt + 1;
+  public void initSubclass(int vertexCnt) {
+    super.initSubclass(vertexCnt);
+    fakeSource = vertexCnt - 2;
+    fakeSink = vertexCnt - 1;
     Arrays.fill(inFlow, 0, vertexCnt, 0);
     Arrays.fill(outFlow, 0, vertexCnt, 0);
     noSolution = false;
+  }
+
+  @Override
+  public void init(int vertexCnt) {
+    super.init(vertexCnt + 2);
   }
 
   @Override
@@ -46,8 +57,8 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
    */
   public int add(int fromIdx, int toIdx, int lowerBound, int upperBound) {
     noSolution |= lowerBound > upperBound;
-    this.lowerBound[edgeCnt] = lowerBound;
-    this.upperBound[edgeCnt] = upperBound;
+    this.lowerBound[currentEdgeCnt] = lowerBound;
+    this.upperBound[currentEdgeCnt] = upperBound;
     if (lowerBound > 0) {
       outFlow[fromIdx] += lowerBound;
       inFlow[toIdx] += lowerBound;

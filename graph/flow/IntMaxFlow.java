@@ -1,14 +1,14 @@
 package template.graph.flow;
 
 import template.collections.queue.IntArrayQueue;
-import template.graph.BidirectionalGraph;
+import template.graph.basic.AbstractBidirectionalGraph;
 
 import java.util.Arrays;
 
 /**
  * A max flow system.
  */
-public class IntMaxFlow extends BidirectionalGraph {
+public class IntMaxFlow extends AbstractBidirectionalGraph {
 
   protected static final int INF = Integer.MAX_VALUE;
 
@@ -21,12 +21,23 @@ public class IntMaxFlow extends BidirectionalGraph {
 
   public IntMaxFlow(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
-    this.flow = new int[edgeCapacity << 1];
-    this.capacity = new int[edgeCapacity << 1];
+  }
+
+  public IntMaxFlow(int vertexCapacity, int edgeCapacity, boolean initialize) {
+    super(vertexCapacity, edgeCapacity, initialize);
+  }
+
+  @Override
+  public void createSubclass(int vertexCapacity, int edgeCapacity) {
+    this.flow = new int[edgeCapacity];
+    this.capacity = new int[edgeCapacity];
     this.q = new IntArrayQueue(vertexCapacity);
     this.level = new int[vertexCapacity];
     this.edgePnt = new int[vertexCapacity];
   }
+
+  @Override
+  public void initSubclass(int vertexCnt) {}
 
   @Override
   public void add(int fromIdx, int toIdx) {
@@ -37,11 +48,11 @@ public class IntMaxFlow extends BidirectionalGraph {
    * Adds an edge from {@code fromIdx} to {@code toIdx} with {@code capacity}.
    */
   public int add(int fromIdx, int toIdx, int capacity) {
-    flow[edgeCnt] = flow[edgeCnt + 1] = 0;
-    this.capacity[edgeCnt] = capacity;
-    this.capacity[edgeCnt + 1] = 0;
+    flow[currentEdgeCnt] = flow[currentEdgeCnt + 1] = 0;
+    this.capacity[currentEdgeCnt] = capacity;
+    this.capacity[currentEdgeCnt + 1] = 0;
     super.add(fromIdx, toIdx);
-    return edgeCnt - 2;
+    return currentEdgeCnt - 2;
   }
 
   /**

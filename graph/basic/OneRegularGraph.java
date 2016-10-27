@@ -1,11 +1,11 @@
-package template.graph;
+package template.graph.basic;
 
 import java.util.Arrays;
 
 /**
  * Directed graph with n edges (i.e. each node with exactly one outgoing edge).
  */
-public class OneRegularGraph extends DirectedGraph {
+public class OneRegularGraph extends AbstractDirectedGraph {
 
   /**
    * Total number of components.
@@ -42,6 +42,10 @@ public class OneRegularGraph extends DirectedGraph {
 
   public OneRegularGraph(int vertexCapacity) {
     super(vertexCapacity, vertexCapacity);
+  }
+
+  @Override
+  public void createSubclass(int vertexCapacity, int edgeCapacity) {
     compSize = new int[vertexCapacity];
     compIdx = new int[vertexCapacity];
     coreSize = new int[vertexCapacity];
@@ -53,8 +57,7 @@ public class OneRegularGraph extends DirectedGraph {
   }
 
   @Override
-  public void init(int vertexCnt) {
-    super.init(vertexCnt);
+  public void initSubclass(int vertexCnt) {
     Arrays.fill(outIdx, 0, vertexCnt, -1);
     Arrays.fill(compIdx, 0, vertexCnt, -1);
     Arrays.fill(cnt, 0, vertexCnt, 0);

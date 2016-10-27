@@ -1,13 +1,23 @@
-package template.graph;
+package template.graph.blockable;
 
 /**
  * A bidirectional graph with blockable edges.
  */
-public class BlockableBidirectionalGraph extends BlockableDirectedGraph {
+public class BlockableBidirectionalGraph
+    extends BlockableDirectedGraph
+    implements BlockableBidirectionalGraphInterface {
 
   public BlockableBidirectionalGraph(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity << 1);
   }
+
+  @Override
+  public void createSubclass(int vertexCapacity, int edgeCapacity) {
+    blocked = new boolean[edgeCapacity];
+  }
+
+  @Override
+  public void initSubclass(int vertexCnt) {}
 
   @Override
   public void add(int fromIdx, int toIdx) {
