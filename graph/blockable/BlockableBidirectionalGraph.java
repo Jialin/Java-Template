@@ -12,14 +12,6 @@ public class BlockableBidirectionalGraph
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {
-    blocked = new boolean[edgeCapacity];
-  }
-
-  @Override
-  public void initSubclass(int vertexCnt) {}
-
-  @Override
   public void add(int fromIdx, int toIdx) {
     super.add(fromIdx, toIdx);
     super.add(toIdx, fromIdx);
