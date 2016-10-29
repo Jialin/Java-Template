@@ -24,23 +24,35 @@ public class %filename% {
   private static final Random random = new Random();
 
   public static %type% min(%type%[] values) {
+    return min(values, 0, values.length);
+  }
+
+  public static %type% min(%type%[] values, int fromIdx, int toIdx) {
     %type% res = %Class%.MAX_VALUE;
-    for (%type% value : values) {
-      if (res > value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res > values[i]) res = values[i];
     }
     return res;
   }
 
   public static %type% max(%type%[] values) {
+    return max(values, 0, values.length);
+  }
+
+  public static %type% max(%type%[] values, int fromIdx, int toIdx) {
     %type% res = %Class%.MIN_VALUE;
-    for (%type% value : values) {
-      if (res < value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res < values[i]) res = values[i];
     }
     return res;
   }
 
   public static int find(%type%[] values, %type% value) {
-    for (int i = 0; i < values.length; ++i) {
+    return find(values, 0, values.length, value);
+  }
+
+  public static int find(%type%[] values, int fromIdx, int toIdx, %type% value) {
+    for (int i = fromIdx; i < toIdx; ++i) {
       if (values[i] == value) return i;
     }
     return -1;

@@ -6,23 +6,35 @@ public class LongArrayUtils {
   private static final Random random = new Random();
 
   public static long min(long[] values) {
+    return min(values, 0, values.length);
+  }
+
+  public static long min(long[] values, int fromIdx, int toIdx) {
     long res = Long.MAX_VALUE;
-    for (long value : values) {
-      if (res > value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res > values[i]) res = values[i];
     }
     return res;
   }
 
   public static long max(long[] values) {
+    return max(values, 0, values.length);
+  }
+
+  public static long max(long[] values, int fromIdx, int toIdx) {
     long res = Long.MIN_VALUE;
-    for (long value : values) {
-      if (res < value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res < values[i]) res = values[i];
     }
     return res;
   }
 
   public static int find(long[] values, long value) {
-    for (int i = 0; i < values.length; ++i) {
+    return find(values, 0, values.length, value);
+  }
+
+  public static int find(long[] values, int fromIdx, int toIdx, long value) {
+    for (int i = fromIdx; i < toIdx; ++i) {
       if (values[i] == value) return i;
     }
     return -1;

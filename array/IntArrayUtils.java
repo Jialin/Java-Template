@@ -6,23 +6,35 @@ public class IntArrayUtils {
   private static final Random random = new Random();
 
   public static int min(int[] values) {
+    return min(values, 0, values.length);
+  }
+
+  public static int min(int[] values, int fromIdx, int toIdx) {
     int res = Integer.MAX_VALUE;
-    for (int value : values) {
-      if (res > value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res > values[i]) res = values[i];
     }
     return res;
   }
 
   public static int max(int[] values) {
+    return max(values, 0, values.length);
+  }
+
+  public static int max(int[] values, int fromIdx, int toIdx) {
     int res = Integer.MIN_VALUE;
-    for (int value : values) {
-      if (res < value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res < values[i]) res = values[i];
     }
     return res;
   }
 
   public static int find(int[] values, int value) {
-    for (int i = 0; i < values.length; ++i) {
+    return find(values, 0, values.length, value);
+  }
+
+  public static int find(int[] values, int fromIdx, int toIdx, int value) {
+    for (int i = fromIdx; i < toIdx; ++i) {
       if (values[i] == value) return i;
     }
     return -1;

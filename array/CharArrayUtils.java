@@ -6,23 +6,35 @@ public class CharArrayUtils {
   private static final Random random = new Random();
 
   public static char min(char[] values) {
+    return min(values, 0, values.length);
+  }
+
+  public static char min(char[] values, int fromIdx, int toIdx) {
     char res = Character.MAX_VALUE;
-    for (char value : values) {
-      if (res > value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res > values[i]) res = values[i];
     }
     return res;
   }
 
   public static char max(char[] values) {
+    return max(values, 0, values.length);
+  }
+
+  public static char max(char[] values, int fromIdx, int toIdx) {
     char res = Character.MIN_VALUE;
-    for (char value : values) {
-      if (res < value) res = value;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (res < values[i]) res = values[i];
     }
     return res;
   }
 
   public static int find(char[] values, char value) {
-    for (int i = 0; i < values.length; ++i) {
+    return find(values, 0, values.length, value);
+  }
+
+  public static int find(char[] values, int fromIdx, int toIdx, char value) {
+    for (int i = fromIdx; i < toIdx; ++i) {
       if (values[i] == value) return i;
     }
     return -1;
