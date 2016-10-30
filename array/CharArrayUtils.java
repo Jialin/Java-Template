@@ -115,8 +115,12 @@ public class CharArrayUtils {
   }
 
   public static int upperBound(char[] values, char value) {
-    int res = values.length;
-    for (int lower = 0, upper = values.length - 1; lower <= upper; ) {
+    return upperBound(values, 0, values.length, value);
+  }
+
+  public static int upperBound(char[] values, int fromIdx, int toIdx, char value) {
+    int res = toIdx;
+    for (int lower = fromIdx, upper = toIdx - 1; lower <= upper; ) {
       int medium = (lower + upper) >> 1;
       if (value < values[medium]) {
         res = medium;
@@ -140,6 +144,19 @@ public class CharArrayUtils {
    */
   public static char kth(char[] values, int kth) {
     return kthInternal(values, 0, values.length - 1, kth);
+  }
+
+  public static String toString(char[] values) {
+    return toString(values, 0, values.length);
+  }
+
+  public static String toString(char[] values, int fromIdx, int toIdx) {
+    StringBuilder sb = new StringBuilder("[");
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (i != fromIdx) sb.append(", ");
+      sb.append(values[i]);
+    }
+    return sb.append("]").toString();
   }
 
   private static char kthInternal(char[] values, int lower, int upper, int kth) {

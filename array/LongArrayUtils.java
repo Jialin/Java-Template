@@ -115,8 +115,12 @@ public class LongArrayUtils {
   }
 
   public static int upperBound(long[] values, long value) {
-    int res = values.length;
-    for (int lower = 0, upper = values.length - 1; lower <= upper; ) {
+    return upperBound(values, 0, values.length, value);
+  }
+
+  public static int upperBound(long[] values, int fromIdx, int toIdx, long value) {
+    int res = toIdx;
+    for (int lower = fromIdx, upper = toIdx - 1; lower <= upper; ) {
       int medium = (lower + upper) >> 1;
       if (value < values[medium]) {
         res = medium;
@@ -140,6 +144,19 @@ public class LongArrayUtils {
    */
   public static long kth(long[] values, int kth) {
     return kthInternal(values, 0, values.length - 1, kth);
+  }
+
+  public static String toString(long[] values) {
+    return toString(values, 0, values.length);
+  }
+
+  public static String toString(long[] values, int fromIdx, int toIdx) {
+    StringBuilder sb = new StringBuilder("[");
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (i != fromIdx) sb.append(", ");
+      sb.append(values[i]);
+    }
+    return sb.append("]").toString();
   }
 
   private static long kthInternal(long[] values, int lower, int upper, int kth) {
