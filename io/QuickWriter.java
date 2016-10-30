@@ -50,6 +50,10 @@ public class QuickWriter {
     writer.print('\n');
   }
 
+  public void println(int[] objects, char delimiter) {
+    print(objects, delimiter);
+    writer.print('\n');
+  }
 
   public void print(long[] objects) {
     print(objects, ' ');
@@ -66,6 +70,11 @@ public class QuickWriter {
 
   public void println(long[] objects) {
     print(objects);
+    writer.print('\n');
+  }
+
+  public void println(long[] objects, char delimiter) {
+    print(objects, delimiter);
     writer.print('\n');
   }
 
