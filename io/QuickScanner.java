@@ -55,6 +55,14 @@ public class QuickScanner {
     }
   }
 
+  public String nextLine() {
+    StringBuilder res = new StringBuilder();
+    for (int b = nextChar(); !isEndOfLineChar(b); b = nextChar()) {
+      res.appendCodePoint(b);
+    }
+    return res.toString();
+  }
+
   public int nextInt() {
     int c = nextNonSpaceChar();
     boolean positive = true;
@@ -136,10 +144,10 @@ public class QuickScanner {
   }
 
   public boolean isSpaceChar(int c) {
-    return c == ' '
-        || c == '\n'
-        || c == '\r'
-        || c == '\t'
-        || c < 0;
+    return c == ' ' || c == '\t' || isEndOfLineChar(c);
+  }
+
+  public boolean isEndOfLineChar(int c) {
+    return c == '\n' || c == '\r' || c < 0;
   }
 }
