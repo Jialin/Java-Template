@@ -54,7 +54,7 @@ public class IntUtils {
   public static int pow(int a, long b, int mod) {
     int res = 1;
     for ( ; b > 0; b >>= 1, a = mul(a, a, mod)) if ((b & 1) > 0) res = mul(res, a, mod);
-    return res;
+    return res >= mod ? fix(res, mod) : res;
   }
 
   public static int modInverse(int a) {
