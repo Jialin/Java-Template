@@ -9,9 +9,9 @@ public abstract class AbstractIntervalTree {
   private int left, right;
 
   /**
-   * Initializes the underlying storage.
+   * Creates the underlying storage.
    */
-  public abstract void initStorage(int n4);
+  public abstract void createSubclass(int nodeCapacity);
 
   /**
    * Initializes leaf node {@code nodeIdx} with range {@code [idx, idx+1)}.
@@ -43,12 +43,16 @@ public abstract class AbstractIntervalTree {
    */
   public abstract void clearLazyPropagation(int nodeIdx);
 
+  public AbstractIntervalTree(int leafCapacity) {
+    createSubclass(leafCapacity << 2);
+    init(leafCapacity);
+  }
+
   /**
    * Initializes the tree with {@code n} leaf nodes.
    */
   public void init(int n) {
     this.n = n;
-    initStorage(n << 2);
     init(0, 0, n);
   }
 
