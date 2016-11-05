@@ -29,4 +29,3 @@ for (root, filename) in findTemplates(ROOT):
                 for (tag, value) in setting.items():
                     parsedLine = string.replace(parsedLine, '%' + tag + '%', value)
                 outputFile.write(parsedLine + '\n')
-
