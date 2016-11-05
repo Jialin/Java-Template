@@ -40,6 +40,17 @@ public class IntArrayUtils {
     return -1;
   }
 
+  public static int findLast(int[] values, int value) {
+    return find(values, 0, values.length, value);
+  }
+
+  public static int findLast(int[] values, int fromIdx, int toIdx, int value) {
+    for (int i = toIdx - 1; i >= fromIdx; --i) {
+      if (values[i] == value) return i;
+    }
+    return -1;
+  }
+
   public static void reverse(int[] values) {
     reverse(values, 0, values.length);
   }

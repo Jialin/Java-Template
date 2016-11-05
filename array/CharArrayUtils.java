@@ -40,6 +40,17 @@ public class CharArrayUtils {
     return -1;
   }
 
+  public static int findLast(char[] values, char value) {
+    return find(values, 0, values.length, value);
+  }
+
+  public static int findLast(char[] values, int fromIdx, int toIdx, char value) {
+    for (int i = toIdx - 1; i >= fromIdx; --i) {
+      if (values[i] == value) return i;
+    }
+    return -1;
+  }
+
   public static void reverse(char[] values) {
     reverse(values, 0, values.length);
   }

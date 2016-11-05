@@ -58,6 +58,17 @@ public class %filename% {
     return -1;
   }
 
+  public static int findLast(%type%[] values, %type% value) {
+    return find(values, 0, values.length, value);
+  }
+
+  public static int findLast(%type%[] values, int fromIdx, int toIdx, %type% value) {
+    for (int i = toIdx - 1; i >= fromIdx; --i) {
+      if (values[i] == value) return i;
+    }
+    return -1;
+  }
+
   public static void reverse(%type%[] values) {
     reverse(values, 0, values.length);
   }
