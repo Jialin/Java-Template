@@ -1,23 +1,28 @@
 [
   {
+    "filename": "CharArrayDeque",
+    "superclass": "CharArrayQueue",
+    "type": "char"
+  },
+  {
     "filename": "IntArrayDeque",
-    "type": "int",
-    "Type": "Int"
+    "superclass": "IntArrayQueue",
+    "type": "int"
   },
   {
     "filename": "LongArrayDeque",
-    "type": "long",
-    "Type": "Long"
+    "superclass": "LongArrayQueue",
+    "type": "long"
   }
 ]
 ====================================================================================================
 package template.collections.deque;
 
-import template.collections.queue.%Type%ArrayQueue;
+import template.collections.queue.%superclass%;
 
-public class %Type%ArrayDeque extends %Type%ArrayQueue {
+public class %filename% extends %superclass% {
 
-  public %Type%ArrayDeque(int capacity) {
+  public %filename%(int capacity) {
     super(capacity);
   }
 

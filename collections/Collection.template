@@ -1,19 +1,21 @@
 [
   {
+    "filename": "CharCollection",
+    "type": "char"
+  },
+  {
     "filename": "IntCollection",
-    "type": "int",
-    "Type": "Int"
+    "type": "int"
   },
   {
     "filename": "LongCollection",
-    "type": "long",
-    "Type": "Long"
+    "type": "long"
   }
 ]
 ====================================================================================================
 package template.collections;
 
-public interface %Type%Collection {
+public interface %filename% {
   void clear();
   int size();
   void add(%type% value);

@@ -1,32 +1,14 @@
-[
-  {
-    "filename": "CharArrayQueue",
-    "interface": "CharCollection",
-    "type": "char"
-  },
-  {
-    "filename": "IntArrayQueue",
-    "interface": "IntCollection",
-    "type": "int"
-  },
-  {
-    "filename": "LongArrayQueue",
-    "interface": "LongCollection",
-    "type": "long"
-  }
-]
-====================================================================================================
 package template.collections.queue;
 
-import template.collections.%interface%;
+import template.collections.CharCollection;
 
-public class %filename% implements %interface% {
+public class CharArrayQueue implements CharCollection {
 
-  protected %type%[] values;
+  protected char[] values;
   protected int open, close;
 
-  public %filename%(int capacity) {
-    values = new %type%[Integer.highestOneBit(capacity) << 1];
+  public CharArrayQueue(int capacity) {
+    values = new char[Integer.highestOneBit(capacity) << 1];
   }
 
   @Override
@@ -40,20 +22,20 @@ public class %filename% implements %interface% {
   }
 
   @Override
-  public void add(%type% value) {
+  public void add(char value) {
     ensureCapacity(size() + 1);
     values[close++] = value;
     close &= values.length - 1;
   }
 
-  public %type% peek() {
+  public char peek() {
     if (open == close) throw new ArrayIndexOutOfBoundsException();
     return values[open];
   }
 
-  public %type% poll() {
+  public char poll() {
     if (open == close) throw new ArrayIndexOutOfBoundsException();
-    %type% res = values[open];
+    char res = values[open];
     open = (open + 1) & (values.length - 1);
     return res;
   }
@@ -70,7 +52,7 @@ public class %filename% implements %interface% {
 
   protected void ensureCapacity(int capacity) {
     if (capacity < values.length) return;
-    %type%[] newValues = new %type%[Integer.highestOneBit(capacity) << 1];
+    char[] newValues = new char[Integer.highestOneBit(capacity) << 1];
     for (int i = 0, j = open; j != close; ++i, j = (j + 1) & (values.length - 1)) {
       newValues[i] = values[j];
     }
