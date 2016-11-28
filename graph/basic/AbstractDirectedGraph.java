@@ -103,5 +103,4 @@ public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
   public int outDegree(int nodeIdx) {
     return outDegree[nodeIdx];
   }
-
 }
