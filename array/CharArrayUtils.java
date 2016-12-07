@@ -1,5 +1,6 @@
 package template.array;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class CharArrayUtils {
@@ -76,6 +77,15 @@ public class CharArrayUtils {
       }
     }
     return res;
+  }
+
+  public static int sortAndUnique(char[] values) {
+    return sortAndUnique(values, 0, values.length);
+  }
+
+  public static int sortAndUnique(char[] values, int fromIdx, int toIdx) {
+    Arrays.sort(values, fromIdx, toIdx);
+    return unique(values, fromIdx, toIdx);
   }
 
   public static int unique(char[] values, int[] cnt) {

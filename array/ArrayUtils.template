@@ -18,6 +18,7 @@
 ====================================================================================================
 package template.array;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class %filename% {
@@ -94,6 +95,15 @@ public class %filename% {
       }
     }
     return res;
+  }
+
+  public static int sortAndUnique(%type%[] values) {
+    return sortAndUnique(values, 0, values.length);
+  }
+
+  public static int sortAndUnique(%type%[] values, int fromIdx, int toIdx) {
+    Arrays.sort(values, fromIdx, toIdx);
+    return unique(values, fromIdx, toIdx);
   }
 
   public static int unique(%type%[] values, int[] cnt) {

@@ -1,5 +1,6 @@
 package template.array;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class LongArrayUtils {
@@ -76,6 +77,15 @@ public class LongArrayUtils {
       }
     }
     return res;
+  }
+
+  public static int sortAndUnique(long[] values) {
+    return sortAndUnique(values, 0, values.length);
+  }
+
+  public static int sortAndUnique(long[] values, int fromIdx, int toIdx) {
+    Arrays.sort(values, fromIdx, toIdx);
+    return unique(values, fromIdx, toIdx);
   }
 
   public static int unique(long[] values, int[] cnt) {
