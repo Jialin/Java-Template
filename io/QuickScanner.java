@@ -119,6 +119,36 @@ public class QuickScanner {
     }
   }
 
+  public double nextDouble() {
+    int c = nextNonSpaceChar();
+    boolean positive = true;
+    if (c == '-') {
+      positive = false;
+      c = nextChar();
+    }
+    double res = 0;
+    for ( ; c != '.' && !isSpaceChar(c); c = nextChar()) {
+      if (c < '0' || c > '9') {
+        throw new IllegalArgumentException("Unexpected character. " + c);
+      }
+      res = res * 10 + c - '0';
+    }
+    if (c == '.') {
+      c = nextChar();
+      double mul = 1;
+      for ( ; !isSpaceChar(c); c = nextChar()) {
+        if (c < '0' || c > '9') {
+          throw new IllegalArgumentException("Unexpected character. " + c);
+        }
+        mul /= 10;
+        if (c != '0') {
+          res += (c - '0') * mul;
+        }
+      }
+    }
+    return positive ? res : -res;
+  }
+
   public int nextNonSpaceChar() {
     int res = nextChar();
     for ( ; isSpaceChar(res) || res < 0; res = nextChar()) ;
