@@ -16,11 +16,11 @@ public class EulerPath {
 
     while (lastOut[nodeIdx] >= 0) {
       int edgeIdx = lastOut[nodeIdx];
-      lastOut[nodeIdx] = graph.nextOut[edgeIdx];
+      lastOut[nodeIdx] = graph.nextOut(edgeIdx);
       if (!graph.blocked[edgeIdx]) {
         graph.block(edgeIdx);
         resCnt = calcInternal(
-            graph.toIdx[edgeIdx], edgeIdx, graph, lastOut, resPath, resCnt);
+            graph.toIdx(edgeIdx), edgeIdx, graph, lastOut, resPath, resCnt);
       }
     }
     if (prevEdgeIdx >= 0) {

@@ -4,11 +4,11 @@ import java.util.Arrays;
 
 public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
 
-  public int vertexCnt, currentEdgeCnt;
-  public int[] fromIdx, toIdx;
-  public int[] nextIn, nextOut;
-  public int[] lastIn, lastOut;
-  public int[] inDegree, outDegree;
+  protected int vertexCnt, currentEdgeCnt;
+  protected int[] fromIdx, toIdx;
+  protected int[] nextIn, nextOut;
+  protected int[] lastIn, lastOut;
+  protected int[] inDegree, outDegree;
 
   public abstract void createSubclass(int vertexCapacity, int edgeCapacity);
   public abstract void initSubclass(int vertexCnt);
