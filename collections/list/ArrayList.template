@@ -17,8 +17,15 @@ import template.collections.%Type%Collection;
 
 public class %Type%ArrayList implements %Type%Collection {
 
-  protected %type%[] values;
-  protected int size;
+  private static %type%[] EMPTY = {};
+
+  public %type%[] values;
+  public int size;
+
+  public %Type%ArrayList() {
+    values = EMPTY;
+    clear();
+  }
 
   public %Type%ArrayList(int capacity) {
     values = new %type%[Integer.highestOneBit(capacity) << 1];
@@ -54,7 +61,9 @@ public class %Type%ArrayList implements %Type%Collection {
   protected void ensureCapacity(int capacity) {
     if (capacity < values.length) return;
     %type%[] newValues = new %type%[Integer.highestOneBit(capacity) << 1];
-    System.arraycopy(values, 0, newValues, 0, values.length);
+    for (int i = 0; i < values.length; ++i) {
+      newValues[i] = values[i];
+    }
     size = size();
     values = newValues;
   }

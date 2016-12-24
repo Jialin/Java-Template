@@ -4,8 +4,15 @@ import template.collections.LongCollection;
 
 public class LongArrayList implements LongCollection {
 
-  protected long[] values;
-  protected int size;
+  private static long[] EMPTY = {};
+
+  public long[] values;
+  public int size;
+
+  public LongArrayList() {
+    values = EMPTY;
+    clear();
+  }
 
   public LongArrayList(int capacity) {
     values = new long[Integer.highestOneBit(capacity) << 1];
@@ -41,7 +48,9 @@ public class LongArrayList implements LongCollection {
   protected void ensureCapacity(int capacity) {
     if (capacity < values.length) return;
     long[] newValues = new long[Integer.highestOneBit(capacity) << 1];
-    System.arraycopy(values, 0, newValues, 0, values.length);
+    for (int i = 0; i < values.length; ++i) {
+      newValues[i] = values[i];
+    }
     size = size();
     values = newValues;
   }
