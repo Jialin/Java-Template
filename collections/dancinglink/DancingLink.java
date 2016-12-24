@@ -31,4 +31,17 @@ public class DancingLink {
       prev[nextIdx] = prevIdx;
     }
   }
+
+  // TODO: verify
+  public void uncover(int idx) {
+    int prevIdx = prev[idx], nextIdx = next[idx];
+    if (prevIdx >= 0) {
+      next[prevIdx] = idx;
+    } else {
+      first = idx;
+    }
+    if (nextIdx >= 0) {
+      prev[nextIdx] = idx;
+    }
+  }
 }
