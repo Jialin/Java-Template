@@ -1,0 +1,45 @@
+[
+  {
+    "filename": "IntAddBinaryIndexedTree",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "LongAddBinaryIndexedTree",
+    "type": "long",
+    "Type": "Long"
+  }
+]
+====================================================================================================
+package template.collections.binaryindexedtree;
+
+public class %Type%AddBinaryIndexedTree extends Abstract%Type%BinaryIndexedTree {
+
+  public %Type%AddBinaryIndexedTree(int capacity) {
+    super(capacity);
+    init(capacity);
+  }
+
+  @Override
+  public %type% merge(%type% x, %type% y) {
+    return x + y;
+  }
+
+  @Override
+  public void init(int n, %type% initValue) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public %type% calc(int idx, %type% initValue) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void init(int n) {
+    super.init(n, 0);
+  }
+
+  public %type% calc(int idx) {
+    return super.calc(idx, 0);
+  }
+}

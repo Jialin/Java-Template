@@ -1,0 +1,47 @@
+[
+  {
+    "filename": "AbstractIntBinaryIndexedTree",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "AbstractLongBinaryIndexedTree",
+    "type": "long",
+    "Type": "Long"
+  }
+]
+====================================================================================================
+package template.collections.binaryindexedtree;
+
+import java.util.Arrays;
+
+public abstract class Abstract%Type%BinaryIndexedTree {
+
+  private int n;
+  private %type%[] values;
+
+  public Abstract%Type%BinaryIndexedTree(int capacity) {
+    values = new %type%[capacity];
+  }
+
+  public abstract %type% merge(%type% x, %type% y);
+
+  public void init(int n, %type% initValue) {
+    this.n = n;
+    Arrays.fill(values, 0, n, initValue);
+  }
+
+  public void update(int idx, %type% value) {
+    for ( ; idx < n; idx |= idx + 1) {
+      values[idx] = merge(values[idx], value);
+    }
+  }
+
+  public %type% calc(int idx, %type% initValue) {
+    %type% res = initValue;
+    for ( ; idx >= 0; idx = (idx & (idx + 1)) - 1) {
+      res = merge(res, values[idx]);
+    }
+    return res;
+  }
+}
