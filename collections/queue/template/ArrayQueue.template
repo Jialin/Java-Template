@@ -1,32 +1,33 @@
 [
   {
     "filename": "CharArrayQueue",
-    "interface": "CharCollection",
-    "type": "char"
+    "type": "char",
+    "Type": "Char"
   },
   {
     "filename": "IntArrayQueue",
-    "interface": "IntCollection",
-    "type": "int"
+    "type": "int",
+    "Type": "Int"
   },
   {
     "filename": "LongArrayQueue",
-    "interface": "LongCollection",
-    "type": "long"
+    "type": "long",
+    "Type": "Long"
   }
 ]
 ====================================================================================================
 package template.collections.queue;
 
-import template.collections.%interface%;
+import template.collections.%Type%Collection;
 
-public class %filename% implements %interface% {
+public class %Type%ArrayQueue implements %Type%Collection {
 
   protected %type%[] values;
   protected int open, close;
 
-  public %filename%(int capacity) {
+  public %Type%ArrayQueue(int capacity) {
     values = new %type%[Integer.highestOneBit(capacity) << 1];
+    clear();
   }
 
   @Override

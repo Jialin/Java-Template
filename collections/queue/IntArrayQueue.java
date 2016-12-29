@@ -9,6 +9,7 @@ public class IntArrayQueue implements IntCollection {
 
   public IntArrayQueue(int capacity) {
     values = new int[Integer.highestOneBit(capacity) << 1];
+    clear();
   }
 
   @Override

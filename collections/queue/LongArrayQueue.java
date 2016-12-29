@@ -9,6 +9,7 @@ public class LongArrayQueue implements LongCollection {
 
   public LongArrayQueue(int capacity) {
     values = new long[Integer.highestOneBit(capacity) << 1];
+    clear();
   }
 
   @Override

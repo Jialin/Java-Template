@@ -9,6 +9,7 @@ public class CharArrayQueue implements CharCollection {
 
   public CharArrayQueue(int capacity) {
     values = new char[Integer.highestOneBit(capacity) << 1];
+    clear();
   }
 
   @Override
