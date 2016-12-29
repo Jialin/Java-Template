@@ -13,8 +13,24 @@ public class HashUtils {
   public static long calc(long[] values, int fromIdx, int toIdx) {
     long res = START_SEED;
     for (int i = fromIdx; i < toIdx; ++i) {
-      res = (res * BASE) ^ values[i];
+      res = (i == fromIdx ? res : res * BASE) ^ hashSingle(values[i]);
     }
     return res * END_SEED;
+  }
+
+  public static long calcHashed(long[] hashedValues) {
+    return calcHashed(hashedValues, 0, hashedValues.length);
+  }
+
+  public static long calcHashed(long[] hashedValues, int fromIdx, int toIdx) {
+    long res = START_SEED;
+    for (int i = fromIdx; i < toIdx; ++i) {
+      res = (i == fromIdx ? res : res * BASE) ^ hashedValues[i];
+    }
+    return res * END_SEED;
+  }
+
+  private static long hashSingle(long value) {
+    return (START_SEED ^ value) * END_SEED;
   }
 }
