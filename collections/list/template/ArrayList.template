@@ -21,6 +21,8 @@ package template.collections.list;
 import template.array.%Type%ArrayUtils;
 import template.collections.%Type%Collection;
 
+import java.util.Arrays;
+
 public class %Type%ArrayList implements %Type%Collection {
 
   private static %type%[] EMPTY = {};
@@ -54,6 +56,14 @@ public class %Type%ArrayList implements %Type%Collection {
     values[size++] = value;
   }
 
+  public %type% peekLast() {
+    return values[size - 1];
+  }
+
+  public %type% pollLast() {
+    return values[--size];
+  }
+
   public %type% get(int idx) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     return values[idx];
@@ -62,6 +72,23 @@ public class %Type%ArrayList implements %Type%Collection {
   public void set(int idx, %type% value) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
+  }
+
+  public void sort() {
+    Arrays.sort(values, 0, size);
+  }
+
+  public void unique() {
+    size = %Type%ArrayUtils.unique(values, 0, size);
+  }
+
+  public void sortAndUnique() {
+    sort();
+    unique();
+  }
+
+  public int lowerBound(%type% value) {
+    return %Type%ArrayUtils.lowerBound(values, 0, size, value);
   }
 
   @Override

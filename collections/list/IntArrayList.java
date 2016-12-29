@@ -3,6 +3,8 @@ package template.collections.list;
 import template.array.IntArrayUtils;
 import template.collections.IntCollection;
 
+import java.util.Arrays;
+
 public class IntArrayList implements IntCollection {
 
   private static int[] EMPTY = {};
@@ -36,6 +38,14 @@ public class IntArrayList implements IntCollection {
     values[size++] = value;
   }
 
+  public int peekLast() {
+    return values[size - 1];
+  }
+
+  public int pollLast() {
+    return values[--size];
+  }
+
   public int get(int idx) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     return values[idx];
@@ -44,6 +54,23 @@ public class IntArrayList implements IntCollection {
   public void set(int idx, int value) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
+  }
+
+  public void sort() {
+    Arrays.sort(values, 0, size);
+  }
+
+  public void unique() {
+    size = IntArrayUtils.unique(values, 0, size);
+  }
+
+  public void sortAndUnique() {
+    sort();
+    unique();
+  }
+
+  public int lowerBound(int value) {
+    return IntArrayUtils.lowerBound(values, 0, size, value);
   }
 
   @Override

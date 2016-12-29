@@ -3,6 +3,8 @@ package template.collections.list;
 import template.array.CharArrayUtils;
 import template.collections.CharCollection;
 
+import java.util.Arrays;
+
 public class CharArrayList implements CharCollection {
 
   private static char[] EMPTY = {};
@@ -36,6 +38,14 @@ public class CharArrayList implements CharCollection {
     values[size++] = value;
   }
 
+  public char peekLast() {
+    return values[size - 1];
+  }
+
+  public char pollLast() {
+    return values[--size];
+  }
+
   public char get(int idx) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     return values[idx];
@@ -44,6 +54,23 @@ public class CharArrayList implements CharCollection {
   public void set(int idx, char value) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
+  }
+
+  public void sort() {
+    Arrays.sort(values, 0, size);
+  }
+
+  public void unique() {
+    size = CharArrayUtils.unique(values, 0, size);
+  }
+
+  public void sortAndUnique() {
+    sort();
+    unique();
+  }
+
+  public int lowerBound(char value) {
+    return CharArrayUtils.lowerBound(values, 0, size, value);
   }
 
   @Override

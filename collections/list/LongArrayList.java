@@ -3,6 +3,8 @@ package template.collections.list;
 import template.array.LongArrayUtils;
 import template.collections.LongCollection;
 
+import java.util.Arrays;
+
 public class LongArrayList implements LongCollection {
 
   private static long[] EMPTY = {};
@@ -36,6 +38,14 @@ public class LongArrayList implements LongCollection {
     values[size++] = value;
   }
 
+  public long peekLast() {
+    return values[size - 1];
+  }
+
+  public long pollLast() {
+    return values[--size];
+  }
+
   public long get(int idx) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     return values[idx];
@@ -44,6 +54,23 @@ public class LongArrayList implements LongCollection {
   public void set(int idx, long value) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
+  }
+
+  public void sort() {
+    Arrays.sort(values, 0, size);
+  }
+
+  public void unique() {
+    size = LongArrayUtils.unique(values, 0, size);
+  }
+
+  public void sortAndUnique() {
+    sort();
+    unique();
+  }
+
+  public int lowerBound(long value) {
+    return LongArrayUtils.lowerBound(values, 0, size, value);
   }
 
   @Override
