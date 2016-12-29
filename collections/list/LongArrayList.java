@@ -1,5 +1,6 @@
 package template.collections.list;
 
+import template.array.LongArrayUtils;
 import template.collections.LongCollection;
 
 public class LongArrayList implements LongCollection {
@@ -43,6 +44,11 @@ public class LongArrayList implements LongCollection {
   public void set(int idx, long value) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
+  }
+
+  @Override
+  public String toString() {
+    return LongArrayUtils.toString(values, 0, size);
   }
 
   protected void ensureCapacity(int capacity) {

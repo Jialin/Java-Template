@@ -1,22 +1,22 @@
 package template.collections.list;
 
-import template.array.IntArrayUtils;
-import template.collections.IntCollection;
+import template.array.CharArrayUtils;
+import template.collections.CharCollection;
 
-public class IntArrayList implements IntCollection {
+public class CharArrayList implements CharCollection {
 
-  private static int[] EMPTY = {};
+  private static char[] EMPTY = {};
 
-  public int[] values;
+  public char[] values;
   public int size;
 
-  public IntArrayList() {
+  public CharArrayList() {
     values = EMPTY;
     clear();
   }
 
-  public IntArrayList(int capacity) {
-    values = new int[Integer.highestOneBit(capacity) << 1];
+  public CharArrayList(int capacity) {
+    values = new char[Integer.highestOneBit(capacity) << 1];
     clear();
   }
 
@@ -31,29 +31,29 @@ public class IntArrayList implements IntCollection {
   }
 
   @Override
-  public void add(int value) {
+  public void add(char value) {
     ensureCapacity(size() + 1);
     values[size++] = value;
   }
 
-  public int get(int idx) {
+  public char get(int idx) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     return values[idx];
   }
 
-  public void set(int idx, int value) {
+  public void set(int idx, char value) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
   }
 
   @Override
   public String toString() {
-    return IntArrayUtils.toString(values, 0, size);
+    return CharArrayUtils.toString(values, 0, size);
   }
 
   protected void ensureCapacity(int capacity) {
     if (capacity < values.length) return;
-    int[] newValues = new int[Integer.highestOneBit(capacity) << 1];
+    char[] newValues = new char[Integer.highestOneBit(capacity) << 1];
     for (int i = 0; i < values.length; ++i) {
       newValues[i] = values[i];
     }

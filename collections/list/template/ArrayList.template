@@ -1,5 +1,10 @@
 [
   {
+    "filename": "CharArrayList",
+    "type": "char",
+    "Type": "Char"
+  },
+  {
     "filename": "IntArrayList",
     "type": "int",
     "Type": "Int"
@@ -13,6 +18,7 @@
 ====================================================================================================
 package template.collections.list;
 
+import template.array.%Type%ArrayUtils;
 import template.collections.%Type%Collection;
 
 public class %Type%ArrayList implements %Type%Collection {
@@ -56,6 +62,11 @@ public class %Type%ArrayList implements %Type%Collection {
   public void set(int idx, %type% value) {
     if (idx >= size) throw new ArrayIndexOutOfBoundsException();
     values[idx] = value;
+  }
+
+  @Override
+  public String toString() {
+    return %Type%ArrayUtils.toString(values, 0, size);
   }
 
   protected void ensureCapacity(int capacity) {
