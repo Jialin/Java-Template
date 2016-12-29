@@ -32,7 +32,7 @@ public class CharArrayList implements CharCollection {
 
   @Override
   public void add(char value) {
-    ensureCapacity(size() + 1);
+    ensureCapacity(size + 1);
     values[size++] = value;
   }
 
@@ -52,12 +52,11 @@ public class CharArrayList implements CharCollection {
   }
 
   protected void ensureCapacity(int capacity) {
-    if (capacity < values.length) return;
+    if (capacity <= values.length) return;
     char[] newValues = new char[Integer.highestOneBit(capacity) << 1];
     for (int i = 0; i < values.length; ++i) {
       newValues[i] = values[i];
     }
-    size = size();
     values = newValues;
   }
 }
