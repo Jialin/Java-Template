@@ -4,8 +4,15 @@ import template.collections.CharCollection;
 
 public class CharArrayQueue implements CharCollection {
 
+  private static char[] EMPTY = {};
+
   protected char[] values;
   protected int open, close;
+
+  public CharArrayQueue() {
+    values = EMPTY;
+    clear();
+  }
 
   public CharArrayQueue(int capacity) {
     values = new char[Integer.highestOneBit(capacity) << 1];

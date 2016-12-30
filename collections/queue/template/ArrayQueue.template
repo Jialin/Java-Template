@@ -22,8 +22,15 @@ import template.collections.%Type%Collection;
 
 public class %Type%ArrayQueue implements %Type%Collection {
 
+  private static %type%[] EMPTY = {};
+
   protected %type%[] values;
   protected int open, close;
+
+  public %Type%ArrayQueue() {
+    values = EMPTY;
+    clear();
+  }
 
   public %Type%ArrayQueue(int capacity) {
     values = new %type%[Integer.highestOneBit(capacity) << 1];

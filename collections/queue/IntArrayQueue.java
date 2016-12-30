@@ -4,8 +4,15 @@ import template.collections.IntCollection;
 
 public class IntArrayQueue implements IntCollection {
 
+  private static int[] EMPTY = {};
+
   protected int[] values;
   protected int open, close;
+
+  public IntArrayQueue() {
+    values = EMPTY;
+    clear();
+  }
 
   public IntArrayQueue(int capacity) {
     values = new int[Integer.highestOneBit(capacity) << 1];

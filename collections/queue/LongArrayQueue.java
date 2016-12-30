@@ -4,8 +4,15 @@ import template.collections.LongCollection;
 
 public class LongArrayQueue implements LongCollection {
 
+  private static long[] EMPTY = {};
+
   protected long[] values;
   protected int open, close;
+
+  public LongArrayQueue() {
+    values = EMPTY;
+    clear();
+  }
 
   public LongArrayQueue(int capacity) {
     values = new long[Integer.highestOneBit(capacity) << 1];
