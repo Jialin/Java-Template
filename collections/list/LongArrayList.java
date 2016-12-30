@@ -56,6 +56,11 @@ public class LongArrayList implements LongCollection {
     values[idx] = value;
   }
 
+  public void swap(int x, int y) {
+    if (x >= size || y >= size) throw new ArrayIndexOutOfBoundsException();
+    LongArrayUtils.swap(values, x, y);
+  }
+
   public void sort() {
     Arrays.sort(values, 0, size);
   }

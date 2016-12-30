@@ -56,6 +56,11 @@ public class IntArrayList implements IntCollection {
     values[idx] = value;
   }
 
+  public void swap(int x, int y) {
+    if (x >= size || y >= size) throw new ArrayIndexOutOfBoundsException();
+    IntArrayUtils.swap(values, x, y);
+  }
+
   public void sort() {
     Arrays.sort(values, 0, size);
   }

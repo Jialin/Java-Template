@@ -74,6 +74,11 @@ public class %Type%ArrayList implements %Type%Collection {
     values[idx] = value;
   }
 
+  public void swap(int x, int y) {
+    if (x >= size || y >= size) throw new ArrayIndexOutOfBoundsException();
+    %Type%ArrayUtils.swap(values, x, y);
+  }
+
   public void sort() {
     Arrays.sort(values, 0, size);
   }
