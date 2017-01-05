@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class LongArrayUtils {
-  private static final Random random = new Random();
+  private static final Random RANDOM = new Random(1000000007);
 
   public static long min(long[] values) {
     return min(values, 0, values.length);
@@ -160,6 +160,16 @@ public class LongArrayUtils {
     values[uIdx] ^= values[vIdx];
   }
 
+  public static void shuffle(long[] values) {
+    shuffle(values, 0, values.length);
+  }
+
+  public static void shuffle(long[] values, int lower, int upper) {
+    for (int i = upper - lower - 1; i > 0; --i) {
+      swap(values, i + lower, RANDOM.nextInt(i + 1) + lower);
+    }
+  }
+
   /**
    * Returns {@code k}-th (0-indexed) smallest value.
    */
@@ -186,7 +196,7 @@ public class LongArrayUtils {
       if (values[lower] > values[lower + 1]) swap(values, lower, lower + 1);
       return kth > 0 ? values[lower + 1] : values[lower];
     }
-    long pivot = values[lower + random.nextInt(upper - lower)];
+    long pivot = values[lower + RANDOM.nextInt(upper - lower)];
     int i = lower, j = upper;
     while (i <= j) {
       for ( ; values[i] < pivot; ++i) {}
