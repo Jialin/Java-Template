@@ -4,10 +4,11 @@ import template.array.LongArrayUtils;
 import template.collections.LongCollection;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class LongArrayList implements LongCollection {
 
-  private static long[] EMPTY = {};
+  private static final long[] EMPTY = {};
 
   public long[] values;
   public int size;
@@ -76,6 +77,14 @@ public class LongArrayList implements LongCollection {
 
   public int lowerBound(long value) {
     return LongArrayUtils.lowerBound(values, 0, size, value);
+  }
+
+  public void reverse() {
+    LongArrayUtils.reverse(values, 0, size);
+  }
+
+  public void shuffle() {
+    LongArrayUtils.shuffle(values, 0, size);
   }
 
   @Override

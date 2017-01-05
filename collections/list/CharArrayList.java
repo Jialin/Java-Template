@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class CharArrayList implements CharCollection {
 
-  private static char[] EMPTY = {};
+  private static final char[] EMPTY = {};
 
   public char[] values;
   public int size;
@@ -76,6 +76,14 @@ public class CharArrayList implements CharCollection {
 
   public int lowerBound(char value) {
     return CharArrayUtils.lowerBound(values, 0, size, value);
+  }
+
+  public void reverse() {
+    CharArrayUtils.reverse(values, 0, size);
+  }
+
+  public void shuffle() {
+    CharArrayUtils.shuffle(values, 0, size);
   }
 
   @Override

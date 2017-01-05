@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class IntArrayList implements IntCollection {
 
-  private static int[] EMPTY = {};
+  private static final int[] EMPTY = {};
 
   public int[] values;
   public int size;
@@ -76,6 +76,14 @@ public class IntArrayList implements IntCollection {
 
   public int lowerBound(int value) {
     return IntArrayUtils.lowerBound(values, 0, size, value);
+  }
+
+  public void reverse() {
+    IntArrayUtils.reverse(values, 0, size);
+  }
+
+  public void shuffle() {
+    IntArrayUtils.shuffle(values, 0, size);
   }
 
   @Override
