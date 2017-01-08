@@ -15,7 +15,7 @@ public class ACAutomaton extends AbstractTrie {
   }
 
   @Override
-  public void create(int letterCapacity, int nodeCapacity) {
+  public void createSubclass(int letterCapacity, int nodeCapacity) {
     suffixLink = new int[nodeCapacity];
     next = new int[letterCapacity][nodeCapacity];
   }
