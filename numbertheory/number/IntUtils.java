@@ -84,6 +84,18 @@ public class IntUtils {
     return gcd;
   }
 
+  public static int[][] combination(int n) {
+    int[][] res = new int[n][];
+    for (int i = 0; i < n; ++i) {
+      res[i] = new int[i + 1];
+      res[i][0] = res[i][i] = 1;
+      for (int j = 1; j < i; ++j) {
+        res[i][j] = res[i - 1][j - 1] + res[i - 1][j];
+      }
+    }
+    return res;
+  }
+
   private static int slightFix(int a, int mod) {
     return a >= mod
         ? a - mod
