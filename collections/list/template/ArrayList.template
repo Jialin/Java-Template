@@ -22,7 +22,6 @@ import template.array.%Type%ArrayUtils;
 import template.collections.%Type%Collection;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class %Type%ArrayList implements %Type%Collection {
 
@@ -88,6 +87,13 @@ public class %Type%ArrayList implements %Type%Collection {
     size = %Type%ArrayUtils.unique(values, 0, size);
   }
 
+  public void unique(IntArrayList cnt) {
+    cnt.clear();
+    cnt.ensureCapacity(size);
+    int newSize = %Type%ArrayUtils.unique(values, 0, size, cnt.values, 0);
+    size = cnt.size = newSize;
+  }
+
   public void sortAndUnique() {
     sort();
     unique();
@@ -95,6 +101,10 @@ public class %Type%ArrayList implements %Type%Collection {
 
   public int lowerBound(%type% value) {
     return %Type%ArrayUtils.lowerBound(values, 0, size, value);
+  }
+
+  public int upperBound(%type% value) {
+    return %Type%ArrayUtils.upperBound(values, 0, size, value);
   }
 
   public void reverse() {
@@ -110,10 +120,10 @@ public class %Type%ArrayList implements %Type%Collection {
     return %Type%ArrayUtils.toString(values, 0, size);
   }
 
-  protected void ensureCapacity(int capacity) {
+  public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
     %type%[] newValues = new %type%[Integer.highestOneBit(capacity) << 1];
-    for (int i = 0; i < values.length; ++i) {
+    for (int i = 0; i < size; ++i) {
       newValues[i] = values[i];
     }
     values = newValues;

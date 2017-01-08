@@ -69,6 +69,13 @@ public class IntArrayList implements IntCollection {
     size = IntArrayUtils.unique(values, 0, size);
   }
 
+  public void unique(IntArrayList cnt) {
+    cnt.clear();
+    cnt.ensureCapacity(size);
+    int newSize = IntArrayUtils.unique(values, 0, size, cnt.values, 0);
+    size = cnt.size = newSize;
+  }
+
   public void sortAndUnique() {
     sort();
     unique();
@@ -76,6 +83,10 @@ public class IntArrayList implements IntCollection {
 
   public int lowerBound(int value) {
     return IntArrayUtils.lowerBound(values, 0, size, value);
+  }
+
+  public int upperBound(int value) {
+    return IntArrayUtils.upperBound(values, 0, size, value);
   }
 
   public void reverse() {
@@ -91,10 +102,10 @@ public class IntArrayList implements IntCollection {
     return IntArrayUtils.toString(values, 0, size);
   }
 
-  protected void ensureCapacity(int capacity) {
+  public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
     int[] newValues = new int[Integer.highestOneBit(capacity) << 1];
-    for (int i = 0; i < values.length; ++i) {
+    for (int i = 0; i < size; ++i) {
       newValues[i] = values[i];
     }
     values = newValues;
