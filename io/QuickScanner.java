@@ -149,6 +149,18 @@ public class QuickScanner {
     return positive ? res : -res;
   }
 
+  public double[] nextDouble(int n) {
+    double[] res = new double[n];
+    nextDouble(n, res);
+    return res;
+  }
+
+  public void nextDouble(int n, double[] res) {
+    for (int i = 0; i < n; ++i) {
+      res[i] = nextDouble();
+    }
+  }
+
   public int nextNonSpaceChar() {
     int res = nextChar();
     for ( ; isSpaceChar(res) || res < 0; res = nextChar()) ;
