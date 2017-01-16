@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public class DisjointSet {
 
-  int[] parent;
+  public int[] parent;
+  public int setCnt;
 
   public DisjointSet(int vertexCapacity) {
     this.parent = new int[vertexCapacity];
@@ -13,6 +14,7 @@ public class DisjointSet {
 
   public void init(int n) {
     Arrays.fill(parent, 0, n, -1);
+    setCnt = n;
   }
 
   public int calcRoot(int x) {
@@ -32,6 +34,7 @@ public class DisjointSet {
     if (rootX != rootY) {
       parent[rootX] += parent[rootY];
       parent[rootY] = rootX;
+      --setCnt;
     }
   }
 
