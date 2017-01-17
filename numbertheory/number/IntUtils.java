@@ -57,11 +57,11 @@ public class IntUtils {
     return res >= mod ? fix(res, mod) : res;
   }
 
-  public static int modInverse(int a) {
-    return modInverse(a, MOD);
+  public static int inverse(int a) {
+    return inverse(a, MOD);
   }
 
-  public static int modInverse(int a, int mod) {
+  public static int inverse(int a, int mod) {
     if (extGcd(a, mod, x) != 1) {
       throw new IllegalArgumentException();
     }
@@ -84,6 +84,7 @@ public class IntUtils {
     return gcd;
   }
 
+  // TODO: move to other utils as it's no use modular at all.
   public static int[][] combination(int n) {
     int[][] res = new int[n][];
     for (int i = 0; i < n; ++i) {
