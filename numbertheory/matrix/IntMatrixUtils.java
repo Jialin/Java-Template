@@ -1,8 +1,8 @@
 package template.numbertheory.matrix;
 
-import template.numbertheory.number.IntUtils;
-
 public class IntMatrixUtils {
+
+  private static int MOD = 1000000007;
 
   private static int[][] tmp;
 
@@ -56,10 +56,10 @@ public class IntMatrixUtils {
         if (deltaValue <= Long.MAX_VALUE - value) {
           value += deltaValue;
         } else {
-          value = value % IntUtils.MOD + deltaValue;
+          value = value % MOD + deltaValue;
         }
       }
-      c[i][j] = (int) (value % IntUtils.MOD);
+      c[i][j] = (int) (value % MOD);
     }
     if (res != c) {
       for (int i = 0; i < na; ++i) for (int j = 0; j < mb; ++j) {
