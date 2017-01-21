@@ -29,4 +29,9 @@ public class LongAddBinaryIndexedTree extends AbstractLongBinaryIndexedTree {
   public long calc(int idx) {
     return super.calc(idx, 0);
   }
+
+  public long calcRange(int lower, int upper) {
+    if (lower >= upper) return 0;
+    return calc(upper - 1) - (lower > 0 ? calc(lower - 1) : 0);
+  }
 }
