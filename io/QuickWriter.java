@@ -1,5 +1,7 @@
 package template.io;
 
+import template.collections.list.IntArrayList;
+
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -66,6 +68,14 @@ public class QuickWriter {
   public void println(int[] objects, int fromIdx, int toIdx, char delimiter) {
     print(objects, fromIdx, toIdx, delimiter);
     writer.print('\n');
+  }
+
+  public void println(IntArrayList lst) {
+    println(lst, ' ');
+  }
+
+  public void println(IntArrayList lst, char delimiter) {
+    println(lst.values, 0, lst.size, delimiter);
   }
 
   public void print(long[] objects) {
