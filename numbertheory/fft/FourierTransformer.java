@@ -2,14 +2,14 @@ package template.numbertheory.fft;
 
 import template.numbertheory.complex.Complex;
 
-public class FastFourierTransformer {
+public class FourierTransformer {
 
   private int n;
   private Complex wBase, mul;
   private Complex[] w;
   private int[] rev;
 
-  public FastFourierTransformer(int capacity) {
+  public FourierTransformer(int capacity) {
     w = new Complex[capacity + 1];
     for (int i = 0; i <= capacity; ++i) {
       w[i] = Complex.zero();
