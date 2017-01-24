@@ -33,7 +33,7 @@ public class IntModular {
 
   public int mul(int a, int b) {
     return a > 0
-        ? (b < mod / a ? a * b : (int) ((long) a * b))
+        ? (b < mod / a ? a * b : (int) ((long) a * b % mod))
         : 0;
   }
 
