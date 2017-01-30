@@ -4,10 +4,11 @@ import template.array.IntArrayUtils;
 
 public class IntModular {
 
-  private static int MOD = 1000000007;
+  private static final int MOD = 1000000007;
 
-  private int mod;
-  private int[] x;
+  public final int mod;
+
+  private final int[] x;
 
   public IntModular() {
     this(MOD);
