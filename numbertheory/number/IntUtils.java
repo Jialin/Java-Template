@@ -2,6 +2,15 @@ package template.numbertheory.number;
 
 public class IntUtils {
 
+  public static boolean isPow2(int n) {
+    return n > 0 && (n & (n - 1)) == 0;
+  }
+
+  public static int nextPow2(int n) {
+    if (n < 1) return 1;
+    return isPow2(n) ? n : Integer.highestOneBit(n) << 1;
+  }
+
   public static boolean isPrime(int n) {
     if (n < 2) return false;
     for (int x = 2; x <= n / x; ++x) if (n % x == 0) {
