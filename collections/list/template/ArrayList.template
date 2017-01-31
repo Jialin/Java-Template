@@ -21,8 +21,6 @@ package template.collections.list;
 import template.array.%Type%ArrayUtils;
 import template.collections.%Type%Collection;
 
-import java.util.Arrays;
-
 public class %Type%ArrayList implements %Type%Collection {
 
   private static final %type%[] EMPTY = {};
@@ -80,7 +78,7 @@ public class %Type%ArrayList implements %Type%Collection {
   }
 
   public void sort() {
-    Arrays.sort(values, 0, size);
+    %Type%ArrayUtils.sort(values, 0, size);
   }
 
   public void unique() {

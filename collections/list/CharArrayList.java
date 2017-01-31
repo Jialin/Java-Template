@@ -3,8 +3,6 @@ package template.collections.list;
 import template.array.CharArrayUtils;
 import template.collections.CharCollection;
 
-import java.util.Arrays;
-
 public class CharArrayList implements CharCollection {
 
   private static final char[] EMPTY = {};
@@ -62,7 +60,7 @@ public class CharArrayList implements CharCollection {
   }
 
   public void sort() {
-    Arrays.sort(values, 0, size);
+    CharArrayUtils.sort(values, 0, size);
   }
 
   public void unique() {

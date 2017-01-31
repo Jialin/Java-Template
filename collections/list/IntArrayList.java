@@ -3,8 +3,6 @@ package template.collections.list;
 import template.array.IntArrayUtils;
 import template.collections.IntCollection;
 
-import java.util.Arrays;
-
 public class IntArrayList implements IntCollection {
 
   private static final int[] EMPTY = {};
@@ -62,7 +60,7 @@ public class IntArrayList implements IntCollection {
   }
 
   public void sort() {
-    Arrays.sort(values, 0, size);
+    IntArrayUtils.sort(values, 0, size);
   }
 
   public void unique() {

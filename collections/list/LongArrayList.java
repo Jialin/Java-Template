@@ -3,8 +3,6 @@ package template.collections.list;
 import template.array.LongArrayUtils;
 import template.collections.LongCollection;
 
-import java.util.Arrays;
-
 public class LongArrayList implements LongCollection {
 
   private static final long[] EMPTY = {};
@@ -62,7 +60,7 @@ public class LongArrayList implements LongCollection {
   }
 
   public void sort() {
-    Arrays.sort(values, 0, size);
+    LongArrayUtils.sort(values, 0, size);
   }
 
   public void unique() {
