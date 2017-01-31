@@ -79,12 +79,21 @@ public class CharArrayUtils {
     return res;
   }
 
+  public static void sort(char[] values) {
+    sort(values, 0, values.length);
+  }
+
+  public static void sort(char[] values, int fromIdx, int toIdx) {
+    shuffle(values, fromIdx, toIdx);
+    Arrays.sort(values, fromIdx, toIdx);
+  }
+
   public static int sortAndUnique(char[] values) {
     return sortAndUnique(values, 0, values.length);
   }
 
   public static int sortAndUnique(char[] values, int fromIdx, int toIdx) {
-    Arrays.sort(values, fromIdx, toIdx);
+    sort(values, fromIdx, toIdx);
     return unique(values, fromIdx, toIdx);
   }
 
@@ -164,9 +173,9 @@ public class CharArrayUtils {
     shuffle(values, 0, values.length);
   }
 
-  public static void shuffle(char[] values, int lower, int upper) {
-    for (int i = upper - lower - 1; i > 0; --i) {
-      swap(values, i + lower, RANDOM.nextInt(i + 1) + lower);
+  public static void shuffle(char[] values, int fromIdx, int toIdx) {
+    for (int i = toIdx - fromIdx - 1; i > 0; --i) {
+      swap(values, i + fromIdx, RANDOM.nextInt(i + 1) + fromIdx);
     }
   }
 
