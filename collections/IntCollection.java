@@ -1,5 +1,7 @@
 package template.collections;
 
+import java.util.Collection;
+
 public interface IntCollection {
   void clear();
   int size();
@@ -10,6 +12,12 @@ public interface IntCollection {
   }
 
   default void addAll(int[] values) {
+    for (int value : values) {
+      add(value);
+    }
+  }
+
+  default void addAll(Collection<Integer> values) {
     for (int value : values) {
       add(value);
     }

@@ -1,19 +1,24 @@
 [
   {
+    "Class": "Character",
     "filename": "CharCollection",
     "type": "char"
   },
   {
+    "Class": "Integer",
     "filename": "IntCollection",
     "type": "int"
   },
   {
+    "Class": "Long",
     "filename": "LongCollection",
     "type": "long"
   }
 ]
 ====================================================================================================
 package template.collections;
+
+import java.util.Collection;
 
 public interface %filename% {
   void clear();
@@ -25,6 +30,12 @@ public interface %filename% {
   }
 
   default void addAll(%type%[] values) {
+    for (%type% value : values) {
+      add(value);
+    }
+  }
+
+  default void addAll(Collection<%Class%> values) {
     for (%type% value : values) {
       add(value);
     }
