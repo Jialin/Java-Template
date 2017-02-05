@@ -2,6 +2,9 @@ package template.collections.list;
 
 import template.array.CharArrayUtils;
 import template.collections.CharCollection;
+import template.numbertheory.number.IntUtils;
+
+import java.util.Collection;
 
 public class CharArrayList implements CharCollection {
 
@@ -16,8 +19,13 @@ public class CharArrayList implements CharCollection {
   }
 
   public CharArrayList(int capacity) {
-    values = new char[Integer.highestOneBit(capacity) << 1];
+    values = new char[IntUtils.nextPow2(capacity)];
     clear();
+  }
+
+  public CharArrayList(Collection<Character> collection) {
+    this(collection.size());
+    addAll(collection);
   }
 
   @Override
@@ -33,7 +41,23 @@ public class CharArrayList implements CharCollection {
   @Override
   public void add(char value) {
     ensureCapacity(size + 1);
-    values[size++] = value;
+    addInternal(value);
+  }
+
+  @Override
+  public void addAll(char[] values) {
+    ensureCapacity(size + values.length);
+    for (char value : values) {
+      addInternal(value);
+    }
+  }
+
+  @Override
+  public void addAll(Collection<Character> values) {
+    ensureCapacity(size + values.size());
+    for (char value : values) {
+      addInternal(value);
+    }
   }
 
   public char peekLast() {
@@ -102,10 +126,14 @@ public class CharArrayList implements CharCollection {
 
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
-    char[] newValues = new char[Integer.highestOneBit(capacity) << 1];
+    char[] newValues = new char[IntUtils.nextPow2(capacity)];
     for (int i = 0; i < size; ++i) {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  private void addInternal(char value) {
+    values[size++] = value;
   }
 }

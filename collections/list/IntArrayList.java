@@ -2,6 +2,9 @@ package template.collections.list;
 
 import template.array.IntArrayUtils;
 import template.collections.IntCollection;
+import template.numbertheory.number.IntUtils;
+
+import java.util.Collection;
 
 public class IntArrayList implements IntCollection {
 
@@ -16,8 +19,13 @@ public class IntArrayList implements IntCollection {
   }
 
   public IntArrayList(int capacity) {
-    values = new int[Integer.highestOneBit(capacity) << 1];
+    values = new int[IntUtils.nextPow2(capacity)];
     clear();
+  }
+
+  public IntArrayList(Collection<Integer> collection) {
+    this(collection.size());
+    addAll(collection);
   }
 
   @Override
@@ -33,7 +41,23 @@ public class IntArrayList implements IntCollection {
   @Override
   public void add(int value) {
     ensureCapacity(size + 1);
-    values[size++] = value;
+    addInternal(value);
+  }
+
+  @Override
+  public void addAll(int[] values) {
+    ensureCapacity(size + values.length);
+    for (int value : values) {
+      addInternal(value);
+    }
+  }
+
+  @Override
+  public void addAll(Collection<Integer> values) {
+    ensureCapacity(size + values.size());
+    for (int value : values) {
+      addInternal(value);
+    }
   }
 
   public int peekLast() {
@@ -102,10 +126,14 @@ public class IntArrayList implements IntCollection {
 
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
-    int[] newValues = new int[Integer.highestOneBit(capacity) << 1];
+    int[] newValues = new int[IntUtils.nextPow2(capacity)];
     for (int i = 0; i < size; ++i) {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  private void addInternal(int value) {
+    values[size++] = value;
   }
 }

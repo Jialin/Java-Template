@@ -2,6 +2,9 @@ package template.collections.list;
 
 import template.array.LongArrayUtils;
 import template.collections.LongCollection;
+import template.numbertheory.number.IntUtils;
+
+import java.util.Collection;
 
 public class LongArrayList implements LongCollection {
 
@@ -16,8 +19,13 @@ public class LongArrayList implements LongCollection {
   }
 
   public LongArrayList(int capacity) {
-    values = new long[Integer.highestOneBit(capacity) << 1];
+    values = new long[IntUtils.nextPow2(capacity)];
     clear();
+  }
+
+  public LongArrayList(Collection<Long> collection) {
+    this(collection.size());
+    addAll(collection);
   }
 
   @Override
@@ -33,7 +41,23 @@ public class LongArrayList implements LongCollection {
   @Override
   public void add(long value) {
     ensureCapacity(size + 1);
-    values[size++] = value;
+    addInternal(value);
+  }
+
+  @Override
+  public void addAll(long[] values) {
+    ensureCapacity(size + values.length);
+    for (long value : values) {
+      addInternal(value);
+    }
+  }
+
+  @Override
+  public void addAll(Collection<Long> values) {
+    ensureCapacity(size + values.size());
+    for (long value : values) {
+      addInternal(value);
+    }
   }
 
   public long peekLast() {
@@ -102,10 +126,14 @@ public class LongArrayList implements LongCollection {
 
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
-    long[] newValues = new long[Integer.highestOneBit(capacity) << 1];
+    long[] newValues = new long[IntUtils.nextPow2(capacity)];
     for (int i = 0; i < size; ++i) {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  private void addInternal(long value) {
+    values[size++] = value;
   }
 }

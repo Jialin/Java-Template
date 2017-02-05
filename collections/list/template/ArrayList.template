@@ -1,18 +1,21 @@
 [
   {
+    "Class": "Character",
+    "Type": "Char",
     "filename": "CharArrayList",
-    "type": "char",
-    "Type": "Char"
+    "type": "char"
   },
   {
+    "Class": "Integer",
+    "Type": "Int",
     "filename": "IntArrayList",
-    "type": "int",
-    "Type": "Int"
+    "type": "int"
   },
   {
+    "Class": "Long",
+    "Type": "Long",
     "filename": "LongArrayList",
-    "type": "long",
-    "Type": "Long"
+    "type": "long"
   }
 ]
 ====================================================================================================
@@ -20,6 +23,9 @@ package template.collections.list;
 
 import template.array.%Type%ArrayUtils;
 import template.collections.%Type%Collection;
+import template.numbertheory.number.IntUtils;
+
+import java.util.Collection;
 
 public class %Type%ArrayList implements %Type%Collection {
 
@@ -34,8 +40,13 @@ public class %Type%ArrayList implements %Type%Collection {
   }
 
   public %Type%ArrayList(int capacity) {
-    values = new %type%[Integer.highestOneBit(capacity) << 1];
+    values = new %type%[IntUtils.nextPow2(capacity)];
     clear();
+  }
+
+  public %Type%ArrayList(Collection<%Class%> collection) {
+    this(collection.size());
+    addAll(collection);
   }
 
   @Override
@@ -51,7 +62,23 @@ public class %Type%ArrayList implements %Type%Collection {
   @Override
   public void add(%type% value) {
     ensureCapacity(size + 1);
-    values[size++] = value;
+    addInternal(value);
+  }
+
+  @Override
+  public void addAll(%type%[] values) {
+    ensureCapacity(size + values.length);
+    for (%type% value : values) {
+      addInternal(value);
+    }
+  }
+
+  @Override
+  public void addAll(Collection<%Class%> values) {
+    ensureCapacity(size + values.size());
+    for (%type% value : values) {
+      addInternal(value);
+    }
   }
 
   public %type% peekLast() {
@@ -120,10 +147,14 @@ public class %Type%ArrayList implements %Type%Collection {
 
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
-    %type%[] newValues = new %type%[Integer.highestOneBit(capacity) << 1];
+    %type%[] newValues = new %type%[IntUtils.nextPow2(capacity)];
     for (int i = 0; i < size; ++i) {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  private void addInternal(%type% value) {
+    values[size++] = value;
   }
 }
