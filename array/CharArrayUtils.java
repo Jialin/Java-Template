@@ -58,9 +58,7 @@ public class CharArrayUtils {
 
   public static void reverse(char[] values, int fromIdx, int toIdx) {
     for (int i = fromIdx, j = toIdx - 1; i < j; ++i, --j) {
-      values[i] ^= values[j];
-      values[j] ^= values[i];
-      values[i] ^= values[j];
+      swap(values, i, j);
     }
   }
 
