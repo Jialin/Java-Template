@@ -60,6 +60,13 @@ public class IntArrayList implements IntCollection {
     }
   }
 
+  public void addAll(IntArrayList values) {
+    ensureCapacity(size + values.size);
+    for (int i = 0; i < values.size; ++i) {
+      addInternal(values.get(i));
+    }
+  }
+
   public int peekLast() {
     return values[size - 1];
   }
@@ -103,6 +110,11 @@ public class IntArrayList implements IntCollection {
     unique();
   }
 
+  public void sortAndUnique(IntArrayList cnt) {
+    sort();
+    unique(cnt);
+  }
+
   public int lowerBound(int value) {
     return IntArrayUtils.lowerBound(values, 0, size, value);
   }
@@ -117,6 +129,10 @@ public class IntArrayList implements IntCollection {
 
   public void shuffle() {
     IntArrayUtils.shuffle(values, 0, size);
+  }
+
+  public int kth(int kth) {
+    return IntArrayUtils.kth(values, 0, size, kth);
   }
 
   @Override

@@ -60,6 +60,13 @@ public class LongArrayList implements LongCollection {
     }
   }
 
+  public void addAll(LongArrayList values) {
+    ensureCapacity(size + values.size);
+    for (int i = 0; i < values.size; ++i) {
+      addInternal(values.get(i));
+    }
+  }
+
   public long peekLast() {
     return values[size - 1];
   }
@@ -103,6 +110,11 @@ public class LongArrayList implements LongCollection {
     unique();
   }
 
+  public void sortAndUnique(IntArrayList cnt) {
+    sort();
+    unique(cnt);
+  }
+
   public int lowerBound(long value) {
     return LongArrayUtils.lowerBound(values, 0, size, value);
   }
@@ -117,6 +129,10 @@ public class LongArrayList implements LongCollection {
 
   public void shuffle() {
     LongArrayUtils.shuffle(values, 0, size);
+  }
+
+  public long kth(int kth) {
+    return LongArrayUtils.kth(values, 0, size, kth);
   }
 
   @Override

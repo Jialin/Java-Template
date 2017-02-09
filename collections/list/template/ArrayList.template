@@ -81,6 +81,13 @@ public class %Type%ArrayList implements %Type%Collection {
     }
   }
 
+  public void addAll(%Type%ArrayList values) {
+    ensureCapacity(size + values.size);
+    for (int i = 0; i < values.size; ++i) {
+      addInternal(values.get(i));
+    }
+  }
+
   public %type% peekLast() {
     return values[size - 1];
   }
@@ -124,6 +131,11 @@ public class %Type%ArrayList implements %Type%Collection {
     unique();
   }
 
+  public void sortAndUnique(IntArrayList cnt) {
+    sort();
+    unique(cnt);
+  }
+
   public int lowerBound(%type% value) {
     return %Type%ArrayUtils.lowerBound(values, 0, size, value);
   }
@@ -138,6 +150,10 @@ public class %Type%ArrayList implements %Type%Collection {
 
   public void shuffle() {
     %Type%ArrayUtils.shuffle(values, 0, size);
+  }
+
+  public %type% kth(int kth) {
+    return %Type%ArrayUtils.kth(values, 0, size, kth);
   }
 
   @Override

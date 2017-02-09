@@ -60,6 +60,13 @@ public class CharArrayList implements CharCollection {
     }
   }
 
+  public void addAll(CharArrayList values) {
+    ensureCapacity(size + values.size);
+    for (int i = 0; i < values.size; ++i) {
+      addInternal(values.get(i));
+    }
+  }
+
   public char peekLast() {
     return values[size - 1];
   }
@@ -103,6 +110,11 @@ public class CharArrayList implements CharCollection {
     unique();
   }
 
+  public void sortAndUnique(IntArrayList cnt) {
+    sort();
+    unique(cnt);
+  }
+
   public int lowerBound(char value) {
     return CharArrayUtils.lowerBound(values, 0, size, value);
   }
@@ -117,6 +129,10 @@ public class CharArrayList implements CharCollection {
 
   public void shuffle() {
     CharArrayUtils.shuffle(values, 0, size);
+  }
+
+  public char kth(int kth) {
+    return CharArrayUtils.kth(values, 0, size, kth);
   }
 
   @Override
