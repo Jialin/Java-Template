@@ -177,11 +177,12 @@ public class LongArrayUtils {
     }
   }
 
-  /**
-   * Returns {@code k}-th (0-indexed) smallest value.
-   */
   public static long kth(long[] values, int kth) {
-    return kthInternal(values, 0, values.length - 1, kth);
+    return kth(values, 0, values.length, kth);
+  }
+
+  public static long kth(long[] values, int fromIdx, int toIdx, int kth) {
+    return kthInternal(values, fromIdx, toIdx - 1, kth);
   }
 
   public static String toString(long[] values) {

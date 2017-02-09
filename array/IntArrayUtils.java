@@ -177,11 +177,12 @@ public class IntArrayUtils {
     }
   }
 
-  /**
-   * Returns {@code k}-th (0-indexed) smallest value.
-   */
   public static int kth(int[] values, int kth) {
-    return kthInternal(values, 0, values.length - 1, kth);
+    return kth(values, 0, values.length, kth);
+  }
+
+  public static int kth(int[] values, int fromIdx, int toIdx, int kth) {
+    return kthInternal(values, fromIdx, toIdx - 1, kth);
   }
 
   public static String toString(int[] values) {
