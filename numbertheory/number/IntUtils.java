@@ -30,4 +30,12 @@ public class IntUtils {
     }
     return res;
   }
+
+  public static int gcd(int a, int b) {
+    return b != 0 ? gcd(b, a % b) : a;
+  }
+
+  public static int lcm(int a, int b) {
+    return a / gcd(a, b) * b;
+  }
 }

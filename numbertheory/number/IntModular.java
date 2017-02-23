@@ -38,6 +38,10 @@ public class IntModular {
         : 0;
   }
 
+  public int div(int a, int b) {
+    return mul(a, inverse(b));
+  }
+
   public int pow(int a, long b) {
     int res = 1;
     for ( ; b > 0; b >>= 1, a = mul(a, a)) if ((b & 1) > 0) {
@@ -51,10 +55,6 @@ public class IntModular {
       throw new IllegalArgumentException();
     }
     return slightFix(x[0]);
-  }
-
-  public int gcd(int a, int b) {
-    return b != 0 ? gcd(b, a % b) : a;
   }
 
   public int extGcd(int a, int b, int[] x) {
