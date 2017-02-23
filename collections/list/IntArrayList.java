@@ -123,6 +123,15 @@ public class IntArrayList implements IntCollection {
     return IntArrayUtils.upperBound(values, 0, size, value);
   }
 
+  public boolean binarySearch(int value) {
+    int idx = lowerBound(value);
+    return idx < size && get(idx) == value;
+  }
+
+  public int find(int value) {
+    return IntArrayUtils.find(values, 0, size, value);
+  }
+
   public void reverse() {
     IntArrayUtils.reverse(values, 0, size);
   }

@@ -123,6 +123,15 @@ public class LongArrayList implements LongCollection {
     return LongArrayUtils.upperBound(values, 0, size, value);
   }
 
+  public boolean binarySearch(long value) {
+    int idx = lowerBound(value);
+    return idx < size && get(idx) == value;
+  }
+
+  public int find(long value) {
+    return LongArrayUtils.find(values, 0, size, value);
+  }
+
   public void reverse() {
     LongArrayUtils.reverse(values, 0, size);
   }

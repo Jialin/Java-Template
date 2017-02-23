@@ -144,6 +144,15 @@ public class %Type%ArrayList implements %Type%Collection {
     return %Type%ArrayUtils.upperBound(values, 0, size, value);
   }
 
+  public boolean binarySearch(%type% value) {
+    int idx = lowerBound(value);
+    return idx < size && get(idx) == value;
+  }
+
+  public int find(%type% value) {
+    return %Type%ArrayUtils.find(values, 0, size, value);
+  }
+
   public void reverse() {
     %Type%ArrayUtils.reverse(values, 0, size);
   }

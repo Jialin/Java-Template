@@ -123,6 +123,15 @@ public class CharArrayList implements CharCollection {
     return CharArrayUtils.upperBound(values, 0, size, value);
   }
 
+  public boolean binarySearch(char value) {
+    int idx = lowerBound(value);
+    return idx < size && get(idx) == value;
+  }
+
+  public int find(char value) {
+    return CharArrayUtils.find(values, 0, size, value);
+  }
+
   public void reverse() {
     CharArrayUtils.reverse(values, 0, size);
   }
