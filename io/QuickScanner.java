@@ -1,5 +1,7 @@
 package template.io;
 
+import template.collections.list.IntArrayList;
+
 import java.io.InputStream;
 
 public class QuickScanner {
@@ -88,6 +90,12 @@ public class QuickScanner {
   public void nextInt(int n, int[] res) {
     for (int i = 0; i < n; ++i) {
       res[i] = nextInt();
+    }
+  }
+
+  public void nextInt(int n, IntArrayList res) {
+    for (int i = 0; i < n; ++i) {
+      res.add(nextInt());
     }
   }
 
