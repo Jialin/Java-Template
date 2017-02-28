@@ -37,9 +37,14 @@ public abstract class AbstractSimpleIntervalTree {
       initLeaf(n + i, i);
     }
     for (int i = n - 1; i > 0; --i) {
-      lower[i] = lower[i << 1];
-      upper[i] = upper[(i << 1) | 1];
-      merge(i, i << 1, (i << 1) | 1);
+      int left = i << 1, right = left | 1;
+      if (upper[left] == lower[right]) {
+        lower[i] = lower[left];
+        upper[i] = upper[right];
+        merge(i, left, right);
+      } else {
+        lower[i] = -1;
+      }
     }
   }
 
