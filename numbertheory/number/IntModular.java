@@ -20,11 +20,11 @@ public class IntModular {
   }
 
   public int add(int a, int b) {
-    return slightFix(a + b);
+    return fix(a + b);
   }
 
   public int sub(int a, int b) {
-    return slightFix(a - b);
+    return fix(a - b);
   }
 
   public int fix(int a) {
