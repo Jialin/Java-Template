@@ -57,12 +57,17 @@ public class QuickScanner {
     }
   }
 
-  public String nextLine() {
-    StringBuilder res = new StringBuilder();
-    for (int b = nextChar(); !isEndOfLineChar(b); b = nextChar()) {
-      res.appendCodePoint(b);
+  public String nextLine(boolean ignoreEmptyLines) {
+    if (ignoreEmptyLines) {
+      while (true) {
+        String res = nextLineInternal();
+        if (!res.isEmpty()) {
+          return res;
+        }
+      }
+    } else {
+      return nextLineInternal();
     }
-    return res.toString();
   }
 
   public int nextInt() {
@@ -199,5 +204,13 @@ public class QuickScanner {
 
   public boolean isEndOfLineChar(int c) {
     return c == '\n' || c == '\r' || c < 0;
+  }
+
+  private String nextLineInternal() {
+    StringBuilder res = new StringBuilder();
+    for (int b = nextChar(); !isEndOfLineChar(b); b = nextChar()) {
+      res.appendCodePoint(b);
+    }
+    return res.toString();
   }
 }
