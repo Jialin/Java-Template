@@ -1,0 +1,50 @@
+[
+  {
+    "filename": "AbstractIntBinaryIndexedTree2D",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "AbstractLongBinaryIndexedTree2D",
+    "type": "long",
+    "Type": "Long"
+  }
+]
+====================================================================================================
+package template.collections.binaryindexedtree;
+
+import java.util.Arrays;
+
+public abstract class Abstract%Type%BinaryIndexedTree2D {
+
+  private int n, m;
+  private %type%[][] values;
+
+  public Abstract%Type%BinaryIndexedTree2D(int capacity1, int capacity2) {
+    values = new %type%[capacity1][capacity2];
+  }
+
+  public abstract %type% merge(%type% x, %type% y);
+
+  public void init(int n, int m, %type% initValue) {
+    this.n = n;
+    this.m = m;
+    for (int i = 0; i < n; ++i) {
+      Arrays.fill(values[i], 0, m, initValue);
+    }
+  }
+
+  public void update(int x, int y, %type% value) {
+    for ( ; x < n; x |= x + 1) for (int i = y; i < m; i |= i + 1) {
+      values[x][i] = merge(values[x][i], value);
+    }
+  }
+
+  public %type% calc(int x, int y, %type% initValue) {
+    %type% res = initValue;
+    for ( ; x >= 0; x = (x & (x + 1)) - 1) for (int i = y; i >= 0; i = (i & (i + 1)) - 1) {
+      res = merge(res, values[x][i]);
+    }
+    return res;
+  }
+}
