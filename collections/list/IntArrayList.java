@@ -5,8 +5,9 @@ import template.collections.IntCollection;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
+import java.util.Iterator;
 
-public class IntArrayList implements IntCollection {
+public class IntArrayList implements IntCollection, Iterable<Integer> {
 
   private static final int[] EMPTY = {};
 
@@ -144,9 +145,8 @@ public class IntArrayList implements IntCollection {
     return IntArrayUtils.kth(values, 0, size, kth);
   }
 
-  @Override
-  public String toString() {
-    return IntArrayUtils.toString(values, 0, size);
+  public void update(int delta) {
+    IntArrayUtils.update(values, 0, size, delta);
   }
 
   public void ensureCapacity(int capacity) {
@@ -156,6 +156,28 @@ public class IntArrayList implements IntCollection {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  @Override
+  public String toString() {
+    return IntArrayUtils.toString(values, 0, size);
+  }
+
+  @Override
+  public Iterator<Integer> iterator() {
+    return new Iterator<Integer>() {
+      private int i = 0;
+
+      @Override
+      public boolean hasNext() {
+        return i < size;
+      }
+
+      @Override
+      public Integer next() {
+        return values[i++];
+      }
+    };
   }
 
   private void addInternal(int value) {

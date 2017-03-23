@@ -5,8 +5,9 @@ import template.collections.LongCollection;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
+import java.util.Iterator;
 
-public class LongArrayList implements LongCollection {
+public class LongArrayList implements LongCollection, Iterable<Long> {
 
   private static final long[] EMPTY = {};
 
@@ -144,9 +145,8 @@ public class LongArrayList implements LongCollection {
     return LongArrayUtils.kth(values, 0, size, kth);
   }
 
-  @Override
-  public String toString() {
-    return LongArrayUtils.toString(values, 0, size);
+  public void update(long delta) {
+    LongArrayUtils.update(values, 0, size, delta);
   }
 
   public void ensureCapacity(int capacity) {
@@ -156,6 +156,28 @@ public class LongArrayList implements LongCollection {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  @Override
+  public String toString() {
+    return LongArrayUtils.toString(values, 0, size);
+  }
+
+  @Override
+  public Iterator<Long> iterator() {
+    return new Iterator<Long>() {
+      private int i = 0;
+
+      @Override
+      public boolean hasNext() {
+        return i < size;
+      }
+
+      @Override
+      public Long next() {
+        return values[i++];
+      }
+    };
   }
 
   private void addInternal(long value) {

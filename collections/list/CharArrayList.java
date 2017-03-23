@@ -5,8 +5,9 @@ import template.collections.CharCollection;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
+import java.util.Iterator;
 
-public class CharArrayList implements CharCollection {
+public class CharArrayList implements CharCollection, Iterable<Character> {
 
   private static final char[] EMPTY = {};
 
@@ -144,9 +145,8 @@ public class CharArrayList implements CharCollection {
     return CharArrayUtils.kth(values, 0, size, kth);
   }
 
-  @Override
-  public String toString() {
-    return CharArrayUtils.toString(values, 0, size);
+  public void update(char delta) {
+    CharArrayUtils.update(values, 0, size, delta);
   }
 
   public void ensureCapacity(int capacity) {
@@ -156,6 +156,28 @@ public class CharArrayList implements CharCollection {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  @Override
+  public String toString() {
+    return CharArrayUtils.toString(values, 0, size);
+  }
+
+  @Override
+  public Iterator<Character> iterator() {
+    return new Iterator<Character>() {
+      private int i = 0;
+
+      @Override
+      public boolean hasNext() {
+        return i < size;
+      }
+
+      @Override
+      public Character next() {
+        return values[i++];
+      }
+    };
   }
 
   private void addInternal(char value) {

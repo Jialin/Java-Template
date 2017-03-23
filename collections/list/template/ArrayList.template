@@ -26,8 +26,9 @@ import template.collections.%Type%Collection;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
+import java.util.Iterator;
 
-public class %Type%ArrayList implements %Type%Collection {
+public class %Type%ArrayList implements %Type%Collection, Iterable<%Class%> {
 
   private static final %type%[] EMPTY = {};
 
@@ -165,9 +166,8 @@ public class %Type%ArrayList implements %Type%Collection {
     return %Type%ArrayUtils.kth(values, 0, size, kth);
   }
 
-  @Override
-  public String toString() {
-    return %Type%ArrayUtils.toString(values, 0, size);
+  public void update(%type% delta) {
+    %Type%ArrayUtils.update(values, 0, size, delta);
   }
 
   public void ensureCapacity(int capacity) {
@@ -177,6 +177,28 @@ public class %Type%ArrayList implements %Type%Collection {
       newValues[i] = values[i];
     }
     values = newValues;
+  }
+
+  @Override
+  public String toString() {
+    return %Type%ArrayUtils.toString(values, 0, size);
+  }
+
+  @Override
+  public Iterator<%Class%> iterator() {
+    return new Iterator<%Class%>() {
+      private int i = 0;
+
+      @Override
+      public boolean hasNext() {
+        return i < size;
+      }
+
+      @Override
+      public %Class% next() {
+        return values[i++];
+      }
+    };
   }
 
   private void addInternal(%type% value) {
