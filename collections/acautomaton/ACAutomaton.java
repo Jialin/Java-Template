@@ -28,6 +28,11 @@ public class ACAutomaton extends AbstractTrie {
     }
   }
 
+  @Override
+  public String toString(int nodeIdx) {
+    return null;
+  }
+
   public int calcSuffixLink(int u) {
     if (suffixLink[u] < 0) {
       suffixLink[u] = u == root || parent[u] == root
