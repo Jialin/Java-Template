@@ -102,6 +102,22 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
     return res;
   }
 
+  /** Checks if there's a possible flow (no source and no sink). */
+  public boolean calc() {
+    if (noSolution) return false;
+    int sum = 0;
+    for (int i = vertexCnt - 2; i >= 0; --i) {
+      if (inFlow[i] > outFlow[i]) {
+        int delta = inFlow[i] - outFlow[i];
+        sum += delta;
+        super.add(fakeSource, i, delta);
+      } else if (inFlow[i] < outFlow[i]) {
+        super.add(i, fakeSink, outFlow[i] - inFlow[i]);
+      }
+    }
+    return super.calc(fakeSource, fakeSink) == sum;
+  }
+
   private void block(int edgeIdx) {
     flow[edgeIdx] = capacity[edgeIdx] = 0;
     flow[edgeIdx ^ 1] = capacity[edgeIdx ^ 1] = 0;
