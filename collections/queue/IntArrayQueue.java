@@ -1,8 +1,9 @@
 package template.collections.queue;
 
 import template.collections.IntCollection;
+import template.io.Displayable;
 
-public class IntArrayQueue implements IntCollection {
+public class IntArrayQueue implements IntCollection, Displayable {
 
   private static int[] EMPTY = {};
 
@@ -49,7 +50,7 @@ public class IntArrayQueue implements IntCollection {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     StringBuilder sb = new StringBuilder("[");
     for (int i = open; i != close; i = (i + 1) & (values.length - 1)) {
       if (i != open) sb.append(',').append(' ');

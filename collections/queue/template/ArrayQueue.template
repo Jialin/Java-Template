@@ -19,8 +19,9 @@
 package template.collections.queue;
 
 import template.collections.%Type%Collection;
+import template.io.Displayable;
 
-public class %Type%ArrayQueue implements %Type%Collection {
+public class %Type%ArrayQueue implements %Type%Collection, Displayable {
 
   private static %type%[] EMPTY = {};
 
@@ -67,7 +68,7 @@ public class %Type%ArrayQueue implements %Type%Collection {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     StringBuilder sb = new StringBuilder("[");
     for (int i = open; i != close; i = (i + 1) & (values.length - 1)) {
       if (i != open) sb.append(',').append(' ');

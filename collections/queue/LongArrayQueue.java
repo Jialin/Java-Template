@@ -1,8 +1,9 @@
 package template.collections.queue;
 
 import template.collections.LongCollection;
+import template.io.Displayable;
 
-public class LongArrayQueue implements LongCollection {
+public class LongArrayQueue implements LongCollection, Displayable {
 
   private static long[] EMPTY = {};
 
@@ -49,7 +50,7 @@ public class LongArrayQueue implements LongCollection {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     StringBuilder sb = new StringBuilder("[");
     for (int i = open; i != close; i = (i + 1) & (values.length - 1)) {
       if (i != open) sb.append(',').append(' ');

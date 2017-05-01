@@ -1,8 +1,9 @@
 package template.collections.queue;
 
 import template.collections.CharCollection;
+import template.io.Displayable;
 
-public class CharArrayQueue implements CharCollection {
+public class CharArrayQueue implements CharCollection, Displayable {
 
   private static char[] EMPTY = {};
 
@@ -49,7 +50,7 @@ public class CharArrayQueue implements CharCollection {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     StringBuilder sb = new StringBuilder("[");
     for (int i = open; i != close; i = (i + 1) & (values.length - 1)) {
       if (i != open) sb.append(',').append(' ');
