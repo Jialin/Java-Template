@@ -7,35 +7,63 @@ import template.collections.list.IntArrayList;
  */
 public abstract class AbstractSimpleIntervalTree {
 
+  /** Creates the underlying storage. */
   public abstract void createSubclass(int nodeCapacity);
 
+  /** Initializes the lazy propagation. */
+  public abstract void initLazyPropagation(int nodeCapacity);
+
+  /** Initializes leaf node {@code nodeIdx} with range {@code [idx, idx+1)}. */
   public abstract void initLeaf(int nodeIdx, int idx);
 
-  public abstract void merge(int nodeIdx, int leftNodeIdx, int rightNodeIdx);
+  /**
+   * Calculates the non-leaf node {@code nodeIdx} from its children.
+   *
+   * NOTE: remember to consider the lazy propagation in node {@code nodeIdx}.
+   */
+  public abstract void calcNonLeafNode(int nodeIdx);
 
-  public abstract void updateNode(int nodeIdx, int lower, int upper);
+  /** Appends node {@code nodeIdx} to the calculation result. */
+  public abstract void calcAppend(int nodeIdx);
 
-  public abstract void calcAppend(int nodeIdx, int lower, int upper);
+  /**
+   * Assigns lazy propagation to fake node (i.e. 0-th).
+   *
+   * NOTE: assign the value to update to the 0-th node.
+   */
+  public abstract void assignFakeLazyPropagation();
 
-  public abstract String toString(int nodeIdx);
+  /** Pushes lazy propagation from node {@code fromNodeIdx} to node {@code toNodeIdx}. */
+  public abstract void pushLazyPropagation(int fromNodeIdx, int toNodeIdx);
+
+  /** Clears lazy propagation in the node. */
+  public abstract void clearLazyPropagation(int nodeIdx);
+
+  /** Text to display for the node value. */
+  public abstract String valueToString(int nodeIdx);
+
+  /** Text to display for the node lazy propagation. */
+  public abstract String lazyPropagationToString(int nodeIdx);
 
   public int[] lower, upper;
 
-  private int n;
+  private int n, height;
   private IntArrayList calcLeftIdx, calcRightIdx;
 
-  public AbstractSimpleIntervalTree(int leafCapacity) {
+  public AbstractSimpleIntervalTree(int leafCapacity, boolean initialize) {
     calcLeftIdx = new IntArrayList();
     calcRightIdx = new IntArrayList();
     int leafCapacity2 = leafCapacity << 1;
     lower = new int[leafCapacity2];
     upper = new int[leafCapacity2];
     createSubclass(leafCapacity2);
-    init(leafCapacity);
+    if (initialize) init(leafCapacity);
   }
 
   public void init(int n) {
     this.n = n;
+    this.height = 32 - Integer.numberOfLeadingZeros(n);
+    initLazyPropagation(n << 1);
     for (int i = 0; i < n; ++i) {
       lower[n + i] = i;
       upper[n + i] = i + 1;
@@ -46,7 +74,7 @@ public abstract class AbstractSimpleIntervalTree {
       if (upper[left] == lower[right]) {
         lower[i] = lower[left];
         upper[i] = upper[right];
-        merge(i, left, right);
+        calcNonLeafNode(i);
       } else {
         lower[i] = n;
         upper[i] = -1;
@@ -55,33 +83,31 @@ public abstract class AbstractSimpleIntervalTree {
   }
 
   public void updateRange(int lower, int upper) {
-    int l = lower, r = upper;
+    assignFakeLazyPropagation();
+    pushInternal(lower);
+    pushInternal(upper - 1);
+    boolean toCalcLeft = false, toCalcRight = false;
     for (lower += n, upper += n; lower < upper; lower >>= 1, upper >>= 1) {
+      if (toCalcLeft) calcNonLeafNode(lower - 1);
+      if (toCalcRight) calcNonLeafNode(upper);
       if ((lower & 1) > 0) {
-        updateNode(lower, this.lower[lower], this.upper[lower]);
-        ++lower;
+        pushLazyPropagation(0, lower++);
+        toCalcLeft = true;
       }
       if ((upper & 1) > 0) {
-        --upper;
-        updateNode(upper, this.lower[upper], this.upper[upper]);
+        pushLazyPropagation(0, --upper);
+        toCalcRight = true;
       }
     }
-    for (l = (l + n) >> 1, r = (r + n - 1) >> 1; l > 0 || r > 0; ) {
-      if (l < r) {
-        mergeInternal(r);
-        r >>= 1;
-      } else if (r < l) {
-        mergeInternal(l);
-        l >>= 1;
-      } else {
-        mergeInternal(l);
-        l >>= 1;
-        r >>= 1;
-      }
+    for (--lower; upper > 0; lower >>= 1, upper >>= 1) {
+      if (toCalcLeft) calcNonLeafNode(lower);
+      if (toCalcRight && (!toCalcLeft || lower != upper)) calcNonLeafNode(upper);
     }
   }
 
   public void calcRange(int lower, int upper) {
+    pushInternal(lower);
+    pushInternal(upper - 1);
     calcLeftIdx.clear();
     calcRightIdx.clear();
     for (lower += n, upper += n; lower < upper; lower >>= 1, upper >>= 1) {
@@ -90,11 +116,11 @@ public abstract class AbstractSimpleIntervalTree {
     }
     for (int i = 0; i < calcLeftIdx.size; ++i) {
       int idx = calcLeftIdx.get(i);
-      calcAppend(idx, this.lower[idx], this.upper[idx]);
+      calcAppend(idx);
     }
     for (int i = calcRightIdx.size - 1; i >= 0; --i) {
       int idx = calcRightIdx.get(i);
-      calcAppend(idx, this.lower[idx], this.upper[idx]);
+      calcAppend(idx);
     }
   }
 
@@ -102,15 +128,21 @@ public abstract class AbstractSimpleIntervalTree {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < n << 1; ++i) if (lower[i] < upper[i]) {
-      sb.append(String.format("@%d[%d,%d):%s", i, lower[i], upper[i], toString(i)));
+      sb.append(String.format("@%d[%d,%d):%s", i, lower[i], upper[i], valueToString(i)));
+      if (lower[i] + 1 < upper[i]) sb.append(String.format(" | %s", lazyPropagationToString(i)));
       if (i + 1 < n << 1) sb.append('\n');
     }
     return sb.toString();
   }
 
-  private void mergeInternal(int nodeIdx) {
-    if (lower[nodeIdx] >= upper[nodeIdx]) return;
-    int leftNodeIdx = nodeIdx << 1;
-    merge(nodeIdx, leftNodeIdx, leftNodeIdx | 1);
+  private void pushInternal(int nodeIdx) {
+    for (int s = height, l = nodeIdx + n, r = l; s > 0; --s) {
+      for (int i = l >> s; i <= r >> s; ++i) if (lower[i] < upper[i]) {
+//if (i == 0) System.out.printf("pushInternal 0: nodeIdx(%d)\n", nodeIdx);
+        pushLazyPropagation(i, i << 1);
+        pushLazyPropagation(i, (i << 1) | 1);
+        clearLazyPropagation(i);
+      }
+    }
   }
 }
