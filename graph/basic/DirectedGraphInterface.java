@@ -15,4 +15,6 @@ public interface DirectedGraphInterface {
   int nextOut(int edgeIdx);
   int inDegree(int nodeIdx);
   int outDegree(int nodeIdx);
+
+  Iterable<Integer> outNodes(int nodeIdx);
 }

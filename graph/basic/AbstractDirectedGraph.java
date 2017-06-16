@@ -1,6 +1,7 @@
 package template.graph.basic;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
 
@@ -102,5 +103,24 @@ public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
   @Override
   public int outDegree(int nodeIdx) {
     return outDegree[nodeIdx];
+  }
+
+  @Override
+  public Iterable<Integer> outNodes(int nodeIdx) {
+    return () -> new Iterator<Integer>() {
+      private int edgeIdx = lastOut[nodeIdx];
+
+      @Override
+      public boolean hasNext() {
+        return edgeIdx >= 0;
+      }
+
+      @Override
+      public Integer next() {
+        int res = toIdx[edgeIdx];
+        edgeIdx = nextOut(edgeIdx);
+        return res;
+      }
+    };
   }
 }
