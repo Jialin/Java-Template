@@ -22,6 +22,28 @@ public class IntPartitionTree {
     build(0, 0, n);
   }
 
+  /** Returns the {@code kth} (0-indexed) ranked element between [{@code fromIdx}, {@code toIdx}). */
+  public int calcKth(int fromIdx, int toIdx, int kth) {
+    int depth = 0, lower = 0, upper = n;
+    for ( ; lower + 1 < upper; ++depth) {
+      int medium = (lower + upper) >> 1;
+      int subGoLeftCnt = fromIdx == lower ? 0 : goLeftSum[depth][fromIdx - 1];
+      int totGoLeftCnt = goLeftSum[depth][toIdx - 1];
+      int cnt = totGoLeftCnt - subGoLeftCnt;
+      if (kth < cnt) {
+        fromIdx = lower + subGoLeftCnt;
+        toIdx = lower + totGoLeftCnt;
+        upper = medium;
+      } else {
+        fromIdx += medium - lower - subGoLeftCnt;
+        toIdx += medium - lower - totGoLeftCnt;
+        lower = medium;
+        kth -= cnt;
+      }
+    }
+    return values[depth][lower];
+  }
+
   /** Counts the number of elements in [{@code fromIdx}, {@code toIdx}) which are less than {@code value}. */
   public int calcLess(int fromIdx, int toIdx, int value) {
     int res = 0;
