@@ -29,6 +29,10 @@ public interface %filename% {
     return size() == 0;
   }
 
+  default boolean isNotEmpty() {
+    return size() > 0;
+  }
+
   default void addAll(%type%[] values) {
     for (%type% value : values) {
       add(value);

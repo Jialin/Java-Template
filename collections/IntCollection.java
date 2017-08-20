@@ -11,6 +11,10 @@ public interface IntCollection {
     return size() == 0;
   }
 
+  default boolean isNotEmpty() {
+    return size() > 0;
+  }
+
   default void addAll(int[] values) {
     for (int value : values) {
       add(value);

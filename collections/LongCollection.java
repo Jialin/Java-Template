@@ -11,6 +11,10 @@ public interface LongCollection {
     return size() == 0;
   }
 
+  default boolean isNotEmpty() {
+    return size() > 0;
+  }
+
   default void addAll(long[] values) {
     for (long value : values) {
       add(value);
