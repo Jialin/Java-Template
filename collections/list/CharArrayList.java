@@ -2,12 +2,13 @@ package template.collections.list;
 
 import template.array.CharArrayUtils;
 import template.collections.CharCollection;
+import template.io.Displayable;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-public class CharArrayList implements CharCollection, Iterable<Character> {
+public class CharArrayList implements Displayable, CharCollection, Iterable<Character> {
 
   private static final char[] EMPTY = {};
 
@@ -159,7 +160,7 @@ public class CharArrayList implements CharCollection, Iterable<Character> {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     return CharArrayUtils.toString(values, 0, size);
   }
 

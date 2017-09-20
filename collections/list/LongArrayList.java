@@ -2,12 +2,13 @@ package template.collections.list;
 
 import template.array.LongArrayUtils;
 import template.collections.LongCollection;
+import template.io.Displayable;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-public class LongArrayList implements LongCollection, Iterable<Long> {
+public class LongArrayList implements Displayable, LongCollection, Iterable<Long> {
 
   private static final long[] EMPTY = {};
 
@@ -159,7 +160,7 @@ public class LongArrayList implements LongCollection, Iterable<Long> {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     return LongArrayUtils.toString(values, 0, size);
   }
 

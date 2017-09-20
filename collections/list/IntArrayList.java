@@ -2,12 +2,13 @@ package template.collections.list;
 
 import template.array.IntArrayUtils;
 import template.collections.IntCollection;
+import template.io.Displayable;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-public class IntArrayList implements IntCollection, Iterable<Integer> {
+public class IntArrayList implements Displayable, IntCollection, Iterable<Integer> {
 
   private static final int[] EMPTY = {};
 
@@ -159,7 +160,7 @@ public class IntArrayList implements IntCollection, Iterable<Integer> {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     return IntArrayUtils.toString(values, 0, size);
   }
 

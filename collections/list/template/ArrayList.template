@@ -23,12 +23,13 @@ package template.collections.list;
 
 import template.array.%Type%ArrayUtils;
 import template.collections.%Type%Collection;
+import template.io.Displayable;
 import template.numbertheory.number.IntUtils;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-public class %Type%ArrayList implements %Type%Collection, Iterable<%Class%> {
+public class %Type%ArrayList implements Displayable, %Type%Collection, Iterable<%Class%> {
 
   private static final %type%[] EMPTY = {};
 
@@ -180,7 +181,7 @@ public class %Type%ArrayList implements %Type%Collection, Iterable<%Class%> {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     return %Type%ArrayUtils.toString(values, 0, size);
   }
 
