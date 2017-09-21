@@ -31,6 +31,14 @@ public class IntUtils {
     return res;
   }
 
+  public static boolean isEven(int x) {
+    return (x & 1) == 0;
+  }
+
+  public static boolean isOdd(int x) {
+    return (x & 1) > 0;
+  }
+
   public static int gcd(int a, int b) {
     return b != 0 ? gcd(b, a % b) : a;
   }
