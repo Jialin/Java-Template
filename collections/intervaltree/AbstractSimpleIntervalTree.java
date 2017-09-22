@@ -138,7 +138,6 @@ public abstract class AbstractSimpleIntervalTree {
   private void pushInternal(int nodeIdx) {
     for (int s = height, l = nodeIdx + n, r = l; s > 0; --s) {
       for (int i = l >> s; i <= r >> s; ++i) if (lower[i] < upper[i]) {
-//if (i == 0) System.out.printf("pushInternal 0: nodeIdx(%d)\n", nodeIdx);
         pushLazyPropagation(i, i << 1);
         pushLazyPropagation(i, (i << 1) | 1);
         clearLazyPropagation(i);

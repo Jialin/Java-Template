@@ -3,7 +3,7 @@ package template.collections.intervaltree;
 /**
  * Abstract interval tree.
  */
-public abstract class AbstractIntervalTree {
+public abstract class AbstractCompleteIntervalTree {
 
   private int n;
   private int left, right;
@@ -43,7 +43,7 @@ public abstract class AbstractIntervalTree {
    */
   public abstract void clearLazyPropagation(int nodeIdx);
 
-  public AbstractIntervalTree(int leafCapacity) {
+  public AbstractCompleteIntervalTree(int leafCapacity) {
     createSubclass(leafCapacity << 2);
     init(leafCapacity);
   }
