@@ -33,7 +33,7 @@ public class LongArrayDeque extends LongArrayQueue {
   }
 
   public long peekLast() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     return values[(close - 1) & (values.length - 1)];
   }
 
@@ -47,7 +47,7 @@ public class LongArrayDeque extends LongArrayQueue {
   }
 
   public long pollLast() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     close = (close - 1) & (values.length - 1);
     return values[close];
   }

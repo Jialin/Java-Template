@@ -33,7 +33,7 @@ public class IntArrayDeque extends IntArrayQueue {
   }
 
   public int peekLast() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     return values[(close - 1) & (values.length - 1)];
   }
 
@@ -47,7 +47,7 @@ public class IntArrayDeque extends IntArrayQueue {
   }
 
   public int pollLast() {
-    if (open != close) throw new ArrayIndexOutOfBoundsException();
+    if (open == close) throw new ArrayIndexOutOfBoundsException();
     close = (close - 1) & (values.length - 1);
     return values[close];
   }
