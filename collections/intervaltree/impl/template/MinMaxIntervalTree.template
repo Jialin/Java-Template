@@ -1,0 +1,90 @@
+[
+  {
+    "filename": "IntMaxIntervalTree",
+    "type": "int",
+    "compare": "max",
+    "initvalue": "Integer.MIN_VALUE"
+  },
+  {
+    "filename": "IntMinIntervalTree",
+    "type": "int",
+    "compare": "min",
+    "initvalue": "Integer.MAX_VALUE"
+  },
+  {
+    "filename": "LongMaxIntervalTree",
+    "type": "long",
+    "compare": "max",
+    "initvalue": "Long.MIN_VALUE"
+  },
+  {
+    "filename": "LongMinIntervalTree",
+    "type": "long",
+    "compare": "min",
+    "initvalue": "Long.MAX_VALUE"
+  }
+]
+====================================================================================================
+package template.collections.intervaltree.impl;
+
+import template.collections.intervaltree.AbstractIntervalTree;
+
+public class %filename% extends AbstractIntervalTree {
+
+  public %filename%(int leafCapacity) {
+    super(leafCapacity);
+  }
+
+  private %type%[] values;
+  private %type%[] %compare%Values;
+
+  @Override
+  public void init(int n) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void createStorage(int nodeCapacity) {
+    %compare%Values = new %type%[nodeCapacity];
+  }
+
+  @Override
+  public void initLeaf(int nodeIdx, int idx) {
+    %compare%Values[nodeIdx] = values[idx];
+  }
+
+  @Override
+  public void merge(int idx, int leftIdx, int rightIdx) {
+    %compare%Values[idx] = Math.%compare%(%compare%Values[leftIdx], %compare%Values[rightIdx]);
+  }
+
+  @Override
+  public void copy(int destIdx, int sourceIdx) {
+    %compare%Values[destIdx] = %compare%Values[sourceIdx];
+  }
+
+  @Override
+  public void clearNode(int idx) {
+    %compare%Values[idx] = %initvalue%;
+  }
+
+  @Override
+  public String toDisplay(int nodeIdx) {
+    return String.valueOf(%compare%Values[nodeIdx]);
+  }
+
+  public void init(int n, %type%[] values) {
+    this.values = values;
+    super.init(n);
+  }
+
+  public void update(int idx, %type% value) {
+    %compare%Values[idx + leafCnt()] = value;
+    populateRangeUpdateToRoot(idx, idx + 1);
+  }
+
+  public %type% calc(int lower, int upper) {
+    calcRange(lower, upper);
+    return %compare%Values[0];
+  }
+}
