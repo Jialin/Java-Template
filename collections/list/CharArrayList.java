@@ -48,10 +48,7 @@ public class CharArrayList implements Displayable, CharCollection, Iterable<Char
 
   @Override
   public void addAll(char[] values) {
-    ensureCapacity(size + values.length);
-    for (char value : values) {
-      addInternal(value);
-    }
+    addAll(values, 0, values.length);
   }
 
   @Override
@@ -66,6 +63,13 @@ public class CharArrayList implements Displayable, CharCollection, Iterable<Char
     ensureCapacity(size + values.size);
     for (int i = 0; i < values.size; ++i) {
       addInternal(values.get(i));
+    }
+  }
+
+  public void addAll(char[] values, int lower, int upper) {
+    ensureCapacity(size + upper - lower);
+    for (int i = lower; i < upper; ++i) {
+      addInternal(values[i]);
     }
   }
 

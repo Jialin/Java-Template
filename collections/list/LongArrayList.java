@@ -48,10 +48,7 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
 
   @Override
   public void addAll(long[] values) {
-    ensureCapacity(size + values.length);
-    for (long value : values) {
-      addInternal(value);
-    }
+    addAll(values, 0, values.length);
   }
 
   @Override
@@ -66,6 +63,13 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
     ensureCapacity(size + values.size);
     for (int i = 0; i < values.size; ++i) {
       addInternal(values.get(i));
+    }
+  }
+
+  public void addAll(long[] values, int lower, int upper) {
+    ensureCapacity(size + upper - lower);
+    for (int i = lower; i < upper; ++i) {
+      addInternal(values[i]);
     }
   }
 

@@ -48,10 +48,7 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
 
   @Override
   public void addAll(int[] values) {
-    ensureCapacity(size + values.length);
-    for (int value : values) {
-      addInternal(value);
-    }
+    addAll(values, 0, values.length);
   }
 
   @Override
@@ -66,6 +63,13 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
     ensureCapacity(size + values.size);
     for (int i = 0; i < values.size; ++i) {
       addInternal(values.get(i));
+    }
+  }
+
+  public void addAll(int[] values, int lower, int upper) {
+    ensureCapacity(size + upper - lower);
+    for (int i = lower; i < upper; ++i) {
+      addInternal(values[i]);
     }
   }
 

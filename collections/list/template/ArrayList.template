@@ -69,10 +69,7 @@ public class %Type%ArrayList implements Displayable, %Type%Collection, Iterable<
 
   @Override
   public void addAll(%type%[] values) {
-    ensureCapacity(size + values.length);
-    for (%type% value : values) {
-      addInternal(value);
-    }
+    addAll(values, 0, values.length);
   }
 
   @Override
@@ -87,6 +84,13 @@ public class %Type%ArrayList implements Displayable, %Type%Collection, Iterable<
     ensureCapacity(size + values.size);
     for (int i = 0; i < values.size; ++i) {
       addInternal(values.get(i));
+    }
+  }
+
+  public void addAll(%type%[] values, int lower, int upper) {
+    ensureCapacity(size + upper - lower);
+    for (int i = lower; i < upper; ++i) {
+      addInternal(values[i]);
     }
   }
 
