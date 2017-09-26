@@ -1,5 +1,6 @@
 package template.graph.blockable;
 
+import template.array.BooleanArrayUtils;
 import template.graph.basic.AbstractDirectedGraph;
 
 /**
@@ -9,17 +10,24 @@ public class BlockableDirectedGraph extends AbstractDirectedGraph implements Blo
 
   public boolean[] blocked;
 
+  public BlockableDirectedGraph() {
+    super();
+  }
+
   public BlockableDirectedGraph(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {
-    blocked = new boolean[edgeCapacity];
+  public void createVertexStorage(int vertexCapacity) {}
+
+  @Override
+  public void expandEdgeStorage(int edgeCapacity) {
+    blocked = BooleanArrayUtils.expand(blocked, edgeCapacity);
   }
 
   @Override
-  public void initSubclass(int vertexCnt) {}
+  public void initVertexStorage(int vertexCnt) {}
 
   @Override
   public void add(int fromIdx, int toIdx) {

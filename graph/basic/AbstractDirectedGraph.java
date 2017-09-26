@@ -1,5 +1,8 @@
 package template.graph.basic;
 
+import template.array.IntArrayUtils;
+import template.numbertheory.number.IntUtils;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -11,39 +14,37 @@ public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
   protected int[] lastIn, lastOut;
   protected int[] inDegree, outDegree;
 
-  public abstract void createSubclass(int vertexCapacity, int edgeCapacity);
-  public abstract void initSubclass(int vertexCnt);
+  public abstract void createVertexStorage(int vertexCapacity);
+  public abstract void expandEdgeStorage(int edgeCapacity);
+  public abstract void initVertexStorage(int vertexCnt);
+
+  public AbstractDirectedGraph() {}
 
   public AbstractDirectedGraph(int vertexCapacity, int edgeCapacity) {
     this(vertexCapacity, edgeCapacity, true);
   }
 
   public AbstractDirectedGraph(int vertexCapacity, int edgeCapacity, boolean initialize) {
-    fromIdx = new int[edgeCapacity];
-    toIdx = new int[edgeCapacity];
-    lastIn = new int[vertexCapacity];
-    lastOut = new int[vertexCapacity];
-    nextIn = new int[edgeCapacity];
-    nextOut = new int[edgeCapacity];
-    inDegree = new int[vertexCapacity];
-    outDegree = new int[vertexCapacity];
-    createSubclass(vertexCapacity, edgeCapacity);
+    ensureVertexCapacity(vertexCapacity);
+    ensureEdgeCapacity(edgeCapacity);
     if (initialize) init(vertexCapacity);
   }
 
   @Override
   public void init(int vertexCnt) {
+    ensureVertexCapacity(vertexCnt);
     this.vertexCnt = vertexCnt;
     currentEdgeCnt = 0;
     Arrays.fill(inDegree, 0, vertexCnt, 0);
     Arrays.fill(outDegree, 0, vertexCnt, 0);
     Arrays.fill(lastIn, 0, vertexCnt, -1);
     Arrays.fill(lastOut, 0, vertexCnt, -1);
-    initSubclass(vertexCnt);
+    initVertexStorage(vertexCnt);
   }
 
   @Override
   public void add(int fromIdx, int toIdx) {
+    ensureEdgeCapacity(currentEdgeCnt + 1);
     this.fromIdx[currentEdgeCnt] = fromIdx;
     this.toIdx[currentEdgeCnt] = toIdx;
     ++outDegree[fromIdx];
@@ -122,5 +123,25 @@ public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
         return res;
       }
     };
+  }
+
+  private void ensureVertexCapacity(int vertexCapacity) {
+    if (lastIn != null && lastIn.length >= vertexCapacity) return;
+    int capacity = IntUtils.nextPow2(vertexCapacity);
+    lastIn = new int[capacity];
+    lastOut = new int[capacity];
+    inDegree = new int[capacity];
+    outDegree = new int[capacity];
+    createVertexStorage(capacity);
+  }
+
+  private void ensureEdgeCapacity(int edgeCapacity) {
+    if (fromIdx != null && fromIdx.length >= edgeCapacity) return;
+    int capacity = IntUtils.nextPow2(edgeCapacity);
+    fromIdx = IntArrayUtils.expand(fromIdx, capacity);
+    toIdx = IntArrayUtils.expand(toIdx, capacity);
+    nextIn = IntArrayUtils.expand(nextIn, capacity);
+    nextOut = IntArrayUtils.expand(nextOut, capacity);
+    expandEdgeStorage(capacity);
   }
 }

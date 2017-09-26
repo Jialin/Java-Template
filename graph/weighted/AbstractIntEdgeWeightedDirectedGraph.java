@@ -1,5 +1,6 @@
 package template.graph.weighted;
 
+import template.array.IntArrayUtils;
 import template.graph.basic.AbstractDirectedGraph;
 
 public abstract class AbstractIntEdgeWeightedDirectedGraph
@@ -13,12 +14,15 @@ public abstract class AbstractIntEdgeWeightedDirectedGraph
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {
-    edgeWeights = new int[edgeCapacity];
+  public void createVertexStorage(int vertexCapacity) {}
+
+  @Override
+  public void expandEdgeStorage(int edgeCapacity) {
+    edgeWeights = IntArrayUtils.expand(edgeWeights, edgeCapacity);
   }
 
   @Override
-  public void initSubclass(int vertexCnt) {}
+  public void initVertexStorage(int vertexCnt) {}
 
   @Override
   public void add(int fromIdx, int toIdx) {

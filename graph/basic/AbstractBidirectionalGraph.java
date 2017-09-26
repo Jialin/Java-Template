@@ -2,6 +2,10 @@ package template.graph.basic;
 
 public abstract class AbstractBidirectionalGraph extends AbstractDirectedGraph implements BidirectionalGraphInterface {
 
+  public AbstractBidirectionalGraph() {
+    super();
+  }
+
   public AbstractBidirectionalGraph(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity << 1);
   }

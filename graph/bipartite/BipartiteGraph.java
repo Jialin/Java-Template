@@ -6,16 +6,23 @@ public class BipartiteGraph extends AbstractDirectedGraph {
 
   public int leftCnt, rightCnt;
 
+  public BipartiteGraph() {
+    super();
+  }
+
   public BipartiteGraph(int leftCntCapacity, int rightCntCapacity, int edgeCapacity) {
     super(leftCntCapacity + rightCntCapacity, edgeCapacity, false);
     init(leftCntCapacity, rightCntCapacity);
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {}
+  public void createVertexStorage(int vertexCapacity) {}
 
   @Override
-  public void initSubclass(int vertexCnt) {}
+  public void expandEdgeStorage(int edgeCapacity) {}
+
+  @Override
+  public void initVertexStorage(int vertexCnt) {}
 
   @Override
   public void init(int vertexCnt) {

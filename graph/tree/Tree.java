@@ -7,8 +7,11 @@ public class Tree extends AbstractTree {
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {}
+  public void createVertexStorage(int vertexCapacity) {}
 
   @Override
-  public void initSubclass(int vertexCnt) {}
+  public void expandEdgeStorage(int edgeCapacity) {}
+
+  @Override
+  public void initVertexStorage(int vertexCnt) {}
 }

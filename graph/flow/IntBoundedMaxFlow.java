@@ -1,5 +1,7 @@
 package template.graph.flow;
 
+import template.array.IntArrayUtils;
+
 import java.util.Arrays;
 
 /**
@@ -13,23 +15,30 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
   private int[] inFlow, outFlow;
   private boolean noSolution;
 
+  public IntBoundedMaxFlow() {}
+
   public IntBoundedMaxFlow(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity + 2, edgeCapacity + vertexCapacity + 1, false);
     init(vertexCapacity);
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {
-    super.createSubclass(vertexCapacity, edgeCapacity);
-    this.lowerBound = new int[edgeCapacity];
-    this.upperBound = new int[edgeCapacity];
+  public void createVertexStorage(int vertexCapacity) {
+    super.createVertexStorage(vertexCapacity);
     this.inFlow = new int[vertexCapacity];
     this.outFlow = new int[vertexCapacity];
   }
 
   @Override
-  public void initSubclass(int vertexCnt) {
-    super.initSubclass(vertexCnt);
+  public void expandEdgeStorage(int edgeCapacity) {
+    super.expandEdgeStorage(edgeCapacity);
+    this.lowerBound = IntArrayUtils.expand(lowerBound, edgeCapacity);
+    this.upperBound = IntArrayUtils.expand(upperBound, edgeCapacity);
+  }
+
+  @Override
+  public void initVertexStorage(int vertexCnt) {
+    super.initVertexStorage(vertexCnt);
     fakeSource = vertexCnt - 2;
     fakeSink = vertexCnt - 1;
     Arrays.fill(inFlow, 0, vertexCnt, 0);
@@ -56,14 +65,15 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
    * Adds an edge from {@code fromIdx} to {@code toIdx} with {@code lowerBound} and {@code upperBound}.
    */
   public int add(int fromIdx, int toIdx, int lowerBound, int upperBound) {
+    super.add(fromIdx, toIdx, upperBound - lowerBound);
     noSolution |= lowerBound > upperBound;
-    this.lowerBound[currentEdgeCnt] = lowerBound;
-    this.upperBound[currentEdgeCnt] = upperBound;
+    this.lowerBound[currentEdgeCnt - 2] = lowerBound;
+    this.upperBound[currentEdgeCnt - 2] = upperBound;
     if (lowerBound > 0) {
       outFlow[fromIdx] += lowerBound;
       inFlow[toIdx] += lowerBound;
     }
-    return super.add(fromIdx, toIdx, upperBound - lowerBound);
+    return currentEdgeCnt;
   }
 
   /**

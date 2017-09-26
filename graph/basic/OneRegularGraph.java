@@ -2,62 +2,54 @@ package template.graph.basic;
 
 import java.util.Arrays;
 
-/**
- * Directed graph with n edges (i.e. each node with exactly one outgoing edge).
- */
+/** Directed graph with n edges (i.e. each node with exactly one outgoing edge). */
 public class OneRegularGraph extends AbstractDirectedGraph {
 
-  /**
-   * Total number of components.
-   */
+  /** Total number of components. */
   public int compCnt;
 
-  /**
-   * Size of the i-th component.
-   */
+  /** Size of the i-th component. */
   public int[] compSize;
 
-  /**
-   * Index of the component which i-th node belongs to.
-   */
+  /** Index of the component which i-th node belongs to. */
   public int[] compIdx;
 
-  /**
-   * Size of the core of the i-th component.
-   */
+  /** Size of the core of the i-th component. */
   public int[] coreSize;
 
-  /**
-   * Distance from the i-th node to its core.
-   */
+  /** Distance from the i-th node to its core. */
   public int[] distToCore;
 
-  /**
-   * Closest core node to the i-th node.
-   */
+  /** Closest core node to the i-th node. */
   public int[] closestCoreNode;
 
   private int[] outIdx;
   private int[] cnt;
+
+  public OneRegularGraph() {
+    super();
+  }
 
   public OneRegularGraph(int vertexCapacity) {
     super(vertexCapacity, vertexCapacity);
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {
+  public void createVertexStorage(int vertexCapacity) {
     compSize = new int[vertexCapacity];
     compIdx = new int[vertexCapacity];
     coreSize = new int[vertexCapacity];
     distToCore = new int[vertexCapacity];
     closestCoreNode = new int[vertexCapacity];
-
     outIdx = new int[vertexCapacity];
     cnt = new int[vertexCapacity];
   }
 
   @Override
-  public void initSubclass(int vertexCnt) {
+  public void expandEdgeStorage(int edgeCapacity) {}
+
+  @Override
+  public void initVertexStorage(int vertexCnt) {
     Arrays.fill(outIdx, 0, vertexCnt, -1);
     Arrays.fill(compIdx, 0, vertexCnt, -1);
     Arrays.fill(cnt, 0, vertexCnt, 0);
@@ -70,9 +62,7 @@ public class OneRegularGraph extends AbstractDirectedGraph {
     this.outIdx[fromIdx] = toIdx;
   }
 
-  /**
-   * Calculates properties of the one regular graph. Returns the number of components.
-   */
+  /** Calculates properties of the one regular graph. Returns the number of components. */
   public int calc() {
     compCnt = 0;
     for (int i = 0; i < vertexCnt; ++i) {

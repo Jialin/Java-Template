@@ -1,13 +1,12 @@
 package template.graph.flow;
 
+import template.array.IntArrayUtils;
 import template.collections.queue.IntArrayQueue;
 import template.graph.basic.AbstractBidirectionalGraph;
 
 import java.util.Arrays;
 
-/**
- * A max flow system.
- */
+/** A max flow system. */
 public class IntMaxFlow extends AbstractBidirectionalGraph {
 
   protected static final int INF = Integer.MAX_VALUE;
@@ -19,6 +18,8 @@ public class IntMaxFlow extends AbstractBidirectionalGraph {
   private int[] level;
   private int[] edgePnt;
 
+  public IntMaxFlow() {}
+
   public IntMaxFlow(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
   }
@@ -28,43 +29,41 @@ public class IntMaxFlow extends AbstractBidirectionalGraph {
   }
 
   @Override
-  public void createSubclass(int vertexCapacity, int edgeCapacity) {
-    this.flow = new int[edgeCapacity];
-    this.capacity = new int[edgeCapacity];
+  public void createVertexStorage(int vertexCapacity) {
     this.q = new IntArrayQueue(vertexCapacity);
     this.level = new int[vertexCapacity];
     this.edgePnt = new int[vertexCapacity];
   }
 
   @Override
-  public void initSubclass(int vertexCnt) {}
+  public void expandEdgeStorage(int edgeCapacity) {
+    this.flow = IntArrayUtils.expand(flow, edgeCapacity);
+    this.capacity = IntArrayUtils.expand(capacity, edgeCapacity);
+  }
+
+  @Override
+  public void initVertexStorage(int vertexCnt) {}
 
   @Override
   public void add(int fromIdx, int toIdx) {
     throw new UnsupportedOperationException();
   }
 
-  /**
-   * Adds an edge from {@code fromIdx} to {@code toIdx} with {@code capacity}.
-   */
+  /** Adds an edge from {@code fromIdx} to {@code toIdx} with {@code capacity}. */
   public int add(int fromIdx, int toIdx, int capacity) {
-    flow[currentEdgeCnt] = flow[currentEdgeCnt + 1] = 0;
-    this.capacity[currentEdgeCnt] = capacity;
-    this.capacity[currentEdgeCnt + 1] = 0;
     super.add(fromIdx, toIdx);
+    flow[currentEdgeCnt - 2] = flow[currentEdgeCnt - 1] = 0;
+    this.capacity[currentEdgeCnt - 2] = capacity;
+    this.capacity[currentEdgeCnt - 1] = 0;
     return currentEdgeCnt - 2;
   }
 
-  /**
-   * Adds an edge from {@code fromIdx} to {@code toIdx} with infinite capacity.
-   */
+  /** Adds an edge from {@code fromIdx} to {@code toIdx} with infinite capacity. */
   public int addInf(int fromIdx, int toIdx) {
     return add(fromIdx, toIdx, INF);
   }
 
-  /**
-   * Calculates the max flow from {@code source} to {@code sink}.
-   */
+  /** Calculates the max flow from {@code source} to {@code sink}. */
   public int calc(int source, int sink) {
     this.source = source;
     this.sink = sink;
