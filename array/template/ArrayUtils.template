@@ -203,6 +203,14 @@ public class %filename% {
     return kthInternal(values, fromIdx, toIdx - 1, kth);
   }
 
+  public static %type%[] expand(%type%[] values, int newLength) {
+    if (values != null && values.length >= newLength) return values;
+    %type%[] res = new %type%[newLength];
+    if (values == null) return res;
+    for (int i = 0; i < values.length; ++i) res[i] = values[i];
+    return res;
+  }
+
   public static String toString(%type%[] values) {
     return toString(values, 0, values.length);
   }

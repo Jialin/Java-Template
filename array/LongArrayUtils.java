@@ -185,6 +185,14 @@ public class LongArrayUtils {
     return kthInternal(values, fromIdx, toIdx - 1, kth);
   }
 
+  public static long[] expand(long[] values, int newLength) {
+    if (values != null && values.length >= newLength) return values;
+    long[] res = new long[newLength];
+    if (values == null) return res;
+    for (int i = 0; i < values.length; ++i) res[i] = values[i];
+    return res;
+  }
+
   public static String toString(long[] values) {
     return toString(values, 0, values.length);
   }

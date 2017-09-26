@@ -185,6 +185,14 @@ public class IntArrayUtils {
     return kthInternal(values, fromIdx, toIdx - 1, kth);
   }
 
+  public static int[] expand(int[] values, int newLength) {
+    if (values != null && values.length >= newLength) return values;
+    int[] res = new int[newLength];
+    if (values == null) return res;
+    for (int i = 0; i < values.length; ++i) res[i] = values[i];
+    return res;
+  }
+
   public static String toString(int[] values) {
     return toString(values, 0, values.length);
   }

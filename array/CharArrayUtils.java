@@ -185,6 +185,14 @@ public class CharArrayUtils {
     return kthInternal(values, fromIdx, toIdx - 1, kth);
   }
 
+  public static char[] expand(char[] values, int newLength) {
+    if (values != null && values.length >= newLength) return values;
+    char[] res = new char[newLength];
+    if (values == null) return res;
+    for (int i = 0; i < values.length; ++i) res[i] = values[i];
+    return res;
+  }
+
   public static String toString(char[] values) {
     return toString(values, 0, values.length);
   }
