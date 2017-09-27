@@ -114,6 +114,16 @@ public class IntArrayUtils {
     return res;
   }
 
+  public static void decreaseOne(int[] values) {
+    decreaseOne(values, 0, values.length);
+  }
+
+  public static void decreaseOne(int[] values, int fromIdx, int toIdx) {
+    for (int i = fromIdx; i < toIdx; ++i) {
+      --values[i];
+    }
+  }
+
   public static void update(int[] values, int delta) {
     update(values, 0, values.length, delta);
   }
