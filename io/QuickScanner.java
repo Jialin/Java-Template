@@ -98,6 +98,13 @@ public class QuickScanner {
     }
   }
 
+  public void nextInts(int n, int[]... res) {
+    int m = res.length;
+    for (int i = 0; i < n; ++i) for (int j = 0; j < m; ++j) {
+      res[j][i] = nextInt();
+    }
+  }
+
   public void nextInt(int n, IntArrayList res) {
     for (int i = 0; i < n; ++i) {
       res.add(nextInt());
