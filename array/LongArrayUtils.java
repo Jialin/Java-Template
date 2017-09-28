@@ -134,6 +134,18 @@ public class LongArrayUtils {
     }
   }
 
+  public static void replaceAll(long[] values, long oldValue, long newValue) {
+    replaceAll(values, 0, values.length, oldValue, newValue);
+  }
+
+  public static void replaceAll(long[] values, int fromIdx, int toIdx, long oldValue, long newValue) {
+    for (int i = fromIdx; i < toIdx; ++i) {
+      if (values[i] == oldValue) {
+        values[i] = newValue;
+      }
+    }
+  }
+
   public static int lowerBound(long[] values, long value) {
     return lowerBound(values, 0, values.length, value);
   }
@@ -203,11 +215,11 @@ public class LongArrayUtils {
     return res;
   }
 
-  public static String toString(long[] values) {
-    return toString(values, 0, values.length);
+  public static String toDisplay(long[] values) {
+    return toDisplay(values, 0, values.length);
   }
 
-  public static String toString(long[] values, int fromIdx, int toIdx) {
+  public static String toDisplay(long[] values, int fromIdx, int toIdx) {
     StringBuilder sb = new StringBuilder("[");
     for (int i = fromIdx; i < toIdx; ++i) {
       if (i != fromIdx) sb.append(", ");

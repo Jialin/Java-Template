@@ -186,7 +186,7 @@ public class %Type%ArrayList implements Displayable, %Type%Collection, Iterable<
 
   @Override
   public String toDisplay() {
-    return %Type%ArrayUtils.toString(values, 0, size);
+    return %Type%ArrayUtils.toDisplay(values, 0, size);
   }
 
   @Override

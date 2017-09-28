@@ -165,7 +165,7 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
 
   @Override
   public String toDisplay() {
-    return IntArrayUtils.toString(values, 0, size);
+    return IntArrayUtils.toDisplay(values, 0, size);
   }
 
   @Override

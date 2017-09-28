@@ -165,7 +165,7 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
 
   @Override
   public String toDisplay() {
-    return LongArrayUtils.toString(values, 0, size);
+    return LongArrayUtils.toDisplay(values, 0, size);
   }
 
   @Override

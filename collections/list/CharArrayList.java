@@ -165,7 +165,7 @@ public class CharArrayList implements Displayable, CharCollection, Iterable<Char
 
   @Override
   public String toDisplay() {
-    return CharArrayUtils.toString(values, 0, size);
+    return CharArrayUtils.toDisplay(values, 0, size);
   }
 
   @Override

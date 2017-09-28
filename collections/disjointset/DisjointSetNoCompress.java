@@ -61,9 +61,9 @@ public class DisjointSetNoCompress implements Displayable {
   @Override
   public String toDisplay() {
     StringBuilder sb = new StringBuilder();
-    sb.append(String.format("parent:%s\n", IntArrayUtils.toString(parent, 0, n)));
-    sb.append(String.format("height:%s\n", IntArrayUtils.toString(height, 0, n)));
-    sb.append(String.format("distance:%s", IntArrayUtils.toString(distance, 0, n)));
+    sb.append(String.format("parent:%s\n", IntArrayUtils.toDisplay(parent, 0, n)));
+    sb.append(String.format("height:%s\n", IntArrayUtils.toDisplay(height, 0, n)));
+    sb.append(String.format("distance:%s", IntArrayUtils.toDisplay(distance, 0, n)));
     return sb.toString();
   }
 
