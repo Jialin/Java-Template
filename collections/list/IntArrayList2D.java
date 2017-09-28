@@ -1,6 +1,8 @@
 package template.collections.list;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.function.IntConsumer;
 
 public class IntArrayList2D {
 
@@ -29,6 +31,7 @@ public class IntArrayList2D {
   public void add(int listIdx, int value) {
     ++size[listIdx];
     prev[close] = last[listIdx];
+    if (last[listIdx] >= 0) next[last[listIdx]] = close;
     next[close] = -1;
     values[close] = value;
     if (first[listIdx] < 0) first[listIdx] = close;
@@ -48,5 +51,29 @@ public class IntArrayList2D {
       first[listIdx] = -1;
     }
     return values[idx];
+  }
+
+  public Iterable<Integer> values(int listIdx) {
+    return () -> new Iterator<Integer>() {
+      private int idx = first[listIdx];
+
+      @Override
+      public boolean hasNext() {
+        return idx >= 0;
+      }
+
+      @Override
+      public Integer next() {
+        int res = values[idx];
+        idx = next[idx];
+        return res;
+      }
+    };
+  }
+
+  public void forEach(int listIdx, IntConsumer consumer) {
+    for (int idx = first[listIdx]; idx >= 0; idx = next[idx]) {
+      consumer.accept(idx);
+    }
   }
 }

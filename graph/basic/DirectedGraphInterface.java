@@ -1,5 +1,7 @@
 package template.graph.basic;
 
+import java.util.function.IntConsumer;
+
 public interface DirectedGraphInterface {
 
   void init(int vertexCnt);
@@ -16,5 +18,9 @@ public interface DirectedGraphInterface {
   int inDegree(int nodeIdx);
   int outDegree(int nodeIdx);
 
+  void forEachInNodes(int nodeIdx, IntConsumer consumer);
+  void forEachOutNodes(int nodeIdx, IntConsumer consumer);
+
+  Iterable<Integer> inNodes(int nodeIdx);
   Iterable<Integer> outNodes(int nodeIdx);
 }

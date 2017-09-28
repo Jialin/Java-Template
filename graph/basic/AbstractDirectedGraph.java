@@ -5,6 +5,7 @@ import template.numbertheory.number.IntUtils;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.function.IntConsumer;
 
 public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
 
@@ -104,6 +105,39 @@ public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
   @Override
   public int outDegree(int nodeIdx) {
     return outDegree[nodeIdx];
+  }
+
+  @Override
+  public void forEachInNodes(int nodeIdx, IntConsumer consumer) {
+    for (int edgeIdx = lastIn[nodeIdx]; edgeIdx >= 0; edgeIdx = nextIn[edgeIdx]) {
+      consumer.accept(fromIdx[edgeIdx]);
+    }
+  }
+
+  @Override
+  public Iterable<Integer> inNodes(int nodeIdx) {
+    return () -> new Iterator<Integer>() {
+      private int edgeIdx = lastIn[nodeIdx];
+
+      @Override
+      public boolean hasNext() {
+        return edgeIdx >= 0;
+      }
+
+      @Override
+      public Integer next() {
+        int res = fromIdx[edgeIdx];
+        edgeIdx = nextIn(edgeIdx);
+        return res;
+      }
+    };
+  }
+
+  @Override
+  public void forEachOutNodes(int nodeIdx, IntConsumer consumer) {
+    for (int edgeIdx = lastOut[nodeIdx]; edgeIdx >= 0; edgeIdx = nextOut[edgeIdx]) {
+      consumer.accept(toIdx[edgeIdx]);
+    }
   }
 
   @Override
