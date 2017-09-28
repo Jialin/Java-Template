@@ -1,10 +1,12 @@
 package template.collections.list;
 
+import template.io.Displayable;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.IntConsumer;
 
-public class IntArrayList2D {
+public class IntArrayList2D implements Displayable {
 
   public int listCnt, close;
   public int[] size, first, last;
@@ -17,7 +19,6 @@ public class IntArrayList2D {
     prev = new int[elementCapacity];
     next = new int[elementCapacity];
     values = new int[elementCapacity];
-    init(listCapacity);
   }
 
   public void init(int listCnt) {
@@ -73,7 +74,22 @@ public class IntArrayList2D {
 
   public void forEach(int listIdx, IntConsumer consumer) {
     for (int idx = first[listIdx]; idx >= 0; idx = next[idx]) {
-      consumer.accept(idx);
+      consumer.accept(values[idx]);
     }
+  }
+
+  @Override
+  public String toDisplay() {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < listCnt; ++i) {
+      sb.append(String.format("list[%d]:", i));
+      boolean first = true;
+      for (int idx = this.first[i]; idx >= 0; idx = next[idx]) {
+        if (!first) sb.append(',');
+        sb.append(values[idx]);
+      }
+      sb.append('\n');
+    }
+    return sb.toString();
   }
 }
