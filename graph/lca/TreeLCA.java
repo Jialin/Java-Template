@@ -2,6 +2,7 @@ package template.graph.lca;
 
 import template.collections.rmq.IntMinimumRMQ;
 import template.graph.tree.TreeInterface;
+import template.numbertheory.number.IntUtils;
 
 public class TreeLCA {
 
@@ -12,17 +13,14 @@ public class TreeLCA {
   private int[] dfsIn, dfsOut, dfsDepth, dfsDepthIdx;
   private IntMinimumRMQ rmq;
 
+  public TreeLCA() {}
+
   public TreeLCA(int vertexCapacity) {
-    depth = new int[vertexCapacity];
-    int vertexCapacity3 = vertexCapacity * 3;
-    rmq = new IntMinimumRMQ(vertexCapacity3);
-    dfsIn = new int[vertexCapacity];
-    dfsOut = new int[vertexCapacity];
-    dfsDepth = new int[vertexCapacity3];
-    dfsDepthIdx = new int[vertexCapacity3];
+    ensureCapacity(vertexCapacity);
   }
 
   public void init(TreeInterface tree, int rootNodeIdx) {
+    ensureCapacity(tree.vertexCnt());
     this.tree = tree;
     dfsCnt = 0;
     dfsInternal(rootNodeIdx, -1, 0);
@@ -48,5 +46,17 @@ public class TreeLCA {
     dfsDepth[dfsCnt] = depth;
     dfsDepthIdx[dfsCnt] = u;
     dfsOut[u] = dfsCnt++;
+  }
+
+  private void ensureCapacity(int capacity) {
+    if (depth != null && depth.length >= capacity) return;
+    int size = IntUtils.nextPow2(capacity);
+    int size3 = IntUtils.nextPow2(capacity * 3);
+    depth = new int[size];
+    dfsIn = new int[size];
+    dfsOut = new int[size];
+    rmq = new IntMinimumRMQ(size3);
+    dfsDepth = new int[size3];
+    dfsDepthIdx = new int[size3];
   }
 }
