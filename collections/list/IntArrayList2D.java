@@ -1,6 +1,7 @@
 package template.collections.list;
 
 import template.io.Displayable;
+import template.numbertheory.number.IntUtils;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -12,16 +13,20 @@ public class IntArrayList2D implements Displayable {
   public int[] size, first, last;
   public int[] prev, next, values;
 
+  public IntArrayList2D() {}
+
   public IntArrayList2D(int listCapacity, int elementCapacity) {
-    size = new int[listCapacity];
-    first = new int[listCapacity];
-    last = new int[listCapacity];
-    prev = new int[elementCapacity];
-    next = new int[elementCapacity];
-    values = new int[elementCapacity];
+    this(listCapacity, elementCapacity, true);
+  }
+
+  public IntArrayList2D(int listCapacity, int elementCapacity, boolean initialize) {
+    ensureListCapacity(listCapacity);
+    ensureElementCapacity(elementCapacity);
+    if (initialize) init(listCapacity);
   }
 
   public void init(int listCnt) {
+    ensureListCapacity(listCnt);
     this.listCnt = listCnt;
     close = 0;
     Arrays.fill(size, 0, listCnt, 0);
@@ -30,6 +35,7 @@ public class IntArrayList2D implements Displayable {
   }
 
   public void add(int listIdx, int value) {
+    ensureElementCapacity(close + 1);
     ++size[listIdx];
     prev[close] = last[listIdx];
     if (last[listIdx] >= 0) next[last[listIdx]] = close;
@@ -91,5 +97,21 @@ public class IntArrayList2D implements Displayable {
       sb.append('\n');
     }
     return sb.toString();
+  }
+
+  private void ensureListCapacity(int capacity) {
+    if (size != null && size.length >= capacity) return;
+    int size = IntUtils.nextPow2(capacity);
+    this.size = new int[size];
+    first = new int[size];
+    last = new int[size];
+  }
+
+  private void ensureElementCapacity(int capacity) {
+    if (prev != null && prev.length >= capacity) return;
+    int size = IntUtils.nextPow2(capacity);
+    prev = new int[size];
+    next = new int[size];
+    values = new int[size];
   }
 }
