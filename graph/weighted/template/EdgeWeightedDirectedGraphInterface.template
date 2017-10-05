@@ -1,0 +1,18 @@
+[
+  {
+    "filename": "IntEdgeWeightedDirectedGraphInterface",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "BooleanEdgeWeightedDirectedGraphInterface",
+    "type": "boolean",
+    "Type": "Boolean"
+  }
+]
+====================================================================================================
+package template.graph.weighted;
+
+import template.graph.basic.DirectedGraphInterface;
+
+public interface %Type%EdgeWeightedDirectedGraphInterface extends %Type%EdgeWeighted, DirectedGraphInterface {}

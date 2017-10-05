@@ -1,0 +1,29 @@
+[
+  {
+    "filename": "AbstractIntEdgeWeightedBidirectionalGraph",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "AbstractBooleanEdgeWeightedBidirectionalGraph",
+    "type": "boolean",
+    "Type": "Boolean"
+  }
+]
+====================================================================================================
+package template.graph.weighted;
+
+public class Abstract%Type%EdgeWeightedBidirectionalGraph
+    extends Abstract%Type%EdgeWeightedDirectedGraph
+    implements %Type%EdgeWeightedBidirectionalGraphInterface {
+
+  public Abstract%Type%EdgeWeightedBidirectionalGraph(int vertexCapacity, int edgeCapacity) {
+    super(vertexCapacity, edgeCapacity << 1);
+  }
+
+  @Override
+  public void add(int fromIdx, int toIdx, %type% weight) {
+    super.add(fromIdx, toIdx, weight);
+    super.add(toIdx, fromIdx, weight);
+  }
+}

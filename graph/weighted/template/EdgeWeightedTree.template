@@ -1,0 +1,23 @@
+[
+  {
+    "filename": "IntEdgeWeightedTree",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "BooleanEdgeWeightedTree",
+    "type": "boolean",
+    "Type": "Boolean"
+  }
+]
+====================================================================================================
+package template.graph.weighted;
+
+public class %Type%EdgeWeightedTree
+    extends Abstract%Type%EdgeWeightedBidirectionalGraph
+    implements %Type%EdgeWeightedTreeInterface {
+
+  public %Type%EdgeWeightedTree(int vertexCapacity) {
+    super(vertexCapacity, vertexCapacity - 1);
+  }
+}

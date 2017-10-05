@@ -1,0 +1,21 @@
+[
+  {
+    "filename": "IntEdgeWeighted",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "BooleanEdgeWeighted",
+    "type": "boolean",
+    "Type": "Boolean"
+  }
+]
+====================================================================================================
+package template.graph.weighted;
+
+public interface %Type%EdgeWeighted {
+
+  void add(int fromIdx, int toIdx, %type% weight);
+
+  %type% edgeWeight(int edgeIdx);
+}

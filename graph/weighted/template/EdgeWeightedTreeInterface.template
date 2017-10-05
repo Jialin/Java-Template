@@ -1,0 +1,18 @@
+[
+  {
+    "filename": "IntEdgeWeightedTreeInterface",
+    "type": "int",
+    "Type": "Int"
+  },
+  {
+    "filename": "BooleanEdgeWeightedTreeInterface",
+    "type": "boolean",
+    "Type": "Boolean"
+  }
+]
+====================================================================================================
+package template.graph.weighted;
+
+import template.graph.tree.TreeInterface;
+
+public interface %Type%EdgeWeightedTreeInterface extends %Type%EdgeWeighted, TreeInterface {}
