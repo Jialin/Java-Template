@@ -159,6 +159,13 @@ public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
     };
   }
 
+  @Override
+  public void forEachOutEdges(int nodeIdx, IntConsumer consumer) {
+    for (int edgeIdx = lastOut[nodeIdx]; edgeIdx >= 0; edgeIdx = nextOut[edgeIdx]) {
+      consumer.accept(edgeIdx);
+    }
+  }
+
   private void ensureVertexCapacity(int vertexCapacity) {
     if (lastIn != null && lastIn.length >= vertexCapacity) return;
     int capacity = IntUtils.nextPow2(vertexCapacity);

@@ -20,6 +20,7 @@ public interface DirectedGraphInterface {
 
   void forEachInNodes(int nodeIdx, IntConsumer consumer);
   void forEachOutNodes(int nodeIdx, IntConsumer consumer);
+  void forEachOutEdges(int nodeIdx, IntConsumer consumer);
 
   Iterable<Integer> inNodes(int nodeIdx);
   Iterable<Integer> outNodes(int nodeIdx);
