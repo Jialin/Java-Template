@@ -22,28 +22,29 @@ public class LongMaxIntervalTree extends AbstractIntervalTree {
   }
 
   @Override
-  public void initLeaf(int nodeIdx, int idx) {
-    maxValues[nodeIdx] = values[idx];
+  public void initLeaf(int idxInTree, int idx) {
+    maxValues[idxInTree] = values[idx];
   }
 
   @Override
-  public void merge(int idx, int leftIdx, int rightIdx) {
-    maxValues[idx] = Math.max(maxValues[leftIdx], maxValues[rightIdx]);
+  public void merge(int leftIdxInTree, int rightIdxInTree, int idxInTree) {
+    maxValues[idxInTree] = Math.max(
+        maxValues[leftIdxInTree], maxValues[rightIdxInTree]);
   }
 
   @Override
-  public void copy(int destIdx, int sourceIdx) {
-    maxValues[destIdx] = maxValues[sourceIdx];
+  public void copyForCalc(int fromIdxInTree, int toIdxInTree) {
+    maxValues[toIdxInTree] = maxValues[fromIdxInTree];
   }
 
   @Override
-  public void clearNode(int idx) {
-    maxValues[idx] = Long.MIN_VALUE;
+  public void clearNode(int idxInTree) {
+    maxValues[idxInTree] = Long.MIN_VALUE;
   }
 
   @Override
-  public String toDisplay(int nodeIdx) {
-    return String.valueOf(maxValues[nodeIdx]);
+  public String toDisplay(int idxInTree) {
+    return String.valueOf(maxValues[idxInTree]);
   }
 
   public void init(int n, long[] values) {
@@ -52,7 +53,7 @@ public class LongMaxIntervalTree extends AbstractIntervalTree {
   }
 
   public void update(int idx, long value) {
-    maxValues[idx + leafCnt()] = value;
+    maxValues[idxInTree(idx)] = value;
     populateRangeUpdateToRoot(idx, idx + 1);
   }
 

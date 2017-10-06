@@ -22,28 +22,29 @@ public class IntMinIntervalTree extends AbstractIntervalTree {
   }
 
   @Override
-  public void initLeaf(int nodeIdx, int idx) {
-    minValues[nodeIdx] = values[idx];
+  public void initLeaf(int idxInTree, int idx) {
+    minValues[idxInTree] = values[idx];
   }
 
   @Override
-  public void merge(int idx, int leftIdx, int rightIdx) {
-    minValues[idx] = Math.min(minValues[leftIdx], minValues[rightIdx]);
+  public void merge(int leftIdxInTree, int rightIdxInTree, int idxInTree) {
+    minValues[idxInTree] = Math.min(
+        minValues[leftIdxInTree], minValues[rightIdxInTree]);
   }
 
   @Override
-  public void copy(int destIdx, int sourceIdx) {
-    minValues[destIdx] = minValues[sourceIdx];
+  public void copyForCalc(int fromIdxInTree, int toIdxInTree) {
+    minValues[toIdxInTree] = minValues[fromIdxInTree];
   }
 
   @Override
-  public void clearNode(int idx) {
-    minValues[idx] = Integer.MAX_VALUE;
+  public void clearNode(int idxInTree) {
+    minValues[idxInTree] = Integer.MAX_VALUE;
   }
 
   @Override
-  public String toDisplay(int nodeIdx) {
-    return String.valueOf(minValues[nodeIdx]);
+  public String toDisplay(int idxInTree) {
+    return String.valueOf(minValues[idxInTree]);
   }
 
   public void init(int n, int[] values) {
@@ -52,7 +53,7 @@ public class IntMinIntervalTree extends AbstractIntervalTree {
   }
 
   public void update(int idx, int value) {
-    minValues[idx + leafCnt()] = value;
+    minValues[idxInTree(idx)] = value;
     populateRangeUpdateToRoot(idx, idx + 1);
   }
 

@@ -13,18 +13,18 @@ public abstract class AbstractSimpleIntervalTree {
   /** Initializes the lazy propagation. */
   public abstract void initLazyPropagation(int nodeCapacity);
 
-  /** Initializes leaf node {@code nodeIdx} with range {@code [idx, idx+1)}. */
-  public abstract void initLeaf(int nodeIdx, int idx);
+  /** Initializes leaf node {@code idxInTree} with range {@code [idx, idx+1)}. */
+  public abstract void initLeaf(int idxInTree, int idx);
 
   /**
-   * Calculates the non-leaf node {@code nodeIdx} from its children.
+   * Calculates the non-leaf node {@code idxInTree} from its children.
    *
-   * NOTE: remember to consider the lazy propagation in node {@code nodeIdx}.
+   * NOTE: remember to consider the lazy propagation in node {@code idxInTree}.
    */
-  public abstract void calcNonLeafNode(int nodeIdx);
+  public abstract void calcNonLeafNode(int idxInTree);
 
-  /** Appends node {@code nodeIdx} to the calculation result. */
-  public abstract void calcAppend(int nodeIdx);
+  /** Appends node {@code idxInTree} to the calculation result. */
+  public abstract void calcAppend(int idxInTree);
 
   /**
    * Assigns lazy propagation to fake node (i.e. 0-th).
@@ -33,17 +33,17 @@ public abstract class AbstractSimpleIntervalTree {
    */
   public abstract void assignFakeLazyPropagation();
 
-  /** Pushes lazy propagation from node {@code fromNodeIdx} to node {@code toNodeIdx}. */
-  public abstract void pushLazyPropagation(int fromNodeIdx, int toNodeIdx);
+  /** Pushes lazy propagation from node {@code fromIdx} to node {@code toIdx}. */
+  public abstract void pushLazyPropagation(int fromIdxInTree, int toIdxInTree);
 
   /** Clears lazy propagation in the node. */
-  public abstract void clearLazyPropagation(int nodeIdx);
+  public abstract void clearLazyPropagation(int idxInTree);
 
   /** Text to display for the node value. */
-  public abstract String valueToString(int nodeIdx);
+  public abstract String valueToString(int idxInTree);
 
   /** Text to display for the node lazy propagation. */
-  public abstract String lazyPropagationToString(int nodeIdx);
+  public abstract String lazyPropagationToString(int idxInTree);
 
   public int[] lower, upper;
 
@@ -135,8 +135,8 @@ public abstract class AbstractSimpleIntervalTree {
     return sb.toString();
   }
 
-  private void pushInternal(int nodeIdx) {
-    for (int s = height, l = nodeIdx + n, r = l; s > 0; --s) {
+  private void pushInternal(int idxInTree) {
+    for (int s = height, l = idxInTree + n, r = l; s > 0; --s) {
       for (int i = l >> s; i <= r >> s; ++i) if (lower[i] < upper[i]) {
         pushLazyPropagation(i, i << 1);
         pushLazyPropagation(i, (i << 1) | 1);

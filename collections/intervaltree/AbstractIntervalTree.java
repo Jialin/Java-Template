@@ -9,14 +9,14 @@ public abstract class AbstractIntervalTree implements Displayable {
   /** Creates the underlying storage. */
   public abstract void createStorage(int nodeCapacity);
 
-  /** Initializes leaf node {@code nodeIdx} with range {@code [idx, idx+1)}. */
-  public abstract void initLeaf(int nodeIdx, int idx);
+  /** Initializes leaf node {@code idxInTree} with range {@code [idx, idx+1)}. */
+  public abstract void initLeaf(int idxInTree, int idx);
 
-  /** Merges {@code leftIdx} and {@code rightIdx} to {@code idx}. */
-  public abstract void merge(int idx, int leftIdx, int rightIdx);
+  /** Merges {@code leftIdxInTree} and {@code rightIdxInTree} to {@code idxInTree}. */
+  public abstract void merge(int leftIdxInTree, int rightIdxInTree, int idxInTree);
 
-  /** Copies from {@code sourceIdx} to {@code destIdx}. */
-  public abstract void copy(int destIdx, int sourceIdx);
+  /** Copies from {@code fromIdxInTree} to {@code toIdxInTree}. */
+  public abstract void copyForCalc(int fromIdxInTree, int toIdxInTree);
 
   /**
    * Clears node with initial result.
@@ -31,11 +31,11 @@ public abstract class AbstractIntervalTree implements Displayable {
   private int nodeCapacity;
   private int leafCnt;
   private int[] rangeLower, rangeUpper;
-  private IntArrayList calcIdx, calcIdxAppendix;
+  private IntArrayList calcIdxInTree, calcIdxInTreeAppendix;
 
   public AbstractIntervalTree(int leafCapacity) {
-    calcIdx = new IntArrayList();
-    calcIdxAppendix = new IntArrayList();
+    calcIdxInTree = new IntArrayList();
+    calcIdxInTreeAppendix = new IntArrayList();
     nodeCapacity = leafCapacity << 1;
     rangeLower = new int[nodeCapacity + 2];
     rangeUpper = new int[nodeCapacity + 2];
@@ -47,14 +47,14 @@ public abstract class AbstractIntervalTree implements Displayable {
     for (int i = 0; i < n; ++i) {
       rangeLower[n + i] = i;
       rangeUpper[n + i] = i + 1;
-      initLeaf(n + i, i);
+      initLeaf(i + leafCnt, i);
     }
     for (int i = n - 1; i > 0; --i) {
       int left = i << 1, right = left | 1;
       if (rangeUpper[left] == rangeLower[right]) {
         rangeLower[i] = rangeLower[left];
         rangeUpper[i] = rangeUpper[right];
-        merge(i, left, right);
+        merge(left, right, i);
       } else {
         rangeLower[i] = n;
         rangeUpper[i] = -1;
@@ -66,8 +66,8 @@ public abstract class AbstractIntervalTree implements Displayable {
     lower = (lower + leafCnt) >> 1;
     upper = (upper - 1 + leafCnt) >> 1;
     for ( ; lower > 0 && lower <= upper; lower >>= 1, upper >>= 1) {
-      for (int nodeIdx = lower; nodeIdx <= upper; ++nodeIdx) if (isValidNode(nodeIdx)) {
-        merge(nodeIdx);
+      for (int idxInTree = lower; idxInTree <= upper; ++idxInTree) if (isValidNode(idxInTree)) {
+        merge(idxInTree);
       }
     }
     for ( ; upper > 0 && isValidNode(upper); upper >>= 1) {
@@ -81,51 +81,55 @@ public abstract class AbstractIntervalTree implements Displayable {
       clearNode(0);
       return;
     }
-    calcIdx.clear();
-    calcIdxAppendix.clear();
+    calcIdxInTree.clear();
+    calcIdxInTreeAppendix.clear();
     for (lower += leafCnt, upper += leafCnt; lower < upper; lower >>= 1, upper >>= 1) {
       if ((lower & 1) > 0) {
-        if (isValidNode(lower)) calcIdx.add(lower);
+        if (isValidNode(lower)) calcIdxInTree.add(lower);
         ++lower;
       }
       if ((upper & 1) > 0) {
-        if (isValidNode(--upper)) calcIdxAppendix.add(upper);
+        if (isValidNode(--upper)) calcIdxInTreeAppendix.add(upper);
       }
     }
-    calcIdxAppendix.reverse();
-    calcIdx.addAll(calcIdxAppendix);
-    int idx = calcIdx.get(0);
-    int resIdx = nodeCapacity;
-    copy(resIdx, idx);
-    rangeLower[resIdx] = rangeLower[idx];
-    rangeUpper[resIdx] = rangeUpper[idx];
-    for (int i = 1; i < calcIdx.size; ++i, resIdx ^= 1) {
-      idx = calcIdx.get(i);
-      merge(resIdx ^ 1, resIdx, idx);
-      rangeLower[resIdx ^ 1] = rangeLower[resIdx];
-      rangeUpper[resIdx ^ 1] = rangeUpper[idx];
+    calcIdxInTreeAppendix.reverse();
+    calcIdxInTree.addAll(calcIdxInTreeAppendix);
+    int idxInTree = calcIdxInTree.get(0);
+    int resIdxInTree = nodeCapacity;
+    copyForCalc(idxInTree, resIdxInTree);
+    rangeLower[resIdxInTree] = rangeLower[idxInTree];
+    rangeUpper[resIdxInTree] = rangeUpper[idxInTree];
+    for (int i = 1; i < calcIdxInTree.size; ++i, resIdxInTree ^= 1) {
+      idxInTree = calcIdxInTree.get(i);
+      merge(resIdxInTree, idxInTree, resIdxInTree ^ 1);
+      rangeLower[resIdxInTree ^ 1] = rangeLower[resIdxInTree];
+      rangeUpper[resIdxInTree ^ 1] = rangeUpper[idxInTree];
     }
-    copy(0, resIdx);
+    copyForCalc(resIdxInTree, 0);
   }
 
   public int leafCnt() {
     return leafCnt;
   }
 
-  public int rangeLower(int idx) {
-    return rangeLower[idx];
+  public int idxInTree(int idx) {
+    return idx + leafCnt;
   }
 
-  public int rangeUpper(int idx) {
-    return rangeUpper[idx];
+  public int rangeLower(int idxInTree) {
+    return rangeLower[idxInTree];
   }
 
-  public int rangeLength(int idx) {
-    return rangeUpper[idx] - rangeLower[idx];
+  public int rangeUpper(int idxInTree) {
+    return rangeUpper[idxInTree];
   }
 
-  public boolean isValidNode(int idx) {
-    return rangeLower[idx] < rangeUpper[idx];
+  public int rangeLength(int idxInTree) {
+    return rangeUpper[idxInTree] - rangeLower[idxInTree];
+  }
+
+  public boolean isValidNode(int idxInTree) {
+    return rangeLower[idxInTree] < rangeUpper[idxInTree];
   }
 
   @Override
@@ -138,7 +142,7 @@ public abstract class AbstractIntervalTree implements Displayable {
     return sb.toString();
   }
 
-  private void merge(int idx) {
-    merge(idx, idx << 1, (idx << 1) | 1);
+  private void merge(int idxInTree) {
+    merge(idxInTree << 1, (idxInTree << 1) | 1, idxInTree);
   }
 }

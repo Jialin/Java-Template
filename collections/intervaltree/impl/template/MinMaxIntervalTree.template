@@ -49,28 +49,29 @@ public class %filename% extends AbstractIntervalTree {
   }
 
   @Override
-  public void initLeaf(int nodeIdx, int idx) {
-    %compare%Values[nodeIdx] = values[idx];
+  public void initLeaf(int idxInTree, int idx) {
+    %compare%Values[idxInTree] = values[idx];
   }
 
   @Override
-  public void merge(int idx, int leftIdx, int rightIdx) {
-    %compare%Values[idx] = Math.%compare%(%compare%Values[leftIdx], %compare%Values[rightIdx]);
+  public void merge(int leftIdxInTree, int rightIdxInTree, int idxInTree) {
+    %compare%Values[idxInTree] = Math.%compare%(
+        %compare%Values[leftIdxInTree], %compare%Values[rightIdxInTree]);
   }
 
   @Override
-  public void copy(int destIdx, int sourceIdx) {
-    %compare%Values[destIdx] = %compare%Values[sourceIdx];
+  public void copyForCalc(int fromIdxInTree, int toIdxInTree) {
+    %compare%Values[toIdxInTree] = %compare%Values[fromIdxInTree];
   }
 
   @Override
-  public void clearNode(int idx) {
-    %compare%Values[idx] = %initvalue%;
+  public void clearNode(int idxInTree) {
+    %compare%Values[idxInTree] = %initvalue%;
   }
 
   @Override
-  public String toDisplay(int nodeIdx) {
-    return String.valueOf(%compare%Values[nodeIdx]);
+  public String toDisplay(int idxInTree) {
+    return String.valueOf(%compare%Values[idxInTree]);
   }
 
   public void init(int n, %type%[] values) {
@@ -79,7 +80,7 @@ public class %filename% extends AbstractIntervalTree {
   }
 
   public void update(int idx, %type% value) {
-    %compare%Values[idx + leafCnt()] = value;
+    %compare%Values[idxInTree(idx)] = value;
     populateRangeUpdateToRoot(idx, idx + 1);
   }
 
