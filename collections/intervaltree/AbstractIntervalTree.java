@@ -23,10 +23,10 @@ public abstract class AbstractIntervalTree implements Displayable {
    *
    * NOTE: ONLY used when the calculation range is EMPTY.
    */
-  public abstract void clearNode(int idx);
+  public abstract void clearNode(int idxInTree);
 
   /** Text to display for the node value. */
-  public abstract String toDisplay(int idx);
+  public abstract String toDisplay(int idxInTree);
 
   private int nodeCapacity;
   private int leafCnt;
