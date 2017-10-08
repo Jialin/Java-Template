@@ -80,7 +80,7 @@ public class QuickScanner {
     int res = 0;
     do {
       if (c < '0' || '9' < c) throw new RuntimeException();
-      res = res * 10 + c - '0';
+      res = res * 10 + (c - '0');
       c = nextChar();
     } while (!isSpaceChar(c));
     return positive ? res : -res;
@@ -121,7 +121,7 @@ public class QuickScanner {
     long res = 0;
     do {
       if (c < '0' || '9' < c) throw new RuntimeException();
-      res = res * 10 + c - '0';
+      res = res * 10 + (c - '0');
       c = nextChar();
     } while (!isSpaceChar(c));
     return positive ? res : -res;
@@ -151,7 +151,7 @@ public class QuickScanner {
       if (c < '0' || c > '9') {
         throw new IllegalArgumentException("Unexpected character. " + c);
       }
-      res = res * 10 + c - '0';
+      res = res * 10 + (c - '0');
     }
     if (c == '.') {
       c = nextChar();
