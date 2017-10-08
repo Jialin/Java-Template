@@ -2,6 +2,13 @@ package template.collections.intervaltree.impl;
 
 import template.collections.intervaltree.AbstractIntervalTreeWithLazyPropagation;
 
+/**
+ * Interval tree supports:
+ * <ul>
+ *   <li>Setting value in a range</li>
+ *   <li>Calculating the minimum value in a range</li>
+ * </ul>
+ */
 public class IntMinIntervalTreeSupportSet extends AbstractIntervalTreeWithLazyPropagation {
 
   public IntMinIntervalTreeSupportSet(int leafCapacity) {
@@ -12,9 +19,9 @@ public class IntMinIntervalTreeSupportSet extends AbstractIntervalTreeWithLazyPr
     super(leafCapacity, initialize);
   }
 
-  int[] minValue;
-  boolean[] toSet;
-  int[] setValue;
+  private int[] minValue;
+  private boolean[] toSet;
+  private int[] setValue;
 
   @Override
   public void createStorage(int nodeCapacity) {
@@ -71,14 +78,14 @@ public class IntMinIntervalTreeSupportSet extends AbstractIntervalTreeWithLazyPr
         toSet[idxInTree] ? String.valueOf(setValue[idxInTree]) : "X");
   }
 
-  int[] initValues;
+  private int[] initValues;
 
   public void init(int n, int[] initValues) {
     this.initValues = initValues;
     super.init(n);
   }
 
-  int updateValue;
+  private int updateValue;
 
   public void update(int lower, int upper, int updateValue) {
     this.updateValue = updateValue;

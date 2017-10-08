@@ -2,6 +2,13 @@ package template.collections.intervaltree.impl;
 
 import template.collections.intervaltree.AbstractIntervalTree;
 
+/**
+ * Interval tree supports:
+ * <ul>
+ *   <li>Setting value in a node</li>
+ *   <li>Calculating the max value in a range</li>
+ * </ul>
+ */
 public class LongMaxIntervalTree extends AbstractIntervalTree {
 
   public LongMaxIntervalTree(int leafCapacity) {
