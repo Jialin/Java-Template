@@ -32,7 +32,7 @@ public class QuickWriter {
 
   public void println(Object... objects) {
     print(objects);
-    writer.print('\n');
+    writer.println();
   }
 
   public void print(int[] objects) {
@@ -68,7 +68,7 @@ public class QuickWriter {
 
   public void println(int[] objects, int fromIdx, int toIdx, char delimiter) {
     print(objects, fromIdx, toIdx, delimiter);
-    writer.print('\n');
+    writer.println();
   }
 
   public void println(IntArrayList lst) {
@@ -83,7 +83,7 @@ public class QuickWriter {
     for (int i = 0; i < lst.size; ++i) {
       writer.print(lst.get(i));
     }
-    writer.print('\n');
+    writer.println();
   }
 
   public void print(long[] objects) {
@@ -101,12 +101,12 @@ public class QuickWriter {
 
   public void println(long[] objects) {
     print(objects);
-    writer.print('\n');
+    writer.println();
   }
 
   public void println(long[] objects, char delimiter) {
     print(objects, delimiter);
-    writer.print('\n');
+    writer.println();
   }
 
   public void print(char[] s) {
@@ -125,7 +125,7 @@ public class QuickWriter {
 
   public void println(char[] s, int startIdx) {
     print(s, startIdx);
-    writer.print('\n');
+    writer.println();
   }
 
   public void printf(String format, Object... objects) {
