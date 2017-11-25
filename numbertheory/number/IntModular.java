@@ -32,6 +32,10 @@ public class IntModular {
     return 0 <= a && a < mod ? a : slightFix(a % mod);
   }
 
+  public int fix(long a) {
+    return fix((int) (a % mod));
+  }
+
   public int mul(int a, int b) {
     return a > 0
         ? (b < mod / a ? a * b : (int) ((long) a * b % mod))
