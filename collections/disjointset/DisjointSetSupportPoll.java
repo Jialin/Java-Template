@@ -41,7 +41,7 @@ public class DisjointSetSupportPoll extends DisjointSetNoCompress {
   }
 
   public void poll() {
-    Truth.assertThat(records.isNotEmpty());
+    Truth.assertTrue(records.isNotEmpty());
     int record = records.pollLast();
     int child = record >> 1;
     int parent = this.parent[child];

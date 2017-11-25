@@ -38,7 +38,7 @@ public abstract class AbstractIntervalTreeWithLazyPropagation implements Display
   public abstract String toDisplay(int idxInTree);
 
   private int nodeCapacity;
-  private int leafCnt, height;
+  private int leafCnt;
   private int[] rangeLower, rangeUpper;
   private IntArrayList idxInTreeToUpdate, idxInTreeToUpdateAppendix;
 
@@ -59,7 +59,6 @@ public abstract class AbstractIntervalTreeWithLazyPropagation implements Display
 
   public void init(int leafCnt) {
     this.leafCnt = leafCnt;
-    this.height = 32 - Integer.numberOfLeadingZeros(leafCnt);
     for (int i = 0; i < leafCnt; ++i) {
       rangeLower[i + leafCnt] = i;
       rangeUpper[i + leafCnt] = i + 1;

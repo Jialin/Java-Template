@@ -32,7 +32,7 @@ public class IntMinIntervalTreeSupportSet extends AbstractIntervalTreeWithLazyPr
 
   @Override
   public void initLeaf(int idxInTree, int idx) {
-    minValue[idxInTree] = initValues[idx];
+    minValue[idxInTree] = initValues == null ? 0 : initValues[idx];
   }
 
   @Override
