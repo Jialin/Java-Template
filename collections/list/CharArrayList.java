@@ -154,6 +154,10 @@ public class CharArrayList implements Displayable, CharCollection, Iterable<Char
     CharArrayUtils.update(values, 0, size, delta);
   }
 
+  public boolean nextPermutation() {
+    return CharArrayUtils.nextPermutation(values, 0, size);
+  }
+
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
     char[] newValues = new char[IntUtils.nextPow2(capacity)];

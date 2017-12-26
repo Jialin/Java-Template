@@ -175,6 +175,10 @@ public class %Type%ArrayList implements Displayable, %Type%Collection, Iterable<
     %Type%ArrayUtils.update(values, 0, size, delta);
   }
 
+  public boolean nextPermutation() {
+    return %Type%ArrayUtils.nextPermutation(values, 0, size);
+  }
+
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
     %type%[] newValues = new %type%[IntUtils.nextPow2(capacity)];

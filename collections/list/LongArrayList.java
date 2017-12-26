@@ -154,6 +154,10 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
     LongArrayUtils.update(values, 0, size, delta);
   }
 
+  public boolean nextPermutation() {
+    return LongArrayUtils.nextPermutation(values, 0, size);
+  }
+
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
     long[] newValues = new long[IntUtils.nextPow2(capacity)];

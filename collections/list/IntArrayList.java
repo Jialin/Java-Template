@@ -154,6 +154,10 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
     IntArrayUtils.update(values, 0, size, delta);
   }
 
+  public boolean nextPermutation() {
+    return IntArrayUtils.nextPermutation(values, 0, size);
+  }
+
   public void ensureCapacity(int capacity) {
     if (capacity <= values.length) return;
     int[] newValues = new int[IntUtils.nextPow2(capacity)];

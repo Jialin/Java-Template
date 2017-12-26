@@ -233,6 +233,27 @@ public class %filename% {
     return res;
   }
 
+  public static boolean nextPermutation(%type%[] values) {
+    return nextPermutation(values, 0, values.length);
+  }
+
+  public static boolean nextPermutation(%type%[] values, int fromIdx, int toIdx) {
+    int pos = -1;
+    for (int i = toIdx - 2; i >= fromIdx; --i) if (values[i] < values[i + 1]) {
+      pos = i;
+      break;
+    }
+    if (pos < 0) return false;
+    int newPos = -1;
+    for (int i = toIdx - 1; i > pos; --i) if (values[pos] < values[i]) {
+      newPos = i;
+      break;
+    }
+    swap(values, pos, newPos);
+    reverse(values, pos + 1, toIdx);
+    return true;
+  }
+
   public static String toDisplay(%type%[] values) {
     return toDisplay(values, 0, values.length);
   }
