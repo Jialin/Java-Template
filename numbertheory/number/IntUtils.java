@@ -46,4 +46,15 @@ public class IntUtils {
   public static int lcm(int a, int b) {
     return a / gcd(a, b) * b;
   }
+
+  public static int phi(int n) {
+    int res = 1;
+    for (int i = 2; i <= n / i; ++i) if (n % i == 0) {
+      res *= i - 1;
+      n /= i;
+      for ( ; n % i == 0; res *= i, n /= i) {}
+    }
+    if (n > 1) res *= n - 1;
+    return res;
+  }
 }
