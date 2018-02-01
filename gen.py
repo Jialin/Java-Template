@@ -39,4 +39,3 @@ for (root, filename) in findTemplates(ROOT):
         with open(os.path.join(templateRoot, outputFilename), 'w') as outputFile:
             for line in outputLines:
                 outputFile.write(line)
-
