@@ -1,6 +1,8 @@
 package template.numbertheory.complex;
 
-public class Complex {
+import template.io.Displayable;
+
+public class Complex implements Displayable {
 
   public double real, imag;
 
@@ -70,8 +72,18 @@ public class Complex {
     assign(real / scale, imag / scale);
   }
 
+  /** this *= o */
+  public void mul(Complex o) {
+    assign(real * o.real - imag * o.imag, real * o.imag + imag * o.real);
+  }
+
   @Override
-  public String toString() {
+  public Complex clone() {
+    return new Complex(real, imag);
+  }
+
+  @Override
+  public String toDisplay() {
     return String.format(imag < 0 ? "%f%fi" : "%f+%fi", real, imag);
   }
 

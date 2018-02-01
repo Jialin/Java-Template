@@ -127,6 +127,14 @@ public class LongUtils {
     return gcd;
   }
 
+  public static boolean isBitOne(long x, int bit) {
+    return ((x >> bit) & 1) > 0;
+  }
+
+  public static boolean isBitZero(long x, int bit) {
+    return ((x >> bit) & 1) == 0;
+  }
+
   private static void factorizeInternal(long n) {
     P.clear();
     factorizeDfs(n);

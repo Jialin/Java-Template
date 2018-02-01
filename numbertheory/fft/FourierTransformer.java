@@ -1,6 +1,7 @@
 package template.numbertheory.fft;
 
 import template.numbertheory.complex.Complex;
+import template.truth.Truth;
 
 public class FourierTransformer {
 
@@ -22,6 +23,7 @@ public class FourierTransformer {
 
   public void init(int n) {
     if (this.n == n) return;
+    Truth.assertTrue(Integer.bitCount(n) == 1);
     this.n = n;
     wBase.initPolar(1, 2 * Math.PI / n);
     w[0].init(1, 0);
@@ -36,14 +38,7 @@ public class FourierTransformer {
   }
 
   public void fft(Complex[] a, boolean invert) {
-    if (Integer.bitCount(n) != 1) {
-      throw new IllegalArgumentException(n + " should be pow of 2.");
-    }
-    for (int i = 0; i < n; ++i) if (i < rev[i]) {
-      Complex tmp = a[i];
-      a[i] = a[rev[i]];
-      a[rev[i]] = tmp;
-    }
+    swap(a);
     for (int l = 1; l < n; l <<= 1) {
       int l2 = l << 1, step = n / l2;
       for (int i = 0; i < n; i += l2) {
@@ -59,6 +54,25 @@ public class FourierTransformer {
         a[i].shrink(n);
       }
     }
+  }
+
+  /** Computes a single coefficient. */
+  public Complex fftAt(int idx, Complex[] a, boolean invert) {
+    swap(a);
+    for (int l = 1; l < n; l <<= 1) {
+      int l2 = l << 1, step = n / l2;
+      for (int i = 0; i < n; i += l2) {
+        int j = idx & (l - 1);
+        int wIdx = invert ? n - step * j : step * j;
+        mul.initMul(a[i + j + l], w[wIdx]);
+        a[i + j + l].initSub(a[i + j], mul);
+        a[i + j].add(mul);
+      }
+    }
+    if (invert) {
+      a[idx].shrink(n);
+    }
+    return a[idx];
   }
 
   public void fft(Complex[][] a, boolean invert) {
@@ -82,5 +96,13 @@ public class FourierTransformer {
       res[i][j].initMul(a[i][j], b[i][j]);
     }
     fft(res, true);
+  }
+
+  private void swap(Complex[] a) {
+    for (int i = 0; i < n; ++i) if (i < rev[i]) {
+      Complex tmp = a[i];
+      a[i] = a[rev[i]];
+      a[rev[i]] = tmp;
+    }
   }
 }
