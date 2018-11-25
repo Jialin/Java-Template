@@ -22,6 +22,9 @@ public class QuickScanner {
 
   public String next() {
     int b = nextNonSpaceChar();
+    if (b < 0) {
+      return "";
+    }
     StringBuilder res = new StringBuilder();
     do {
       res.appendCodePoint(b);
@@ -70,20 +73,28 @@ public class QuickScanner {
     }
   }
 
-  public int nextInt() {
-    int c = nextNonSpaceChar();
-    boolean positive = true;
-    if (c == '-') {
-      positive = false;
-      c = nextChar();
+  public int nextLine(char[] s, boolean ignoreEmptyLines) {
+    int res;
+    if (ignoreEmptyLines) {
+      do {
+        res = nextLineInternal(s);
+      } while (res == 0);
+      return res;
+    } else {
+      return nextLineInternal(s);
     }
-    int res = 0;
-    do {
-      if (c < '0' || '9' < c) throw new RuntimeException();
-      res = res * 10 + (c - '0');
-      c = nextChar();
-    } while (!isSpaceChar(c));
-    return positive ? res : -res;
+  }
+
+  public int nextInt() {
+    return nextIntInternal(nextNonSpaceChar());
+  }
+
+  public int nextIntOrDefault(int defaultValue) {
+    int c = nextNonSpaceChar();
+    if (c < 0) {
+      return defaultValue;
+    }
+    return nextIntInternal(c);
   }
 
   public int[] nextInt(int n) {
@@ -183,20 +194,20 @@ public class QuickScanner {
 
   public int nextNonSpaceChar() {
     int res = nextChar();
-    for ( ; isSpaceChar(res) || res < 0; res = nextChar()) ;
+    for ( ; res >= 0 && isSpaceChar(res); res = nextChar()) {}
     return res;
   }
 
   public int nextChar() {
     if (numberOfChars == -1) {
-      throw new RuntimeException();
+      return -1;
     }
     if (currentPosition >= numberOfChars) {
       currentPosition = 0;
       try {
         numberOfChars = stream.read(buffer);
       } catch (Exception e) {
-        throw new RuntimeException(e);
+        return -1;
       }
       if (numberOfChars <= 0) {
         return -1;
@@ -219,5 +230,28 @@ public class QuickScanner {
       res.appendCodePoint(b);
     }
     return res.toString();
+  }
+
+  private int nextIntInternal(int c) {
+    boolean positive = true;
+    if (c == '-') {
+      positive = false;
+      c = nextChar();
+    }
+    int res = 0;
+    do {
+      if (c < '0' || '9' < c) throw new RuntimeException();
+      res = res * 10 + (c - '0');
+      c = nextChar();
+    } while (!isSpaceChar(c));
+    return positive ? res : -res;
+  }
+
+  private int nextLineInternal(char[] s) {
+    int res = 0;
+    for (int b = nextChar(); !isEndOfLineChar(b); b = nextChar()) {
+      s[res++] = (char) b;
+    }
+    return res;
   }
 }

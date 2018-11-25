@@ -49,7 +49,9 @@ public class QuickWriter {
 
   public void print(int[] objects, int fromIdx, int toIdx, char delimiter) {
     for (int i = fromIdx; i < toIdx; ++i) {
-      if (i > fromIdx) writer.print(delimiter);
+      if (i > fromIdx) {
+        writer.print(delimiter);
+      }
       writer.print(objects[i]);
     }
   }
