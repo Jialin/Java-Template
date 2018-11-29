@@ -1,16 +1,13 @@
 [
   {
-    "filename": "CharArrayQueue",
     "type": "char",
     "Type": "Char"
   },
   {
-    "filename": "IntArrayQueue",
     "type": "int",
     "Type": "Int"
   },
   {
-    "filename": "LongArrayQueue",
     "type": "long",
     "Type": "Long"
   }

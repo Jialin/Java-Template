@@ -2,19 +2,16 @@
   {
     "Class": "Character",
     "Type": "Char",
-    "filename": "CharArrayList",
     "type": "char"
   },
   {
     "Class": "Integer",
     "Type": "Int",
-    "filename": "IntArrayList",
     "type": "int"
   },
   {
     "Class": "Long",
     "Type": "Long",
-    "filename": "LongArrayList",
     "type": "long"
   }
 ]

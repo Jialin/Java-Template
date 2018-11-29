@@ -1,13 +1,11 @@
 [
   {
-    "filename": "IntAddBinaryIndexedTree2D",
-    "type": "int",
-    "Type": "Int"
+    "Type": "Int",
+    "type": "int"
   },
   {
-    "filename": "LongAddBinaryIndexedTree2D",
-    "type": "long",
-    "Type": "Long"
+    "Type": "Long",
+    "type": "long"
   }
 ]
 ====================================================================================================

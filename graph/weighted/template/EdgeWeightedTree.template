@@ -1,11 +1,9 @@
 [
   {
-    "filename": "IntEdgeWeightedTree",
     "type": "int",
     "Type": "Int"
   },
   {
-    "filename": "BooleanEdgeWeightedTree",
     "type": "boolean",
     "Type": "Boolean"
   }

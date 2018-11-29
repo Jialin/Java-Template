@@ -1,6 +1,9 @@
+# python IdeaProjects/ACM/src/template/gen.py
+
 import fnmatch
 import json
 import os
+import re
 import string
 
 TEMPLATE_EXT = 'template'
@@ -10,32 +13,43 @@ def findTemplates(root):
     for _, dirnames, filenames in os.walk(root):
         for filename in fnmatch.filter(filenames, '*.' + TEMPLATE_EXT):
             templates.append((_, filename))
-    return templates;
+    return templates
 
-ROOT = '/Users/jouyang/IdeaProjects/ACM/src/template/'
+ROOT = '/Users/jialinouyang/IdeaProjects/ACM/src/template/'
 SEPARATOR = '=' * 100
 FILENAME = 'filename'
 PACKAGE = 'template'
+FILENAME_PATTERNS = ['(?<=public class )(\w+).*', '(?<=public abstract class )(\w+).*', '(?<=public interface )(\w+).*']
 
 for (root, filename) in findTemplates(ROOT):
     if not root.endswith(PACKAGE):
-        print 'Template file (%s) should live in template packages!' % filename
+        print('Template file (%s) should live in template packages!' % filename)
         continue
-    print 'Processing', filename
+    print('Processing %s' % filename)
     lines = [line.rstrip('\n') for line in open(os.path.join(root, filename))]
-    separatorLine = [i for i, line in enumerate(lines) if line == SEPARATOR][0];
-    templateRoot = root[ : -len(PACKAGE)]
-    for setting in json.loads(''.join(lines[ : separatorLine])):
-        outputLines = []
-        for line in lines[separatorLine + 1 : ]:
-            parsedLine = line
+    separator_line = [i for i, line in enumerate(lines) if line == SEPARATOR][0]
+    template_root = root[: -len(PACKAGE)]
+    for setting in json.loads(''.join(lines[: separator_line])):
+        output_lines = []
+        output_filename = ''
+        for line in lines[separator_line + 1:]:
+            parsed_line = line
             for (tag, value) in setting.items():
-                parsedLine = string.replace(parsedLine, '%' + tag + '%', value)
-            outputLines.append(parsedLine + '\n')
-        outputFilename = setting[FILENAME] + '.java'
-        if os.path.exists(templateRoot + outputFilename) and outputLines == open(templateRoot + outputFilename, 'r').readlines():
+                parsed_line = string.replace(parsed_line, '%' + tag + '%', value)
+            for pattern in FILENAME_PATTERNS:
+                match = re.search(pattern, parsed_line)
+                if match:
+                    output_filename = match.group(1)
+                    break
+            output_lines.append(parsed_line + '\n')
+        if not output_filename:
+            print('Failed to compute the class name for %s' % filename)
             continue
-        print '\tGenerating', outputFilename
-        with open(os.path.join(templateRoot, outputFilename), 'w') as outputFile:
-            for line in outputLines:
-                outputFile.write(line)
+        output_filename += '.java'
+        if os.path.exists(template_root + output_filename) \
+                and output_lines == open(template_root + output_filename, 'r').readlines():
+            continue
+        print('\tGenerating %s' % output_filename)
+        with open(os.path.join(template_root, output_filename), 'w') as output_file:
+            for line in output_lines:
+                output_file.write(line)

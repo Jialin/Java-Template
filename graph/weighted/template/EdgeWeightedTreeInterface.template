@@ -1,11 +1,9 @@
 [
   {
-    "filename": "IntEdgeWeightedTreeInterface",
     "type": "int",
     "Type": "Int"
   },
   {
-    "filename": "BooleanEdgeWeightedTreeInterface",
     "type": "boolean",
     "Type": "Boolean"
   }

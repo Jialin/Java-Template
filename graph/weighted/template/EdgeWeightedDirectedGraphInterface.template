@@ -1,11 +1,9 @@
 [
   {
-    "filename": "IntEdgeWeightedDirectedGraphInterface",
     "type": "int",
     "Type": "Int"
   },
   {
-    "filename": "BooleanEdgeWeightedDirectedGraphInterface",
     "type": "boolean",
     "Type": "Boolean"
   }

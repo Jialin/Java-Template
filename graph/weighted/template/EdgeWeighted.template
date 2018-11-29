@@ -1,11 +1,9 @@
 [
   {
-    "filename": "IntEdgeWeighted",
     "type": "int",
     "Type": "Int"
   },
   {
-    "filename": "BooleanEdgeWeighted",
     "type": "boolean",
     "Type": "Boolean"
   }

@@ -1,18 +1,15 @@
 [
   {
-    "filename": "CharComparator",
-    "type": "char",
-    "Type": "Char"
+    "Type": "Char",
+    "type": "char"
   },
   {
-    "filename": "IntComparator",
-    "type": "int",
-    "Type": "Int"
+    "Type": "Int",
+    "type": "int"
   },
   {
-    "filename": "LongComparator",
-    "type": "long",
-    "Type": "Long"
+    "Type": "Long",
+    "type": "long"
   }
 ]
 ====================================================================================================

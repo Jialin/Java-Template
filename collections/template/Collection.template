@@ -1,17 +1,17 @@
 [
   {
     "Class": "Character",
-    "filename": "CharCollection",
+    "Type": "Char",
     "type": "char"
   },
   {
     "Class": "Integer",
-    "filename": "IntCollection",
+    "Type": "Int",
     "type": "int"
   },
   {
     "Class": "Long",
-    "filename": "LongCollection",
+    "Type": "Long",
     "type": "long"
   }
 ]
@@ -20,7 +20,7 @@ package template.collections;
 
 import java.util.Collection;
 
-public interface %filename% {
+public interface %Type%Collection {
   void clear();
   int size();
   void add(%type% value);

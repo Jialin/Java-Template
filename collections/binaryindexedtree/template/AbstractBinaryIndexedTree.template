@@ -1,13 +1,11 @@
 [
   {
-    "filename": "AbstractIntBinaryIndexedTree",
-    "type": "int",
-    "Type": "Int"
+    "Type": "Int",
+    "type": "int"
   },
   {
-    "filename": "AbstractLongBinaryIndexedTree",
-    "type": "long",
-    "Type": "Long"
+    "Type": "Long",
+    "type": "long"
   }
 ]
 ====================================================================================================

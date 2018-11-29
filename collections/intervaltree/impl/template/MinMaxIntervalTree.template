@@ -1,27 +1,31 @@
 [
   {
-    "filename": "IntMaxIntervalTree",
-    "type": "int",
-    "compare": "max",
-    "initvalue": "Integer.MIN_VALUE"
-  },
-  {
-    "filename": "IntMinIntervalTree",
-    "type": "int",
+    "Compare": "Min",
+    "Type": "Int",
     "compare": "min",
-    "initvalue": "Integer.MAX_VALUE"
+    "initvalue": "Integer.MAX_VALUE",
+    "type": "int"
   },
   {
-    "filename": "LongMaxIntervalTree",
-    "type": "long",
+    "Compare": "Max",
+    "Type": "Int",
     "compare": "max",
-    "initvalue": "Long.MIN_VALUE"
+    "initvalue": "Integer.MIN_VALUE",
+    "type": "int"
   },
   {
-    "filename": "LongMinIntervalTree",
-    "type": "long",
+    "Compare": "Min",
+    "Type": "Long",
     "compare": "min",
-    "initvalue": "Long.MAX_VALUE"
+    "initvalue": "Long.MAX_VALUE",
+    "type": "long"
+  },
+  {
+    "Compare": "Max",
+    "Type": "Long",
+    "compare": "max",
+    "initvalue": "Long.MIN_VALUE",
+    "type": "long"
   }
 ]
 ====================================================================================================
@@ -36,9 +40,9 @@ import template.collections.intervaltree.AbstractIntervalTree;
  *   <li>Calculating the %compare% value in a range</li>
  * </ul>
  */
-public class %filename% extends AbstractIntervalTree {
+public class %Type%%Compare%IntervalTree extends AbstractIntervalTree {
 
-  public %filename%(int leafCapacity) {
+  public %Type%%Compare%IntervalTree(int leafCapacity) {
     super(leafCapacity);
   }
 

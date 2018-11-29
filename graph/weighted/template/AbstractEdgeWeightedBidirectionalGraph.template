@@ -1,11 +1,9 @@
 [
   {
-    "filename": "AbstractIntEdgeWeightedBidirectionalGraph",
     "type": "int",
     "Type": "Int"
   },
   {
-    "filename": "AbstractBooleanEdgeWeightedBidirectionalGraph",
     "type": "boolean",
     "Type": "Boolean"
   }

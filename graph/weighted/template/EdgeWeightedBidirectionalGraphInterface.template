@@ -1,11 +1,9 @@
 [
   {
-    "filename": "IntEdgeWeightedBidirectionalGraphInterface",
     "type": "int",
     "Type": "Int"
   },
   {
-    "filename": "BooleanEdgeWeightedBidirectionalGraphInterface",
     "type": "boolean",
     "Type": "Boolean"
   }

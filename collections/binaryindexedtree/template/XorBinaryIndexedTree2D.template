@@ -1,13 +1,11 @@
 [
   {
-    "filename": "IntXorBinaryIndexedTree2D",
-    "type": "int",
-    "Type": "Int"
+    "Type": "Int",
+    "type": "int"
   },
   {
-    "filename": "LongXorBinaryIndexedTree2D",
-    "type": "long",
-    "Type": "Long"
+    "Type": "Long",
+    "type": "long"
   }
 ]
 ====================================================================================================
