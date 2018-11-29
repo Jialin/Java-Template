@@ -1,0 +1,32 @@
+[
+  {
+    "First": "Int",
+    "FirstClass": "Integer",
+    "Second": "Int",
+    "SecondClass": "Integer",
+    "first": "int",
+    "second": "int"
+  }
+]
+====================================================================================================
+package template.pair;
+
+public class %First%%Second%Pair implements Comparable<%First%%Second%Pair> {
+
+  public final %first% first;
+  public final %second% second;
+
+  public %First%%Second%Pair(%first% first, %second% second) {
+    this.first = first;
+    this.second = second;
+  }
+
+  @Override
+  public int compareTo(%First%%Second%Pair o) {
+    int cmp = %FirstClass%.compare(first, o.first);
+    if (cmp != 0) {
+      return cmp;
+    }
+    return %SecondClass%.compare(second, o.second);
+  }
+}
