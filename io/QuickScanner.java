@@ -40,6 +40,9 @@ public class QuickScanner {
   public int next(char[] s, int startIdx) {
     int b = nextNonSpaceChar();
     int res = 0;
+    if (b < 0) {
+      return res;
+    }
     do {
       s[startIdx++] = (char) b;
       b = nextChar();
