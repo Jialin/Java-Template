@@ -18,4 +18,13 @@ public class IntIntPair implements Comparable<IntIntPair> {
     }
     return Integer.compare(second, o.second);
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof IntIntPair)) {
+      return false;
+    }
+    IntIntPair other = (IntIntPair) o;
+    return first == other.first && second == other.second;
+  }
 }

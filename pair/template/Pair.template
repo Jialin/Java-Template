@@ -29,4 +29,13 @@ public class %First%%Second%Pair implements Comparable<%First%%Second%Pair> {
     }
     return %SecondClass%.compare(second, o.second);
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof %First%%Second%Pair)) {
+      return false;
+    }
+    %First%%Second%Pair other = (%First%%Second%Pair) o;
+    return first == other.first && second == other.second;
+  }
 }
