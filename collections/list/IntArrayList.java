@@ -30,6 +30,13 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
     addAll(collection);
   }
 
+  public void initRange(int start, int end) {
+    clear();
+    for (int i = start; i < end; ++i) {
+      add(i);
+    }
+  }
+
   @Override
   public void clear() {
     size = 0;
@@ -81,18 +88,37 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
     return values[--size];
   }
 
+  public void remove(int idx) {
+    if (size == 0) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
+    idx = fixIdx(idx);
+    for (int i = idx, j = i + 1; j < size; ++i, ++j) {
+      values[i] = values[j];
+    }
+    --size;
+  }
+
   public int get(int idx) {
-    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
+    if (size == 0) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
+    idx = fixIdx(idx);
     return values[idx];
   }
 
   public void set(int idx, int value) {
-    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
+    if (size == 0) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
+    idx = fixIdx(idx);
     values[idx] = value;
   }
 
   public void swap(int x, int y) {
-    if (x >= size || y >= size) throw new ArrayIndexOutOfBoundsException();
+    if (x >= size || y >= size) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
     IntArrayUtils.swap(values, x, y);
   }
 
@@ -191,5 +217,18 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
 
   private void addInternal(int value) {
     values[size++] = value;
+  }
+
+  private int fixIdx(int idx) {
+    if (size == 0) {
+      return 0;
+    }
+    if (idx >= size) {
+      return idx % size;
+    } else if (idx < 0) {
+      idx %= size;
+      return idx < 0 ? idx + size : idx;
+    }
+    return idx;
   }
 }
