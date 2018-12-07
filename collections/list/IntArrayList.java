@@ -100,19 +100,11 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
   }
 
   public int get(int idx) {
-    if (size == 0) {
-      throw new ArrayIndexOutOfBoundsException();
-    }
-    idx = fixIdx(idx);
-    return values[idx];
+    return values[fixIdx(idx)];
   }
 
   public void set(int idx, int value) {
-    if (size == 0) {
-      throw new ArrayIndexOutOfBoundsException();
-    }
-    idx = fixIdx(idx);
-    values[idx] = value;
+    values[fixIdx(idx)] = value;
   }
 
   public void swap(int x, int y) {
@@ -221,7 +213,7 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
 
   private int fixIdx(int idx) {
     if (size == 0) {
-      return 0;
+      throw new ArrayIndexOutOfBoundsException();
     }
     if (idx >= size) {
       return idx % size;

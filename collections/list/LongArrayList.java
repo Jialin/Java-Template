@@ -30,6 +30,13 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
     addAll(collection);
   }
 
+  public void initRange(int start, int end) {
+    clear();
+    for (int i = start; i < end; ++i) {
+      add(i);
+    }
+  }
+
   @Override
   public void clear() {
     size = 0;
@@ -81,18 +88,29 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
     return values[--size];
   }
 
+  public void remove(int idx) {
+    if (size == 0) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
+    idx = fixIdx(idx);
+    for (int i = idx, j = i + 1; j < size; ++i, ++j) {
+      values[i] = values[j];
+    }
+    --size;
+  }
+
   public long get(int idx) {
-    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
-    return values[idx];
+    return values[fixIdx(idx)];
   }
 
   public void set(int idx, long value) {
-    if (idx >= size) throw new ArrayIndexOutOfBoundsException();
-    values[idx] = value;
+    values[fixIdx(idx)] = value;
   }
 
   public void swap(int x, int y) {
-    if (x >= size || y >= size) throw new ArrayIndexOutOfBoundsException();
+    if (x >= size || y >= size) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
     LongArrayUtils.swap(values, x, y);
   }
 
@@ -191,5 +209,18 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
 
   private void addInternal(long value) {
     values[size++] = value;
+  }
+
+  private int fixIdx(int idx) {
+    if (size == 0) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
+    if (idx >= size) {
+      return idx % size;
+    } else if (idx < 0) {
+      idx %= size;
+      return idx < 0 ? idx + size : idx;
+    }
+    return idx;
   }
 }
