@@ -1,5 +1,6 @@
 package template.io;
 
+import template.collections.list.CharArrayList;
 import template.collections.list.IntArrayList;
 
 import java.io.InputStream;
@@ -86,6 +87,22 @@ public class QuickScanner {
     } else {
       return nextLineInternal(s);
     }
+  }
+
+  public int nextLine(CharArrayList s) {
+    int res = 0;
+    for (int b = nextChar(); !isEndOfLineChar(b); b = nextChar(), ++res) {
+      s.add((char) b);
+    }
+    return res;
+  }
+
+  public int nextNonEmptyLine(CharArrayList s) {
+    int res;
+    do {
+      res = nextLine(s);
+    } while (res == 0);
+    return res;
   }
 
   public int nextInt() {
