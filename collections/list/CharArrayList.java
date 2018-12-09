@@ -30,9 +30,9 @@ public class CharArrayList implements Displayable, CharCollection, Iterable<Char
     addAll(collection);
   }
 
-  public void initRange(int start, int end) {
+  public void initRange(char start, char end) {
     clear();
-    for (int i = start; i < end; ++i) {
+    for (char i = start; i < end; ++i) {
       add(i);
     }
   }

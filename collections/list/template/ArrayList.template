@@ -48,9 +48,9 @@ public class %Type%ArrayList implements Displayable, %Type%Collection, Iterable<
     addAll(collection);
   }
 
-  public void initRange(int start, int end) {
+  public void initRange(%type% start, %type% end) {
     clear();
-    for (int i = start; i < end; ++i) {
+    for (%type% i = start; i < end; ++i) {
       add(i);
     }
   }

@@ -30,9 +30,9 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
     addAll(collection);
   }
 
-  public void initRange(int start, int end) {
+  public void initRange(long start, long end) {
     clear();
-    for (int i = start; i < end; ++i) {
+    for (long i = start; i < end; ++i) {
       add(i);
     }
   }
