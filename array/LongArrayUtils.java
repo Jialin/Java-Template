@@ -4,7 +4,19 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class LongArrayUtils {
+
   private static final Random RANDOM = new Random(1000000007);
+
+  public static void fillRange(long[] values, long end) {
+    fillRange(values, (long) 0, end);
+  }
+
+  public static void fillRange(long[] values, long start, long end) {
+    long value = start;
+    for (int i = 0; value < end; ++i, ++value) {
+      values[i] = value;
+    }
+  }
 
   public static long min(long[] values) {
     return min(values, 0, values.length);
@@ -97,6 +109,10 @@ public class LongArrayUtils {
 
   public static int unique(long[] values, int[] cnt) {
     return unique(values, 0, values.length, cnt, 0);
+  }
+
+  public static int unique(long[] values, int fromIdx, int toIdx, int[] cnt) {
+    return unique(values, fromIdx, toIdx, cnt, 0);
   }
 
   public static int unique(long[] values, int fromIdx, int toIdx, int[] cnt, int startIdx) {

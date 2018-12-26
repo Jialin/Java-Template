@@ -4,7 +4,19 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class CharArrayUtils {
+
   private static final Random RANDOM = new Random(1000000007);
+
+  public static void fillRange(char[] values, char end) {
+    fillRange(values, (char) 0, end);
+  }
+
+  public static void fillRange(char[] values, char start, char end) {
+    char value = start;
+    for (int i = 0; value < end; ++i, ++value) {
+      values[i] = value;
+    }
+  }
 
   public static char min(char[] values) {
     return min(values, 0, values.length);
@@ -97,6 +109,10 @@ public class CharArrayUtils {
 
   public static int unique(char[] values, int[] cnt) {
     return unique(values, 0, values.length, cnt, 0);
+  }
+
+  public static int unique(char[] values, int fromIdx, int toIdx, int[] cnt) {
+    return unique(values, fromIdx, toIdx, cnt, 0);
   }
 
   public static int unique(char[] values, int fromIdx, int toIdx, int[] cnt, int startIdx) {
