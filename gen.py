@@ -7,21 +7,22 @@ import re
 import string
 
 TEMPLATE_EXT = 'template'
-
-def findTemplates(root):
-    templates = []
-    for _, dirnames, filenames in os.walk(root):
-        for filename in fnmatch.filter(filenames, '*.' + TEMPLATE_EXT):
-            templates.append((_, filename))
-    return templates
-
 ROOT = '/Users/jialinouyang/IdeaProjects/ACM/src/template/'
 SEPARATOR = '=' * 100
 FILENAME = 'filename'
 PACKAGE = 'template'
 FILENAME_PATTERNS = ['(?<=public class )(\w+).*', '(?<=public abstract class )(\w+).*', '(?<=public interface )(\w+).*']
 
-for (root, filename) in findTemplates(ROOT):
+
+def find_templates(root):
+    templates = []
+    for _, dirnames, filenames in os.walk(root):
+        for filename in fnmatch.filter(filenames, '*.' + TEMPLATE_EXT):
+            templates.append((_, filename))
+    return templates
+
+
+for (root, filename) in find_templates(ROOT):
     if not root.endswith(PACKAGE):
         print('Template file (%s) should live in template packages!' % filename)
         continue
