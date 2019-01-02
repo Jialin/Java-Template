@@ -74,6 +74,19 @@ public class IntArrayUtils {
     }
   }
 
+  public static boolean isPalindrome(int[] values) {
+    return isPalindrome(values, 0, values.length);
+  }
+
+  public static boolean isPalindrome(int[] values, int fromIdx, int toIdx) {
+    for (int i = fromIdx, j = toIdx - 1; i < j; ++i, --j) {
+      if (values[i] != values[j]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   public static int unique(int[] values) {
     return unique(values, 0, values.length);
   }
@@ -96,6 +109,14 @@ public class IntArrayUtils {
   public static void sort(int[] values, int fromIdx, int toIdx) {
     shuffle(values, fromIdx, toIdx);
     Arrays.sort(values, fromIdx, toIdx);
+  }
+
+  public static void sort(int[] values, int[]... attributes) {
+    sort(values, 0, values.length, attributes);
+  }
+
+  public static void sort(int[] values, int fromIdx, int toIdx, int[]... attributes) {
+    sortInternal(values, fromIdx, toIdx - 1, attributes);
   }
 
   public static int sortAndUnique(int[] values) {
@@ -265,18 +286,47 @@ public class IntArrayUtils {
     return sb.append("]").toString();
   }
 
-  private static int kthInternal(int[] values, int lower, int upper, int kth) {
-    if (lower == upper) return values[lower];
-    if (lower + 1 == upper) {
-      if (values[lower] > values[lower + 1]) swap(values, lower, lower + 1);
-      return kth > 0 ? values[lower + 1] : values[lower];
+  private static void sortInternal(int[] values, int lower, int upper, int[]... attributes) {
+    if (lower >= upper) {
+      return;
     }
-    int pivot = values[lower + RANDOM.nextInt(upper - lower)];
-    int i = lower, j = upper;
+    int pivot = values[lower + RANDOM.nextInt(upper - lower + 1)];
+    int i = lower;
+    int j = upper;
     while (i <= j) {
       for ( ; values[i] < pivot; ++i) {}
       for ( ; values[j] > pivot; --j) {}
-      if (i <= j) swap(values, i++, j--);
+      if (i <= j) {
+        for (int[] attribute : attributes) {
+          swap(attribute, i, j);
+        }
+        swap(values, i++, j--);
+      }
+    }
+    sortInternal(values, lower, i - 1, attributes);
+    sortInternal(values, i, upper, attributes);
+  }
+
+  private static int kthInternal(int[] values, int lower, int upper, int kth) {
+    if (lower == upper) {
+      return values[lower];
+    }
+    if (lower + 1 == upper) {
+      if (values[lower] > values[lower + 1]) {
+        swap(values, lower, lower + 1);
+      }
+      return kth > 0 ? values[lower + 1] : values[lower];
+    }
+    // TODO(jouyang): maybe upper-lower+1 ??? and get rid of the special treatment above???
+    int pivot = values[lower + RANDOM.nextInt(upper - lower)];
+    int i = lower;
+    int j = upper;
+    while (i <= j) {
+      for ( ; values[i] < pivot; ++i) {}
+      for ( ; values[j] > pivot; --j) {}
+      if (i <= j) {
+        swap(values, i++, j--);
+      }
     }
     return kth < i - lower
         ? kthInternal(values, lower, i - 1, kth)
