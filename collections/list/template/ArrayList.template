@@ -178,6 +178,10 @@ public class %Type%ArrayList implements Displayable, %Type%Collection, Iterable<
     %Type%ArrayUtils.reverse(values, 0, size);
   }
 
+  public boolean isPalindrome() {
+    return %Type%ArrayUtils.isPalindrome(values, 0, size);
+  }
+
   public void shuffle() {
     %Type%ArrayUtils.shuffle(values, 0, size);
   }

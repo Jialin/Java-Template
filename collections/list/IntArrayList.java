@@ -160,6 +160,10 @@ public class IntArrayList implements Displayable, IntCollection, Iterable<Intege
     IntArrayUtils.reverse(values, 0, size);
   }
 
+  public boolean isPalindrome() {
+    return IntArrayUtils.isPalindrome(values, 0, size);
+  }
+
   public void shuffle() {
     IntArrayUtils.shuffle(values, 0, size);
   }

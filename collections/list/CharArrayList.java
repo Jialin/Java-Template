@@ -160,6 +160,10 @@ public class CharArrayList implements Displayable, CharCollection, Iterable<Char
     CharArrayUtils.reverse(values, 0, size);
   }
 
+  public boolean isPalindrome() {
+    return CharArrayUtils.isPalindrome(values, 0, size);
+  }
+
   public void shuffle() {
     CharArrayUtils.shuffle(values, 0, size);
   }

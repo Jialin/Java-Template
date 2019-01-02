@@ -160,6 +160,10 @@ public class LongArrayList implements Displayable, LongCollection, Iterable<Long
     LongArrayUtils.reverse(values, 0, size);
   }
 
+  public boolean isPalindrome() {
+    return LongArrayUtils.isPalindrome(values, 0, size);
+  }
+
   public void shuffle() {
     LongArrayUtils.shuffle(values, 0, size);
   }
