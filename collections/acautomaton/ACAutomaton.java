@@ -2,9 +2,9 @@ package template.collections.acautomaton;
 
 import template.collections.trie.AbstractTrie;
 
-/**
- * Aho-Corasick automaton.
- */
+import java.util.Arrays;
+
+/** Aho-Corasick automaton. */
 public class ACAutomaton extends AbstractTrie {
 
   private int[] suffixLink;
@@ -21,7 +21,15 @@ public class ACAutomaton extends AbstractTrie {
   }
 
   @Override
-  public void initNode(int idx, int parent, int parentLetter) {
+  public void reallocateSubclass(int newNodeCapacity) {
+    suffixLink = Arrays.copyOf(suffixLink, newNodeCapacity);
+    for (int i = letterCnt - 1; i >= 0; --i) {
+      next[i] = Arrays.copyOf(next[i], newNodeCapacity);
+    }
+  }
+
+  @Override
+  public void initNodeSubclass(int idx, int parent, int parentLetter) {
     suffixLink[idx] = -1;
     for (int letter = 0; letter < letterCnt; ++letter) {
       next[letter][idx] = -1;
@@ -29,15 +37,15 @@ public class ACAutomaton extends AbstractTrie {
   }
 
   @Override
-  public String toString(int nodeIdx) {
+  public String toDisplay(int nodeIdx) {
     return null;
   }
 
   public int calcSuffixLink(int u) {
     if (suffixLink[u] < 0) {
-      suffixLink[u] = u == root || parent[u] == root
-          ? root
-          : calcNext(calcSuffixLink(parent[u]), parentLetter[u]);
+      suffixLink[u] = u == ROOT || parent[u] == ROOT
+          ? ROOT
+          : calcNext(calcSuffixLink(parent[u]), fromLetter[u]);
     }
     return suffixLink[u];
   }
@@ -46,8 +54,8 @@ public class ACAutomaton extends AbstractTrie {
     if (next[letter][u] < 0) {
       next[letter][u] = child[letter][u] >= 0
           ? child[letter][u]
-          : u == root
-              ? root
+          : u == ROOT
+              ? ROOT
               : calcNext(calcSuffixLink(u), letter);
     }
     return next[letter][u];
