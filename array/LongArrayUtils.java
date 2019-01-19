@@ -111,12 +111,34 @@ public class LongArrayUtils {
     Arrays.sort(values, fromIdx, toIdx);
   }
 
-  public static void sort(long[] values, long[]... attributes) {
-    sort(values, 0, values.length, attributes);
+  public static void sort(long[] primary, long[]... secondaries) {
+    sort(primary, 0, primary.length, secondaries);
   }
 
-  public static void sort(long[] values, int fromIdx, int toIdx, long[]... attributes) {
-    sortInternal(values, fromIdx, toIdx - 1, attributes);
+  public static void sort(long[] primary, int fromIdx, int toIdx, long[]... secondaries) {
+    if (fromIdx + 1 >= toIdx) {
+      return;
+    }
+    int pivotIdx = fromIdx + RANDOM.nextInt(toIdx - fromIdx);
+    int i = fromIdx;
+    int j = toIdx - 1;
+    while (i <= j) {
+      for ( ; compare(primary, i, pivotIdx, secondaries) < 0; ++i) {}
+      for ( ; compare(primary, j, pivotIdx, secondaries) > 0; --j) {}
+      if (i <= j) {
+        if (i == pivotIdx) {
+          pivotIdx = j;
+        } else if (j == pivotIdx) {
+          pivotIdx = i;
+        }
+        for (long[] secondary : secondaries) {
+          swap(secondary, i, j);
+        }
+        swap(primary, i++, j--);
+      }
+    }
+    sort(primary, fromIdx, i, secondaries);
+    sort(primary, i, toIdx, secondaries);
   }
 
   public static int sortAndUnique(long[] values) {
@@ -331,5 +353,24 @@ public class LongArrayUtils {
     return kth < i - lower
         ? kthInternal(values, lower, i - 1, kth)
         : kthInternal(values, i, upper, kth - i + lower);
+  }
+
+
+  private static int compare(long[] primary, int x, int y, long[]... secondaries) {
+    if (primary[x] < primary[y]) {
+      return -1;
+    }
+    if (primary[x] > primary[y]) {
+      return 1;
+    }
+    for (long[] secondary : secondaries) {
+      if (secondary[x] < secondary[y]) {
+        return -1;
+      }
+      if (secondary[x] > secondary[y]) {
+        return 1;
+      }
+    }
+    return 0;
   }
 }

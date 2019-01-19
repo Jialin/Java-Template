@@ -129,12 +129,34 @@ public class %Type%ArrayUtils {
     Arrays.sort(values, fromIdx, toIdx);
   }
 
-  public static void sort(%type%[] values, %type%[]... attributes) {
-    sort(values, 0, values.length, attributes);
+  public static void sort(%type%[] primary, %type%[]... secondaries) {
+    sort(primary, 0, primary.length, secondaries);
   }
 
-  public static void sort(%type%[] values, int fromIdx, int toIdx, %type%[]... attributes) {
-    sortInternal(values, fromIdx, toIdx - 1, attributes);
+  public static void sort(%type%[] primary, int fromIdx, int toIdx, %type%[]... secondaries) {
+    if (fromIdx + 1 >= toIdx) {
+      return;
+    }
+    int pivotIdx = fromIdx + RANDOM.nextInt(toIdx - fromIdx);
+    int i = fromIdx;
+    int j = toIdx - 1;
+    while (i <= j) {
+      for ( ; compare(primary, i, pivotIdx, secondaries) < 0; ++i) {}
+      for ( ; compare(primary, j, pivotIdx, secondaries) > 0; --j) {}
+      if (i <= j) {
+        if (i == pivotIdx) {
+          pivotIdx = j;
+        } else if (j == pivotIdx) {
+          pivotIdx = i;
+        }
+        for (%type%[] secondary : secondaries) {
+          swap(secondary, i, j);
+        }
+        swap(primary, i++, j--);
+      }
+    }
+    sort(primary, fromIdx, i, secondaries);
+    sort(primary, i, toIdx, secondaries);
   }
 
   public static int sortAndUnique(%type%[] values) {
@@ -349,5 +371,24 @@ public class %Type%ArrayUtils {
     return kth < i - lower
         ? kthInternal(values, lower, i - 1, kth)
         : kthInternal(values, i, upper, kth - i + lower);
+  }
+
+
+  private static int compare(%type%[] primary, int x, int y, %type%[]... secondaries) {
+    if (primary[x] < primary[y]) {
+      return -1;
+    }
+    if (primary[x] > primary[y]) {
+      return 1;
+    }
+    for (%type%[] secondary : secondaries) {
+      if (secondary[x] < secondary[y]) {
+        return -1;
+      }
+      if (secondary[x] > secondary[y]) {
+        return 1;
+      }
+    }
+    return 0;
   }
 }
