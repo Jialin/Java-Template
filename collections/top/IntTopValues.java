@@ -30,6 +30,7 @@ public class IntTopValues {
     for ( ; heap.size > topN; heap.poll()) {}
   }
 
+  /** Top values are stored in reverse order in the heap. */
   public IntPriorityQueue heap() {
     return heap;
   }
