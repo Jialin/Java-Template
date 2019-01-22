@@ -2,13 +2,18 @@ package template.collections.priorityqueue;
 
 import template.collections.list.IntArrayList;
 import template.comparators.IntComparator;
+import template.io.Displayable;
 
-public class IntPriorityQueue extends IntArrayList {
+public class IntPriorityQueue extends IntArrayList implements Displayable {
 
   private final IntComparator comparator;
 
-  public IntPriorityQueue(int capacity) {
-    this(capacity, (x, y) -> x - y);
+  public static IntPriorityQueue minHeap(int capacity) {
+    return new IntPriorityQueue(capacity, (x, y) -> x - y);
+  }
+
+  public static IntPriorityQueue maxHeap(int capacity) {
+    return new IntPriorityQueue(capacity, (x, y) -> y - x);
   }
 
   public IntPriorityQueue(int capacity, IntComparator comparator) {
@@ -24,7 +29,9 @@ public class IntPriorityQueue extends IntArrayList {
     while (i > 0) {
       int parent = (i - 1) >> 1;
       int parentValue = values[parent];
-      if (comparator.compare(value, parentValue) >= 0) break;
+      if (comparator.compare(value, parentValue) >= 0) {
+        break;
+      }
       values[i] = parentValue;
       i = parent;
     }
@@ -32,12 +39,16 @@ public class IntPriorityQueue extends IntArrayList {
   }
 
   public int peek() {
-    if (size == 0) throw new ArrayIndexOutOfBoundsException();
+    if (size == 0) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
     return values[0];
   }
 
   public int poll() {
-    if (size == 0) throw new ArrayIndexOutOfBoundsException();
+    if (size == 0) {
+      throw new ArrayIndexOutOfBoundsException();
+    }
     int res = values[0];
     int value = values[--size];
     int half = size >> 1;
@@ -59,10 +70,12 @@ public class IntPriorityQueue extends IntArrayList {
   }
 
   @Override
-  public String toString() {
+  public String toDisplay() {
     StringBuilder sb = new StringBuilder("[");
     for (int i = 0; i < size; ++i) {
-      if (i > 0) sb.append(',').append(' ');
+      if (i > 0) {
+        sb.append(',').append(' ');
+      }
       sb.append(values[i]);
     }
     return sb.append(']').toString();
