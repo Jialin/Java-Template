@@ -2,10 +2,6 @@ package template.graph.basic;
 
 public final class BidirectionalGraph extends AbstractBidirectionalGraph {
 
-  public BidirectionalGraph() {
-    super();
-  }
-
   public BidirectionalGraph(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
   }

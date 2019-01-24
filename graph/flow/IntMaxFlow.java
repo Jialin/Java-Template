@@ -18,8 +18,6 @@ public class IntMaxFlow extends AbstractBidirectionalGraph {
   private int[] level;
   private int[] edgePnt;
 
-  public IntMaxFlow() {}
-
   public IntMaxFlow(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
   }

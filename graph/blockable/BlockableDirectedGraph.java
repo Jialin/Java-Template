@@ -10,10 +10,6 @@ public class BlockableDirectedGraph extends AbstractDirectedGraph implements Blo
 
   public boolean[] blocked;
 
-  public BlockableDirectedGraph() {
-    super();
-  }
-
   public BlockableDirectedGraph(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
   }

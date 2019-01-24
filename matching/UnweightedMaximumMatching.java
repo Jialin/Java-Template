@@ -77,7 +77,7 @@ public class UnweightedMaximumMatching {
   private void calcDist() {
     ++augmentMark;
     queue.clear();
-    for (int i = leftFree.first; i >= 0; i = leftFree.next[i]) {
+    for (int i = leftFree.first(); i < leftCnt; i = leftFree.next(i)) {
       queue.add(i);
       leftMark[i] = augmentMark;
       leftDist[i] = 0;

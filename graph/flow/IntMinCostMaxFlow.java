@@ -16,8 +16,6 @@ public class IntMinCostMaxFlow extends AbstractBidirectionalGraph {
   private boolean[] tag, minCostUpdated;
   private IntArrayQueue q;
 
-  public IntMinCostMaxFlow() {}
-
   public IntMinCostMaxFlow(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
   }

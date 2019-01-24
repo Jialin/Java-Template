@@ -15,8 +15,6 @@ public class IntBoundedMaxFlow extends IntMaxFlow {
   private int[] inFlow, outFlow;
   private boolean noSolution;
 
-  public IntBoundedMaxFlow() {}
-
   public IntBoundedMaxFlow(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity + 2, edgeCapacity + vertexCapacity + 1, false);
     init(vertexCapacity);

@@ -26,10 +26,6 @@ public class OneRegularGraph extends AbstractDirectedGraph {
   private int[] outIdx;
   private int[] cnt;
 
-  public OneRegularGraph() {
-    super();
-  }
-
   public OneRegularGraph(int vertexCapacity) {
     super(vertexCapacity, vertexCapacity);
   }

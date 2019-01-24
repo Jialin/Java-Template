@@ -19,8 +19,6 @@ public abstract class AbstractDirectedGraph implements DirectedGraphInterface {
   public abstract void expandEdgeStorage(int edgeCapacity);
   public abstract void initVertexStorage(int vertexCnt);
 
-  public AbstractDirectedGraph() {}
-
   public AbstractDirectedGraph(int vertexCapacity, int edgeCapacity) {
     this(vertexCapacity, edgeCapacity, true);
   }

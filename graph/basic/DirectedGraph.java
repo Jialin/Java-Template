@@ -2,10 +2,6 @@ package template.graph.basic;
 
 public class DirectedGraph extends AbstractDirectedGraph {
 
-  public DirectedGraph() {
-    super();
-  }
-
   public DirectedGraph(int vertexCapacity, int edgeCapacity) {
     super(vertexCapacity, edgeCapacity);
   }
