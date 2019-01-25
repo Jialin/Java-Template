@@ -8,7 +8,9 @@ import java.util.List;
 public class Truth {
 
   public static void assertTrue(boolean o) {
-    if (!o) fail("\nExpect true but was false.");
+    if (!o) {
+      fail("\nExpect true but was false.");
+    }
   }
 
   public static void assertEquals(int actual, int expect) {
