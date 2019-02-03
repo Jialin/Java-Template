@@ -2,6 +2,18 @@ package template.numbertheory.number;
 
 public class IntUtils {
 
+  public static final int[] POW10 = new int[]{
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      100000,
+      1000000,
+      10000000,
+      100000000,
+      1000000000};
+
   public static boolean isPow2(int n) {
     return n > 0 && (n & (n - 1)) == 0;
   }
